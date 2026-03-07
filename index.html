@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VARKONIS — Financial Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS ─── */
+:root{
+  --bg:#09090f; --s1:#0f0f18; --s2:#141420; --s3:#1a1a2a;
+  --bdr:rgba(255,255,255,.07); --bdr2:rgba(255,255,255,.13);
+  --t:#fff; --t2:rgba(255,255,255,.52); --t3:rgba(255,255,255,.26);
+  --a:#4f6ef7; --a2:#7b94ff; --ag:rgba(79,110,247,.13);
+  --g:#1fcfa0; --r:#f75a5a;
+  --nh:70px; --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{display:block;max-width:100%}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--a)}
+
+/* noise */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.03;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  height:var(--nh);display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,3rem);
+  border-bottom:1px solid var(--bdr);
+  background:rgba(9,9,15,.88);backdrop-filter:blur(20px);
+  transition:background .3s;
+}
+nav.up{background:rgba(9,9,15,.98)}
+
+.logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
+.logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;
+  font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+
+/* nav mega */
+.nav-ul{display:flex;height:100%;align-items:center}
+.nav-ul > li{position:relative;height:100%;display:flex;align-items:center}
+.nav-ul > li > a,
+.nav-ul > li > span{
+  display:flex;align-items:center;gap:.28rem;
+  padding:.15rem .9rem;font-size:.81rem;color:var(--t2);cursor:pointer;
+  transition:color .2s;white-space:nowrap;height:100%;
+}
+.nav-ul > li > a:hover,
+.nav-ul > li > span:hover,
+.nav-ul > li.op > span{color:var(--t)}
+.chv{font-size:.5rem;transition:transform .25s}
+.nav-ul > li.op .chv{transform:rotate(180deg)}
+
+/* mega panel */
+.mega{
+  display:none;position:absolute;top:100%;left:0;
+  background:var(--s2);border:1px solid var(--bdr2);border-top:none;
+  padding:1.6rem 1.4rem;min-width:700px;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+  animation:megaIn .22s var(--ease);
+}
+.mega.sm{min-width:200px}
+@keyframes megaIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.nav-ul > li.op .mega{display:flex;gap:2.5rem}
+.mega.sm{display:none;flex-direction:column;gap:0}
+.nav-ul > li.op .mega.sm{display:flex}
+
+.mega-col{min-width:130px}
+.mega-ttl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);
+  padding:.3rem .6rem .15rem;margin-bottom:.2rem;font-weight:600}
+.mega a{display:flex;align-items:center;gap:.5rem;padding:.48rem .6rem;font-size:.8rem;
+  color:var(--t2);border-radius:4px;transition:background .15s,color .15s;white-space:nowrap}
+.mega a:hover{background:var(--ag);color:var(--a2)}
+.mega a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+
+.mega-img{width:200px;flex-shrink:0;border-radius:6px;overflow:hidden;align-self:flex-start}
+.mega-img-inner{
+  background:linear-gradient(135deg,var(--s3) 0%,#0d1535 100%);
+  padding:1.4rem;border-radius:6px;border:1px solid var(--bdr);
+}
+.mega-img-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.4rem}
+.mega-img-sub{font-size:.72rem;color:var(--t3);line-height:1.5}
+.mega-cta{display:inline-flex;align-items:center;gap:.35rem;margin-top:.8rem;
+  font-size:.72rem;color:var(--a2);font-weight:600;transition:gap .2s}
+.mega-cta:hover{gap:.55rem}
+
+.nav-r{display:flex;align-items:center;gap:.7rem}
+.btn-si{font-size:.79rem;color:var(--t2);padding:.3rem .6rem;transition:color .2s}
+.btn-si:hover{color:var(--t)}
+.btn-gi{font-family:'Syne',sans-serif;font-size:.77rem;font-weight:700;letter-spacing:.05em;
+  padding:.52rem 1.25rem;background:var(--a);color:#fff;border-radius:4px;
+  transition:background .2s,transform .2s,box-shadow .2s}
+.btn-gi:hover{background:var(--a2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,110,247,.4)}
+
+/* hamburger */
+.hbg{display:none;flex-direction:column;gap:5px;width:22px;cursor:pointer}
+.hbg span{display:block;height:1.5px;background:var(--t);border-radius:2px;transition:transform .3s,opacity .3s}
+.hbg.op span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.op span:nth-child(2){opacity:0}
+.hbg.op span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* mobile menu */
+.mmenu{display:none;position:fixed;top:var(--nh);inset:var(--nh) 0 0;
+  background:var(--bg);z-index:700;overflow-y:auto;padding:1.8rem clamp(1rem,5vw,2.5rem)}
+.mmenu.op{display:block}
+.mlink{display:block;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;
+  padding:.75rem 0;border-bottom:1px solid var(--bdr);color:var(--t2);transition:color .2s}
+.mlink:hover{color:var(--t)}
+.msub{padding:.5rem 0 .5rem 1rem}
+.msub a{display:block;font-size:.84rem;color:var(--t3);padding:.35rem 0;transition:color .2s}
+.msub a:hover{color:var(--t2)}
+.mob-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  padding:calc(var(--nh) + 6rem) clamp(1rem,6vw,4rem) 5rem;
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;
+}
+/* grid bg */
+.hero::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(var(--bdr) 1px,transparent 1px),linear-gradient(90deg,var(--bdr) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 72% 72% at 50% 40%,black,transparent)}
+/* glow */
+.glow{position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,110,247,.16),transparent 65%);
+  top:-200px;left:-150px;pointer-events:none;
+  animation:gfloat 10s ease-in-out infinite}
+@keyframes gfloat{0%,100%{transform:translate(0,0)}50%{transform:translate(55px,40px)}}
+
+.hl{position:relative;z-index:2}
+.badge{display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(79,110,247,.4);border-radius:100px;
+  padding:.3rem .9rem;color:var(--a2);margin-bottom:1.8rem;
+  opacity:0;animation:rup .7s .1s var(--ease) forwards}
+.bdot{width:5px;height:5px;border-radius:50%;background:var(--a);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.8vw,5.8rem);font-weight:800;
+  line-height:.96;letter-spacing:-.025em;margin-bottom:1.6rem;
+  opacity:0;animation:rup .8s .25s var(--ease) forwards}
+h1 em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--a2) 45%,var(--g));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-p{font-size:.97rem;line-height:1.8;color:var(--t2);max-width:48ch;margin-bottom:2.2rem;
+  opacity:0;animation:rup .8s .4s var(--ease) forwards}
+
+.hero-btns{display:flex;gap:.85rem;align-items:center;flex-wrap:wrap;
+  opacity:0;animation:rup .8s .55s var(--ease) forwards}
+.bp{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700;letter-spacing:.04em;
+  padding:.78rem 1.75rem;background:var(--a);color:#fff;border-radius:4px;
+  display:inline-flex;align-items:center;gap:.45rem;
+  transition:background .2s,transform .2s,box-shadow .2s}
+.bp:hover{background:var(--a2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(79,110,247,.4)}
+.bg2{font-size:.83rem;color:var(--t2);display:inline-flex;align-items:center;gap:.5rem;transition:color .2s}
+.bg2:hover{color:var(--t)}
+.pr{width:32px;height:32px;border-radius:50%;border:1px solid var(--bdr2);
+  display:grid;place-items:center;font-size:.6rem;transition:border-color .2s,transform .2s}
+.bg2:hover .pr{border-color:var(--t);transform:scale(1.08)}
+
+/* trusted by */
+.trusted{margin-top:3.5rem;opacity:0;animation:rup .8s .7s var(--ease) forwards}
+.trusted-lbl{font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem}
+.trusted-logos{display:flex;align-items:center;gap:1.8rem;flex-wrap:wrap}
+.tlogo{display:flex;align-items:center;justify-content:center;
+  background:var(--s2);border:1px solid var(--bdr);border-radius:4px;
+  padding:.5rem 1rem;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
+  color:var(--t3);letter-spacing:.08em;white-space:nowrap;transition:border-color .2s,color .2s}
+.tlogo:hover{border-color:var(--bdr2);color:var(--t2)}
+
+/* hero right — dashboard */
+.hr{position:relative;z-index:2;opacity:0;animation:rup .9s .38s var(--ease) forwards}
+.dmock{background:var(--s2);border:1px solid var(--bdr2);border-radius:10px;
+  overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.dtbar{background:var(--s3);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;gap:.4rem;padding:.68rem .9rem}
+.ddt{width:9px;height:9px;border-radius:50%}
+.durl{margin-left:.4rem;font-size:.64rem;color:var(--t3);background:var(--bg);
+  padding:.18rem .65rem;border-radius:3px;border:1px solid var(--bdr)}
+.dbody{padding:1.2rem;display:flex;flex-direction:column;gap:.85rem}
+.dgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.dcard{background:var(--s3);border:1px solid var(--bdr);border-radius:5px;padding:.85rem}
+.dclb{font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:.32rem}
+.dcv{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:.2rem}
+.dcc{font-size:.62rem}
+.dchrt{background:var(--s3);border:1px solid var(--bdr);border-radius:5px;padding:.85rem .85rem .65rem}
+.dclb2{font-size:.6rem;color:var(--t3);margin-bottom:.6rem}
+.dtbl{background:var(--s3);border:1px solid var(--bdr);border-radius:5px;overflow:hidden}
+.drow{display:grid;grid-template-columns:2fr 1fr 1fr;padding:.48rem .8rem;font-size:.68rem;border-bottom:1px solid var(--bdr)}
+.drow:last-child{border-bottom:none}
+.drow.dh{color:var(--t3);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase}
+.gu{color:var(--g)}.rd{color:var(--r)}
+.cu{background:rgba(31,207,160,.12);color:var(--g);padding:.1rem .35rem;border-radius:3px;font-size:.6rem}
+.cd{background:rgba(247,90,90,.1);color:var(--r);padding:.1rem .35rem;border-radius:3px;font-size:.6rem}
+@keyframes rup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── MARQUEE ─── */
+.mq{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+  background:var(--s1);overflow:hidden;padding:.8rem 0}
+.mqi{display:flex;width:max-content;animation:mqa 32s linear infinite}
+.mqi:hover{animation-play-state:paused}
+.mqw{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);
+  white-space:nowrap;padding:0 1.8rem;display:flex;align-items:center;gap:1.8rem}
+.mqw::after{content:'◆';color:var(--a);font-size:.4rem}
+@keyframes mqa{to{transform:translateX(-50%)}}
+
+/* ─── SECTION SHARED ─── */
+.sec{padding:6rem clamp(1rem,6vw,4rem)}
+.si2{max-width:1220px;margin:0 auto}
+.ey{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);
+  display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.ey::before{content:'';width:15px;height:1px;background:var(--a)}
+.sh2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3.5vw,2.9rem);font-weight:800;
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem;max-width:22ch}
+.sp2{font-size:.9rem;line-height:1.8;color:var(--t2);max-width:56ch;margin-bottom:3rem}
+
+/* ─── NUMBERS ─── */
+.nums{background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.numsg{display:grid;grid-template-columns:repeat(4,1fr);max-width:1220px;margin:0 auto}
+.nc{padding:3.2rem 2rem;border-right:1px solid var(--bdr);position:relative;overflow:hidden;transition:background .3s}
+.nc:last-child{border-right:none}
+.nc:hover{background:var(--s2)}
+.nc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--a),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.nc:hover::after{transform:scaleX(1)}
+.nv{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3.3rem);font-weight:800;line-height:1;margin-bottom:.4rem}
+.na{color:var(--a)}
+.nl{font-size:.77rem;line-height:1.55;color:var(--t3)}
+
+/* ─── CASE WINS ─── */
+.cwin-intro{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:3rem}
+.cwin-r{display:flex;justify-content:flex-end;align-items:flex-end}
+.btn-all{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.05em;
+  padding:.65rem 1.4rem;border:1px solid var(--bdr2);border-radius:4px;color:var(--t2);
+  display:flex;align-items:center;gap:.45rem;transition:border-color .2s,color .2s}
+.btn-all:hover{border-color:var(--a);color:var(--a2)}
+
+/* win cards */
+.wcards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:6px;overflow:hidden}
+.wc{background:var(--s1);padding:2.2rem;position:relative;overflow:hidden;transition:background .3s;cursor:default}
+.wc:hover{background:var(--s2)}
+.wc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--a),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.wc:hover::after{transform:scaleX(1)}
+.wtags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.wtag{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--bdr2);border-radius:100px;padding:.18rem .55rem;color:var(--t3)}
+.wraised{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:var(--g);display:block;margin-bottom:.35rem}
+.wttl{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.55rem;line-height:1.3}
+.wdesc{font-size:.8rem;line-height:1.7;color:var(--t2);margin-bottom:1.3rem}
+.wres{display:flex;flex-direction:column;gap:.38rem;margin-bottom:1.3rem}
+.wres li{font-size:.76rem;color:var(--t2);display:flex;align-items:flex-start;gap:.5rem;line-height:1.4}
+.wres li::before{content:'↗';color:var(--g);font-size:.68rem;flex-shrink:0;padding-top:.05rem}
+.wfoot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.4rem}
+.wcl{font-size:.69rem;color:var(--t3)}
+.wlnk{font-size:.7rem;font-weight:600;color:var(--a2);display:flex;align-items:center;gap:.32rem;transition:color .2s,gap .2s}
+.wlnk:hover{color:var(--a);gap:.5rem}
+
+/* ─── PROBLEM/SOLUTION ─── */
+.psec{background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.psgrid{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:start;margin-top:3rem}
+.pstabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.pst{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  padding:.36rem .9rem;border-radius:100px;border:1px solid var(--bdr2);color:var(--t3);
+  cursor:pointer;transition:all .2s}
+.pst.on,.pst:hover{border-color:var(--a);color:var(--a);background:var(--ag)}
+.psp{display:none}.psp.on{display:block}
+.psi{border-bottom:1px solid var(--bdr);cursor:pointer}
+.psq{display:flex;justify-content:space-between;align-items:center;padding:1.15rem 0;
+  font-family:'Syne',sans-serif;font-size:.93rem;font-weight:600;transition:color .2s;gap:1rem}
+.psi:hover .psq,.psi.op .psq{color:var(--a2)}
+.psico{font-size:.72rem;transition:transform .3s;flex-shrink:0;color:var(--t3)}
+.psi.op .psico{transform:rotate(45deg);color:var(--a)}
+.psa{max-height:0;overflow:hidden;transition:max-height .4s var(--ease),padding .3s}
+.psi.op .psa{max-height:200px;padding-bottom:1.1rem}
+.psa p{font-size:.84rem;line-height:1.75;color:var(--t2)}
+/* right card */
+.pscard{background:var(--s2);border:1px solid var(--bdr2);border-radius:6px;
+  overflow:hidden;position:sticky;top:calc(var(--nh)+2rem)}
+.psch{background:var(--s3);border-bottom:1px solid var(--bdr);padding:1.2rem 1.4rem;
+  display:flex;justify-content:space-between;align-items:center}
+.pschttl{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700}
+.live{display:flex;align-items:center;gap:.36rem;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g)}
+.livdot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:pulse 2s infinite}
+.pscb{padding:1.3rem 1.4rem}
+.psr{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--bdr);font-size:.8rem}
+.psr:last-of-type{border-bottom:none}
+.psrn{color:var(--t2)}.psrv{font-family:'Syne',sans-serif;font-weight:700}
+.pstot{padding:1.1rem 1.4rem;background:var(--s3);border-top:1px solid var(--bdr2);
+  display:flex;justify-content:space-between;align-items:center}
+.pstl{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.pstv{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800}
+
+/* ─── SERVICES ACCORDION ─── */
+.srv-tabs{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.srt{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  padding:.36rem .9rem;border-radius:100px;border:1px solid var(--bdr2);color:var(--t3);
+  cursor:pointer;transition:all .2s}
+.srt.on,.srt:hover{border-color:var(--a);color:var(--a);background:var(--ag)}
+.srv-panel{display:none}.srv-panel.on{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:6px;overflow:hidden}
+.scard{background:var(--bg);padding:2rem;transition:background .3s;position:relative;overflow:hidden;cursor:pointer}
+.scard:hover{background:var(--s2)}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--a),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.scard:hover::before{transform:scaleX(1)}
+.sico{width:38px;height:38px;border:1px solid var(--bdr2);border-radius:4px;
+  display:grid;place-items:center;background:var(--ag);margin-bottom:1.2rem}
+.sico svg{width:17px;height:17px;stroke:var(--a2);fill:none;stroke-width:1.5}
+.sttl{font-family:'Syne',sans-serif;font-size:.97rem;font-weight:700;margin-bottom:.55rem}
+.sdsc{font-size:.8rem;line-height:1.7;color:var(--t2);margin-bottom:1rem}
+.slnk{font-size:.72rem;color:var(--a2);font-weight:600;display:flex;align-items:center;gap:.3rem;transition:gap .2s}
+.scard:hover .slnk{gap:.5rem}
+
+/* ─── TESTIMONIALS ─── */
+.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.tcard{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.8rem;transition:border-color .3s,transform .3s}
+.tcard:hover{border-color:var(--bdr2);transform:translateY(-4px)}
+.tstars{color:var(--a2);font-size:.7rem;margin-bottom:1rem;letter-spacing:.08em}
+.tq{font-size:.85rem;line-height:1.75;color:var(--t2);margin-bottom:1.5rem;font-style:italic}
+.tau{display:flex;align-items:center;gap:.8rem}
+.tav{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;
+  background:linear-gradient(135deg,var(--a),#1e2f8a)}
+.tnm{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700}
+.trl{font-size:.67rem;color:var(--t3);margin-top:.1rem}
+
+/* ─── PRICING ─── */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:6px;overflow:hidden;margin-top:3rem}
+.plan{background:var(--s1);padding:2.2rem;position:relative;transition:background .3s}
+.plan:hover,.plan.hot{background:var(--s2)}
+.plan.hot::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),var(--g))}
+.pbadge{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--a);
+  display:flex;align-items:center;gap:.36rem;margin-bottom:1rem}
+.pbadge::before{content:'';width:10px;height:1px;background:var(--a)}
+.pname{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:.32rem}
+.pprice{font-family:'Syne',sans-serif;font-size:2.7rem;font-weight:800;line-height:1;margin-bottom:.28rem}
+.plan.hot .pprice{background:linear-gradient(135deg,var(--a),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pper{font-size:.7rem;color:var(--t3);margin-bottom:1.7rem}
+.phr{height:1px;background:var(--bdr);margin-bottom:1.5rem}
+.plist{display:flex;flex-direction:column;gap:.72rem;margin-bottom:2rem}
+.plist li{font-size:.8rem;color:var(--t2);display:flex;gap:.6rem;align-items:flex-start;line-height:1.4}
+.plist li::before{content:'✓';color:var(--a);font-size:.68rem;padding-top:.1rem;flex-shrink:0}
+.pbtn{width:100%;padding:.8rem;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  border:1px solid var(--bdr2);border-radius:4px;color:var(--t);transition:border-color .2s,background .2s}
+.pbtn:hover{border-color:var(--a);background:var(--ag)}
+.plan.hot .pbtn{background:var(--a);border-color:var(--a);color:#fff}
+.plan.hot .pbtn:hover{background:var(--a2);border-color:var(--a2)}
+
+/* ─── CTA BAND ─── */
+.ctab{background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+  padding:7rem clamp(1rem,6vw,4rem);text-align:center;position:relative;overflow:hidden}
+.ctab::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,110,247,.11),transparent 65%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cth{font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,4.2rem);
+  font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1rem;position:relative}
+.cth em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--g));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ctsp{font-size:.9rem;color:var(--t2);max-width:44ch;margin:0 auto 2.2rem;line-height:1.75;position:relative}
+.ctbtns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;position:relative}
+.bcp{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.05em;
+  padding:.9rem 2.1rem;background:var(--a);color:#fff;border-radius:4px;
+  transition:background .2s,transform .2s,box-shadow .2s}
+.bcp:hover{background:var(--a2);transform:translateY(-2px);box-shadow:0 8px 25px rgba(79,110,247,.4)}
+.bcg{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:600;letter-spacing:.05em;
+  padding:.9rem 2.1rem;border:1px solid var(--bdr2);border-radius:4px;color:var(--t2);
+  transition:border-color .2s,color .2s}
+.bcg:hover{border-color:var(--t2);color:var(--t)}
+
+/* ─── CONTACT ─── */
+.conin{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.conh{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3vw,2.7rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem}
+.conp{font-size:.87rem;line-height:1.8;color:var(--t2);margin-bottom:2rem}
+.cppl{display:flex;flex-direction:column;gap:.95rem}
+.cper{display:flex;align-items:center;gap:.85rem;padding:1.1rem;background:var(--s1);border:1px solid var(--bdr);border-radius:6px;transition:border-color .2s}
+.cper:hover{border-color:var(--bdr2)}
+.cav{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--a),#1e2f8a);
+  display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;flex-shrink:0}
+.cpn{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700}
+.cpr2{font-size:.68rem;color:var(--t3)}
+.cpe{font-size:.7rem;color:var(--a2);margin-top:.14rem}
+
+/* form */
+.form{display:flex;flex-direction:column;gap:1rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.fg{display:flex;flex-direction:column;gap:.42rem}
+.fl{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.fi,.fta{background:var(--s1);border:1px solid var(--bdr);border-radius:4px;
+  padding:.72rem .9rem;font-family:'Manrope',sans-serif;font-size:.85rem;color:var(--t);
+  transition:border-color .2s,background .2s;outline:none;width:100%}
+.fi:focus,.fta:focus{border-color:var(--a);background:var(--s2)}
+.fi::placeholder,.fta::placeholder{color:var(--t3)}
+.fta{resize:vertical;min-height:100px}
+.brow{display:flex;gap:.45rem;flex-wrap:wrap}
+.bb{font-size:.7rem;padding:.32rem .8rem;border:1px solid var(--bdr);border-radius:100px;
+  color:var(--t3);cursor:pointer;transition:all .2s;background:transparent}
+.bb.on,.bb:hover{border-color:var(--a);color:var(--a);background:var(--ag)}
+.fsub{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;
+  padding:.82rem 1.8rem;background:var(--a);color:#fff;border-radius:4px;
+  transition:background .2s,transform .2s;align-self:flex-start}
+.fsub:hover{background:var(--a2);transform:translateY(-1px)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1rem,6vw,4rem) 2rem}
+.fg4{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;
+  padding-bottom:2.8rem;border-bottom:1px solid var(--bdr);margin-bottom:1.8rem}
+.flogo{display:flex;align-items:center;gap:.52rem;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.85rem}
+.flico{width:24px;height:24px;background:var(--a);display:grid;place-items:center;font-size:.6rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+.fdesc{font-size:.78rem;line-height:1.7;color:var(--t3);max-width:26ch}
+.fct{font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem;font-weight:600}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.62rem}
+.flinks a{font-size:.78rem;color:var(--t2);transition:color .2s}
+.flinks a:hover{color:var(--a2)}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.fcopy{font-size:.68rem;color:var(--t3)}
+.fleg{display:flex;gap:1.5rem}
+.fleg a{font-size:.68rem;color:var(--t3);transition:color .2s}
+.fleg a:hover{color:var(--t2)}
+
+/* ─── REVEAL ─── */
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+[data-r].in{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}
+[data-r][data-d="2"]{transition-delay:.2s}
+[data-r][data-d="3"]{transition-delay:.3s}
+[data-r][data-d="4"]{transition-delay:.4s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1060px){
+  .hero{grid-template-columns:1fr;padding-top:calc(var(--nh)+4.5rem)}
+  .hr{display:none}
+  .psgrid{grid-template-columns:1fr}
+  .pscard{position:static}
+  .conin{grid-template-columns:1fr}
+  .cwin-intro{grid-template-columns:1fr}
+  .cwin-r{justify-content:flex-start;margin-top:1rem}
+  .fg4{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-ul,.btn-si{display:none}
+  .hbg{display:flex}
+  .numsg{grid-template-columns:1fr 1fr}
+  .nc{border-right:none;border-bottom:1px solid var(--bdr)}
+  .nc:nth-child(odd){border-right:1px solid var(--bdr)}
+  .wcards,.tcards,.pgrid{grid-template-columns:1fr}
+  .srv-panel.on{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .fg4{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .numsg{grid-template-columns:1fr}
+  .nc:nth-child(odd){border-right:none}
+  .nc{border-bottom:1px solid var(--bdr)}
+  .nc:last-child{border-bottom:none}
+  .srv-panel.on{grid-template-columns:1fr}
+  .hero-btns,.ctbtns{flex-direction:column;align-items:flex-start}
+  .ctbtns{align-items:center}
+  .trusted-logos{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav id="nav">
+  <a href="#" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+
+  <ul class="nav-ul">
+    <li id="d-plat">
+      <span>Platform <span class="chv">▾</span></span>
+      <div class="mega">
+        <div class="mega-col">
+          <div class="mega-ttl">Analytics</div>
+          <a href="#"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Portfolio Analytics</a>
+          <a href="#"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Risk Intelligence</a>
+          <a href="#"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>AI Insights</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-ttl">Operations</div>
+          <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Client Reporting</a>
+          <a href="#"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Deal Flow CRM</a>
+          <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Team Access</a>
+          <a href="#"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>API &amp; Integrations</a>
+        </div>
+        <div class="mega-img">
+          <div class="mega-img-inner">
+            <div class="mega-img-ttl">VARKONIS Platform</div>
+            <div class="mega-img-sub">Institutional-grade financial intelligence for firms that demand precision.</div>
+            <a href="#" class="mega-cta">Explore platform →</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li id="d-sol">
+      <span>Solutions <span class="chv">▾</span></span>
+      <div class="mega sm">
+        <a href="#">Hedge Funds</a>
+        <a href="#">Private Equity</a>
+        <a href="#">Wealth Management</a>
+        <a href="#">M&amp;A Advisory</a>
+        <a href="#">Family Offices</a>
+      </div>
+    </li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-r">
+    <a href="#" class="btn-si">Sign In</a>
+    <a href="#contact" class="btn-gi">Get in touch</a>
+    <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div class="mmenu" id="mmenu">
+  <a class="mlink" href="#">Platform</a>
+  <div class="msub"><a href="#">Portfolio Analytics</a><a href="#">Risk Intelligence</a><a href="#">Client Reporting</a><a href="#">Deal Flow CRM</a><a href="#">AI Insights</a></div>
+  <a class="mlink" href="#">Solutions</a>
+  <div class="msub"><a href="#">Hedge Funds</a><a href="#">Private Equity</a><a href="#">Wealth Management</a><a href="#">M&A Advisory</a></div>
+  <a class="mlink" href="#cases">Case Studies</a>
+  <a class="mlink" href="#services">Services</a>
+  <a class="mlink" href="#pricing">Pricing</a>
+  <a class="mlink" href="#contact">Contact</a>
+  <div class="mob-btns">
+    <a href="#" style="font-size:.88rem;color:var(--t2)">Sign In</a>
+    <a href="#contact" class="btn-gi">Get in touch</a>
+  </div>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section class="hero">
+  <div class="glow"></div>
+
+  <div class="hl">
+    <div class="badge"><div class="bdot"></div>Financial Intelligence Platform</div>
+    <h1>Authority of<br><em>Great Significance.</em></h1>
+    <p class="hero-p">VARKONIS delivers institutional-grade financial analytics, risk intelligence, and consulting tools — empowering firms that handle serious capital to make faster, sharper decisions.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="bp">Get in touch <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#cases" class="bg2">View our cases <div class="pr">→</div></a>
+    </div>
+    <div class="trusted">
+      <div class="trusted-lbl">Trusted by firms backed by top-tier investors</div>
+      <div class="trusted-logos">
+        <div class="tlogo">ALDGATE CAPITAL</div>
+        <div class="tlogo">VERIMONT</div>
+        <div class="tlogo">MERIDIAN WEALTH</div>
+        <div class="tlogo">KESTREL FUND</div>
+        <div class="tlogo">+ more</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr">
+    <div class="dmock">
+      <div class="dtbar">
+        <div class="ddt" style="background:#ff5f57"></div>
+        <div class="ddt" style="background:#febc2e"></div>
+        <div class="ddt" style="background:#28c840"></div>
+        <div class="durl">app.varkonis.io/dashboard</div>
+      </div>
+      <div class="dbody">
+        <div class="dgrid3">
+          <div class="dcard"><div class="dclb">Total AUM</div><div class="dcv">$24.6M</div><div class="dcc cu">▲ 4.8%</div></div>
+          <div class="dcard"><div class="dclb">YTD Return</div><div class="dcv">+18.3%</div><div class="dcc cu">vs 11.2% bmk</div></div>
+          <div class="dcard"><div class="dclb">Sharpe</div><div class="dcv">0.94</div><div class="dcc cu">▲ 0.81</div></div>
+        </div>
+        <div class="dchrt">
+          <div class="dclb2">Portfolio Value — 12 months</div>
+          <svg viewBox="0 0 500 52" preserveAspectRatio="none" style="width:100%;height:52px;display:block">
+            <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4f6ef7" stop-opacity=".28"/><stop offset="100%" stop-color="#4f6ef7" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,48 C60,42 120,38 180,31 S300,18 360,13 L500,3" stroke="#4f6ef7" stroke-width="1.8" fill="none"/>
+            <path d="M0,48 C60,42 120,38 180,31 S300,18 360,13 L500,3 L500,52 L0,52Z" fill="url(#cg)"/>
+          </svg>
+        </div>
+        <div class="dtbl">
+          <div class="drow dh"><span>Asset Class</span><span>Alloc.</span><span>Return</span></div>
+          <div class="drow"><span>US Equity</span><span>34%</span><span class="gu">+22.1%</span></div>
+          <div class="drow"><span>Fixed Income</span><span>21%</span><span class="gu">+4.2%</span></div>
+          <div class="drow"><span>Alternatives</span><span>17%</span><span class="gu">+31.4%</span></div>
+          <div class="drow"><span>International</span><span>15%</span><span class="rd">−1.8%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- marquee -->
+<div class="mq"><div class="mqi" id="mqi">
+  <span class="mqw">Portfolio Analytics</span><span class="mqw">Risk Intelligence</span><span class="mqw">Real-Time Data</span><span class="mqw">Client Reporting</span><span class="mqw">AI Insights</span><span class="mqw">Deal Flow CRM</span><span class="mqw">Compliance Tools</span><span class="mqw">API Integrations</span><span class="mqw">Wealth Management</span><span class="mqw">M&A Advisory</span>
+  <span class="mqw">Portfolio Analytics</span><span class="mqw">Risk Intelligence</span><span class="mqw">Real-Time Data</span><span class="mqw">Client Reporting</span><span class="mqw">AI Insights</span><span class="mqw">Deal Flow CRM</span><span class="mqw">Compliance Tools</span><span class="mqw">API Integrations</span><span class="mqw">Wealth Management</span><span class="mqw">M&A Advisory</span>
+</div></div>
+
+<!-- ══════ NUMBERS ══════ -->
+<div class="nums">
+  <div class="numsg">
+    <div class="nc" data-r><div class="nv">$4.2<span class="na">B</span></div><div class="nl">Assets analyzed across client portfolios</div></div>
+    <div class="nc" data-r data-d="1"><div class="nv">840<span class="na">+</span></div><div class="nl">Institutional and boutique firm clients</div></div>
+    <div class="nc" data-r data-d="2"><div class="nv">99.9<span class="na">%</span></div><div class="nl">Guaranteed platform uptime SLA</div></div>
+    <div class="nc" data-r data-d="3"><div class="nv">38<span class="na">ms</span></div><div class="nl">Average data latency across all feeds</div></div>
+  </div>
+</div>
+
+<!-- ══════ CASE WINS ══════ -->
+<section class="sec" id="cases">
+  <div class="si2">
+    <div class="cwin-intro" data-r>
+      <div>
+        <div class="ey">Client Wins</div>
+        <h2 class="sh2">Our featured client wins</h2>
+        <p class="sp2">See how leading funds, advisory firms, and family offices transformed their operations — and outcomes — with VARKONIS.</p>
+      </div>
+      <div class="cwin-r">
+        <a href="#" class="btn-all">Explore all cases →</a>
+      </div>
+    </div>
+    <div class="wcards" data-r>
+      <div class="wc">
+        <div class="wtags"><span class="wtag">#Portfolio Analytics</span><span class="wtag">#Risk Tools</span></div>
+        <span class="wraised">+$140M AUM</span>
+        <div class="wttl">Aldgate Capital — From spreadsheets to institutional-grade analytics</div>
+        <p class="wdesc">A $300M multi-asset fund replaced disconnected spreadsheets with VARKONIS, enabling real-time consolidated views across all strategies.</p>
+        <ul class="wres"><li>+38% reduction in reporting time per client</li><li>Risk alerts caught 3 concentration issues pre-event</li><li>Onboarded 12 new clients within 6 months of launch</li></ul>
+        <div class="wfoot"><span class="wcl">Aldgate Capital Partners · London, UK</span><a href="#" class="wlnk">Explore →</a></div>
+      </div>
+      <div class="wc">
+        <div class="wtags"><span class="wtag">#Client Reporting</span><span class="wtag">#AI</span></div>
+        <span class="wraised">35% retention lift</span>
+        <div class="wttl">Verimont Advisory — AI-driven reporting elevated client retention</div>
+        <p class="wdesc">A boutique advisory firm deployed VARKONIS white-label reporting and AI commentary to differentiate their service offering to 60+ HNW clients.</p>
+        <ul class="wres"><li>Client retention improved from 82% to 94%</li><li>Report generation cut from 4 hours to 8 minutes</li><li>Raised $28M in new mandates within first year</li></ul>
+        <div class="wfoot"><span class="wcl">Verimont Advisory · Geneva, Switzerland</span><a href="#" class="wlnk">Explore →</a></div>
+      </div>
+      <div class="wc">
+        <div class="wtags"><span class="wtag">#Deal Flow CRM</span><span class="wtag">#M&A</span></div>
+        <span class="wraised">$2.1B deals tracked</span>
+        <div class="wttl">Meridian Wealth — Centralised M&A pipeline across 6 offices</div>
+        <p class="wdesc">Meridian needed a single platform to manage live deal flow across multiple geographies with shared access controls and compliance audit trails.</p>
+        <ul class="wres"><li>Deal close rate improved 22% in 12 months</li><li>Zero compliance violations in first year of use</li><li>3 cross-office co-investments originated</li></ul>
+        <div class="wfoot"><span class="wcl">Meridian Wealth Management · New York, USA</span><a href="#" class="wlnk">Explore →</a></div>
+      </div>
+      <div class="wc">
+        <div class="wtags"><span class="wtag">#Risk Intelligence</span><span class="wtag">#Hedge Fund</span></div>
+        <span class="wraised">Sharpe 0.71 → 1.12</span>
+        <div class="wttl">Kestrel Fund — Multi-factor risk models reshaped allocation decisions</div>
+        <p class="wdesc">A quant hedge fund used VARKONIS VaR engine and stress-testing suite to identify hidden tail risks before a significant market downturn.</p>
+        <ul class="wres"><li>Avoided $18M estimated drawdown via early alerts</li><li>Sharpe ratio improved from 0.71 to 1.12 in 18 months</li><li>Passed LP risk audit with zero findings for first time</li></ul>
+        <div class="wfoot"><span class="wcl">Kestrel Capital Fund · Singapore</span><a href="#" class="wlnk">Explore →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ PROBLEM/SOLUTION ══════ -->
+<section class="sec psec">
+  <div class="si2">
+    <div class="ey" data-r>Platform</div>
+    <h2 class="sh2" data-r>Capital decisions are hard.<br>Finding the right platform shouldn't be.</h2>
+    <div class="psgrid" data-r>
+      <div>
+        <div class="pstabs">
+          <div class="pst on" data-pt="fund">Fund Managers</div>
+          <div class="pst" data-pt="adv">Advisory Firms</div>
+          <div class="pst" data-pt="fam">Family Offices</div>
+        </div>
+        <div class="psp on" id="pt-fund">
+          <div class="psi op"><div class="psq">Fragmented data across custodians and systems?<span class="psico">+</span></div><div class="psa"><p>VARKONIS connects to 200+ custodians and data providers via secure API — all positions, transactions, and holdings in a single consolidated live view, updated in real time.</p></div></div>
+          <div class="psi"><div class="psq">Reporting takes days and still looks generic?<span class="psico">+</span></div><div class="psa"><p>Generate fully white-labeled, board-ready reports in minutes. AI writes the commentary — you review and send. Investors receive documents that look bespoke because they are.</p></div></div>
+          <div class="psi"><div class="psq">Risk only visible after it hits PnL?<span class="psico">+</span></div><div class="psa"><p>Live VaR, stress tests, and scenario analysis surface tail risks before they materialise. Automated alerts notify your team the moment thresholds are breached.</p></div></div>
+          <div class="psi"><div class="psq">LP risk audits are stressful and time-intensive?<span class="psico">+</span></div><div class="psa"><p>Full audit trails, role-based access, and compliance-ready exports so your operations meet institutional standards — without the last-minute scramble.</p></div></div>
+        </div>
+        <div class="psp" id="pt-adv">
+          <div class="psi op"><div class="psq">Clients expect institutional quality from a lean team?<span class="psico">+</span></div><div class="psa"><p>VARKONIS gives boutique advisory firms enterprise-grade tools without enterprise headcount — one platform replaces a stack of disconnected tools and manual processes.</p></div></div>
+          <div class="psi"><div class="psq">Deal pipeline scattered across inboxes?<span class="psico">+</span></div><div class="psa"><p>Our Deal Flow CRM tracks every mandate, NDA, and milestone from origination to close, with shared team access so everyone stays aligned at every stage.</p></div></div>
+          <div class="psi"><div class="psq">Client reviews feel routine and generic?<span class="psico">+</span></div><div class="psa"><p>AI-generated narrative commentary transforms standard performance data into compelling client stories — reinforcing your expertise at every interaction.</p></div></div>
+        </div>
+        <div class="psp" id="pt-fam">
+          <div class="psi op"><div class="psq">No consolidated view across asset managers?<span class="psico">+</span></div><div class="psa"><p>Aggregate holdings across managers, custodians, and asset classes — real estate, PE, liquid assets, and cash — all in a single family dashboard.</p></div></div>
+          <div class="psi"><div class="psq">Governance across generations is complex?<span class="psico">+</span></div><div class="psa"><p>Role-based permissions let principals, trustees, and advisors each see precisely what they need — with full audit trails for every action taken on the platform.</p></div></div>
+          <div class="psi"><div class="psq">Reporting per entity is manual and inconsistent?<span class="psico">+</span></div><div class="psa"><p>Automatically generate entity-level and consolidated reports on any schedule — fully branded to your family office's standards.</p></div></div>
+        </div>
+      </div>
+      <div class="pscard">
+        <div class="psch">
+          <span class="pschttl">Live Portfolio Monitor</span>
+          <span class="live"><span class="livdot"></span>Live</span>
+        </div>
+        <div class="pscb">
+          <div class="psr"><span class="psrn">US Large Cap Equity</span><span class="psrv">$8.4M</span><span class="cu">+2.3%</span></div>
+          <div class="psr"><span class="psrn">Fixed Income Core</span><span class="psrv">$5.1M</span><span class="cu">+0.6%</span></div>
+          <div class="psr"><span class="psrn">International Dev.</span><span class="psrv">$3.8M</span><span class="cd">−0.4%</span></div>
+          <div class="psr"><span class="psrn">Alternatives</span><span class="psrv">$4.2M</span><span class="cu">+5.1%</span></div>
+          <div class="psr"><span class="psrn">Cash &amp; Equivalents</span><span class="psrv">$3.1M</span><span class="cu">+0.1%</span></div>
+        </div>
+        <div class="pstot"><span class="pstl">Total Portfolio</span><span class="pstv">$24.6M</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SERVICES ══════ -->
+<section class="sec" id="services">
+  <div class="si2">
+    <div class="ey" data-r>Services</div>
+    <h2 class="sh2" data-r>Tailored support from first data connection to long-term scale</h2>
+    <p class="sp2" data-r>Great financial decisions don't happen by accident. VARKONIS helps firms grow through smart analytics, robust risk tools, and scalable operations from day one.</p>
+
+    <div class="srv-tabs" data-r>
+      <div class="srt on" data-st="start">Getting Started</div>
+      <div class="srt" data-st="grow">Grow</div>
+      <div class="srt" data-st="scale">Scale</div>
+    </div>
+
+    <div class="srv-panel on" id="st-start" data-r>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="sttl">Portfolio Analytics</div>
+        <p class="sdsc">Connect all your data sources and get a consolidated real-time view of every position, allocation, and exposure.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="sttl">Client Reporting</div>
+        <p class="sdsc">Launch white-labeled, AI-written, regulation-compliant client reports that convert and build trust.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="sttl">Onboarding Sprint</div>
+        <p class="sdsc">Go from zero to live dashboards in under 24 hours with guided setup and dedicated onboarding support.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+    </div>
+
+    <div class="srv-panel" id="st-grow">
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="sttl">Risk Intelligence</div>
+        <p class="sdsc">Multi-factor VaR, stress testing, and tail-risk analysis — surface threats before they hit your PnL.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="sttl">AI-Powered Insights</div>
+        <p class="sdsc">Machine learning surfaces hidden patterns, flags anomalies, and auto-generates plain-language commentary for advisors.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="sttl">Deal Flow CRM</div>
+        <p class="sdsc">Track mandates from origination to close with shared pipeline, NDA management, and milestone tracking.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+    </div>
+
+    <div class="srv-panel" id="st-scale">
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <div class="sttl">Team Collaboration</div>
+        <p class="sdsc">Role-based access, audit trails, and shared workspaces — keep your entire firm on a single source of truth.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="sttl">Enterprise API</div>
+        <p class="sdsc">Full API access for custom integrations, data exports, and embedding VARKONIS intelligence into your own tools.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+      <div class="scard">
+        <div class="sico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="sttl">Compliance Suite</div>
+        <p class="sdsc">Audit-ready exports, regulatory templates, and automated compliance checks — always audit-ready without the scramble.</p>
+        <div class="slnk">Explore →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ TESTIMONIALS ══════ -->
+<section class="sec" style="background:var(--s1);border-top:1px solid var(--bdr)">
+  <div class="si2">
+    <div class="ey" data-r>Client Voices</div>
+    <h2 class="sh2" data-r>5.0 is our average — from firms that demand the best</h2>
+    <div class="tcards">
+      <div class="tcard" data-r><div class="tstars">★★★★★</div><p class="tq">"VARKONIS transformed how we present portfolio performance to our board. The reporting quality alone justified the investment within the first quarter."</p><div class="tau"><div class="tav">MR</div><div><div class="tnm">Marcus Reid</div><div class="trl">CIO · Aldgate Capital Partners</div></div></div></div>
+      <div class="tcard" data-r data-d="1"><div class="tstars">★★★★★</div><p class="tq">"The risk module caught a concentration issue months before it would have been visible through traditional methods. That alone paid for three years of subscription."</p><div class="tau"><div class="tav" style="background:linear-gradient(135deg,var(--g),#0a6b4a)">SL</div><div><div class="tnm">Sophia Laurent</div><div class="trl">Managing Director · Verimont Advisory</div></div></div></div>
+      <div class="tcard" data-r data-d="2"><div class="tstars">★★★★★</div><p class="tq">"We evaluated six platforms. VARKONIS won on depth of analytics and ease of use. Our team went from onboarding to fully productive in under a day."</p><div class="tau"><div class="tav" style="background:linear-gradient(135deg,#ff8c42,#c0392b)">JK</div><div><div class="tnm">James Kwan</div><div class="trl">Head of Strategy · Meridian Wealth</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ PRICING ══════ -->
+<section class="sec" id="pricing">
+  <div class="si2">
+    <div class="ey" data-r>Pricing</div>
+    <h2 class="sh2" data-r>Transparent pricing for firms of every scale</h2>
+    <p class="sp2" data-r>No hidden fees. No per-user traps. Just plans that grow with your firm.</p>
+    <div class="pgrid" data-r>
+      <div class="plan"><div class="pbadge">Boutique</div><div class="pname">Starter</div><div class="pprice">$490</div><div class="pper">per month · billed annually</div><div class="phr"></div><ul class="plist"><li>Up to 5 team members</li><li>20 client portfolios</li><li>Standard reporting suite</li><li>Email &amp; chat support</li><li>API access · 10k calls/mo</li></ul><button class="pbtn">Get Started</button></div>
+      <div class="plan hot"><div class="pbadge">Most Popular</div><div class="pname">Growth</div><div class="pprice">$1,290</div><div class="pper">per month · billed annually</div><div class="phr"></div><ul class="plist"><li>Up to 25 team members</li><li>Unlimited portfolios</li><li>Full analytics suite</li><li>AI-powered insights</li><li>Priority 24/7 support</li><li>Custom white-labeling</li></ul><button class="pbtn">Get Started</button></div>
+      <div class="plan"><div class="pbadge">Enterprise</div><div class="pname">Scale</div><div class="pprice">Custom</div><div class="pper">tailored to your firm</div><div class="phr"></div><ul class="plist"><li>Unlimited team members</li><li>Dedicated infrastructure</li><li>Compliance &amp; audit tools</li><li>Custom integrations</li><li>Dedicated success manager</li></ul><button class="pbtn">Contact Sales</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CTA BAND ══════ -->
+<div class="ctab" data-r>
+  <h2 class="cth">Ready to act with<br><em>true authority?</em></h2>
+  <p class="ctsp">Join 840+ firms using VARKONIS to make faster, sharper capital decisions. 14-day free trial — no credit card required.</p>
+  <div class="ctbtns">
+    <a href="#contact" class="bcp">Get in touch</a>
+    <a href="#cases" class="bcg">View case studies</a>
+  </div>
+</div>
+
+<!-- ══════ CONTACT ══════ -->
+<section class="sec" id="contact">
+  <div class="si2">
+    <div class="conin">
+      <div>
+        <div class="ey" data-r>Contact</div>
+        <h2 class="conh" data-r>Have a project<br>in mind?</h2>
+        <p class="conp" data-r>Tell us about your firm and we'll show you exactly how VARKONIS can accelerate your operations — usually within 48 hours.</p>
+        <div class="cppl" data-r>
+          <div class="cper">
+            <div class="cav">AK</div>
+            <div><div class="cpn">Aisha Kovacs</div><div class="cpr2">Account Executive</div><div class="cpe">aisha@varkonis.io</div></div>
+          </div>
+          <div class="cper">
+            <div class="cav" style="background:linear-gradient(135deg,var(--g),#0a6b4a)">RP</div>
+            <div><div class="cpn">Rajan Patel</div><div class="cpr2">Co-Founder &amp; CTO</div><div class="cpe">rajan@varkonis.io</div></div>
+          </div>
+        </div>
+      </div>
+      <div data-r data-d="2">
+        <div class="form">
+          <div class="frow">
+            <div class="fg"><label class="fl">Your Name *</label><input class="fi" type="text" placeholder="Enter your name"/></div>
+            <div class="fg"><label class="fl">Your Email *</label><input class="fi" type="email" placeholder="Enter your email"/></div>
+          </div>
+          <div class="fg"><label class="fl">Firm Name</label><input class="fi" type="text" placeholder="Your firm or organisation"/></div>
+          <div class="fg"><label class="fl">Message</label><textarea class="fta" placeholder="Tell us about your project or challenge…"></textarea></div>
+          <div class="fg">
+            <label class="fl">Your budget for this project?</label>
+            <div class="brow">
+              <button class="bb" onclick="selB(this)">Under $5k</button>
+              <button class="bb" onclick="selB(this)">$5–$20k</button>
+              <button class="bb on" onclick="selB(this)">$20–$50k</button>
+              <button class="bb" onclick="selB(this)">$50–$100k</button>
+              <button class="bb" onclick="selB(this)">&gt;$100k</button>
+            </div>
+          </div>
+          <button class="fsub" id="fsub">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer>
+  <div class="fg4">
+    <div>
+      <div class="flogo"><div class="flico">V</div>VARKONIS</div>
+      <p class="fdesc">Institutional-grade financial intelligence for firms of great significance.</p>
+    </div>
+    <div>
+      <div class="fct">Platform</div>
+      <ul class="flinks"><li><a href="#">Portfolio Analytics</a></li><li><a href="#">Risk Intelligence</a></li><li><a href="#">Client Reporting</a></li><li><a href="#">Deal Flow CRM</a></li><li><a href="#">API Docs</a></li></ul>
+    </div>
+    <div>
+      <div class="fct">Company</div>
+      <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Blog</a></li><li><a href="#">Press</a></li><li><a href="#">Contact</a></li></ul>
+    </div>
+    <div>
+      <div class="fct">Resources</div>
+      <ul class="flinks"><li><a href="#">Help Center</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Security</a></li><li><a href="#">Status</a></li><li><a href="#">Changelog</a></li></ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">© 2026 VARKONIS Technologies, Inc. · Greek: Authority of Great Significance</div>
+    <div class="fleg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
+
+// Dropdowns
+document.querySelectorAll('.nav-ul > li').forEach(li=>{
+  const d=li.querySelector('.mega');if(!d)return;
+  li.addEventListener('mouseenter',()=>li.classList.add('op'));
+  li.addEventListener('mouseleave',()=>li.classList.remove('op'));
+});
+
+// Hamburger
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{
+  hbg.classList.toggle('op');mm.classList.toggle('op');
+  document.body.style.overflow=mm.classList.contains('op')?'hidden':'';
+});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hbg.classList.remove('op');mm.classList.remove('op');document.body.style.overflow='';
+}));
+
+// Accordion
+document.querySelectorAll('.psi').forEach(item=>{
+  item.querySelector('.psq').addEventListener('click',()=>{
+    const was=item.classList.contains('op');
+    item.closest('.psp').querySelectorAll('.psi').forEach(i=>i.classList.remove('op'));
+    if(!was)item.classList.add('op');
+  });
+});
+
+// Problem/solution tabs
+document.querySelectorAll('.pst').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.pst').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.psp').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById('pt-'+t.dataset.pt).classList.add('on');
+  });
+});
+
+// Service tabs
+document.querySelectorAll('.srt').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.srt').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.srv-panel').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    const p=document.getElementById('st-'+t.dataset.st);
+    p.classList.add('on');
+    // re-observe for reveal
+    io.observe(p);
+  });
+});
+
+// Budget
+function selB(b){document.querySelectorAll('.bb').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+
+// Scroll reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.07});
+document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// Form submit
+document.getElementById('fsub').addEventListener('click',function(){
+  this.textContent='✓ Message sent!';this.style.background='var(--g)';this.style.color='#000';
+  setTimeout(()=>{this.textContent='Submit';this.style.background='';this.style.color='';},3000);
+});
+</script>
+</body>
+</html>
