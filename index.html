@@ -41,7 +41,7 @@ nav.up{background:rgba(9,9,15,.98)}
 
 .logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
 .logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;
-  font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+  font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
   animation:spin 10s linear infinite}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
@@ -842,11 +842,11 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
         <div class="cppl" data-r>
           <div class="cper">
             <div class="cav">AK</div>
-            <div><div class="cpn">Aisha Kovacs</div><div class="cpr2">Account Executive</div><div class="cpe"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="73121a001b1233051201181c1d1a005d1a1c">[email&#160;protected]</a></div></div>
+            <div><div class="cpn">Aisha Kovacs</div><div class="cpr2">Account Executive</div><div class="cpe">aisha@varkonis.io</div></div>
           </div>
           <div class="cper">
             <div class="cav" style="background:linear-gradient(135deg,var(--g),#0a6b4a)">RP</div>
-            <div><div class="cpn">Rajan Patel</div><div class="cpr2">Co-Founder &amp; CTO</div><div class="cpe"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f486959e959ab48295869f9b9a9d87da9d9b">[email&#160;protected]</a></div></div>
+            <div><div class="cpn">Rajan Patel</div><div class="cpr2">Co-Founder &amp; CTO</div><div class="cpe">rajan@varkonis.io</div></div>
           </div>
         </div>
       </div>
@@ -901,7 +901,7 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Nav scroll
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
@@ -968,4 +968,15 @@ document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// Form submit
+document.getElementById('fsub').addEventListener('click',function(){
+  this.textContent='✓ Message sent!';this.style.background='var(--g)';this.style.color='#000';
+  setTimeout(()=>{this.textContent='Submit';this.style.background='';this.style.color='';},3000);
+});
+</script>
+</body>
+</html>
