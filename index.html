@@ -42,9 +42,7 @@ nav.up{background:rgba(9,9,15,.98)}
 .logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
 .logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;
   font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
-  animation:spin 10s linear infinite}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
+ 
 /* nav mega */
 .nav-ul{display:flex;height:100%;align-items:center}
 .nav-ul > li{position:relative;height:100%;display:flex;align-items:center}
@@ -478,7 +476,7 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
 
 <!-- ══════ NAV ══════ -->
 <nav id="nav">
-  <a href="#" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
 
   <ul class="nav-ul">
     <li id="d-plat">
@@ -486,22 +484,22 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
       <div class="mega">
         <div class="mega-col">
           <div class="mega-ttl">Analytics</div>
-          <a href="#"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Portfolio Analytics</a>
-          <a href="#"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Risk Intelligence</a>
-          <a href="#"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>AI Insights</a>
+          <a href="platform-portfolio-analytics.html"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Portfolio Analytics</a>
+          <a href="platform-risk-intelligence.html"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Risk Intelligence</a>
+          <a href="platform-ai-insights.html"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>AI Insights</a>
         </div>
         <div class="mega-col">
           <div class="mega-ttl">Operations</div>
-          <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Client Reporting</a>
-          <a href="#"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Deal Flow CRM</a>
-          <a href="#"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Team Access</a>
-          <a href="#"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>API &amp; Integrations</a>
+          <a href="platform-client-reporting.html"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Client Reporting</a>
+          <a href="platform-deal-flow-crm.html"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Deal Flow CRM</a>
+          <a href="platform-security.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Security &amp; Trust</a>
+          <a href="platform-api-integrations.html"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>API &amp; Integrations</a>
         </div>
         <div class="mega-img">
           <div class="mega-img-inner">
             <div class="mega-img-ttl">VARKONIS Platform</div>
             <div class="mega-img-sub">Institutional-grade financial intelligence for firms that demand precision.</div>
-            <a href="#" class="mega-cta">Explore platform →</a>
+            <a href="platform.html" class="mega-cta">Explore platform →</a>
           </div>
         </div>
       </div>
@@ -509,39 +507,45 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
     <li id="d-sol">
       <span>Solutions <span class="chv">▾</span></span>
       <div class="mega sm">
-        <a href="#">Hedge Funds</a>
-        <a href="#">Private Equity</a>
-        <a href="#">Wealth Management</a>
-        <a href="#">M&amp;A Advisory</a>
-        <a href="#">Family Offices</a>
+        <a href="solutions.html">Solutions Overview</a>
+        <a href="solutions-hedge-funds.html">Hedge Funds</a>
+        <a href="solutions-private-equity.html">Private Equity</a>
+        <a href="solutions-wealth-management.html">Wealth Management</a>
+        <a href="solutions-ma-advisory.html">M&amp;A Advisory</a>
+        <a href="solutions-family-offices.html">Family Offices</a>
+        <a href="cases.html">Case Studies</a>
+        <a href="resources.html">Resources Hub</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
       </div>
     </li>
-    <li><a href="#cases">Case Studies</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="cases.html">Case Studies</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="resources.html">Resources</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 
   <div class="nav-r">
-    <a href="#" class="btn-si">Sign In</a>
-    <a href="#contact" class="btn-gi">Get in touch</a>
+    <a href="login.html" class="btn-si">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
     <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
 <!-- mobile menu -->
 <div class="mmenu" id="mmenu">
-  <a class="mlink" href="#">Platform</a>
-  <div class="msub"><a href="#">Portfolio Analytics</a><a href="#">Risk Intelligence</a><a href="#">Client Reporting</a><a href="#">Deal Flow CRM</a><a href="#">AI Insights</a></div>
-  <a class="mlink" href="#">Solutions</a>
-  <div class="msub"><a href="#">Hedge Funds</a><a href="#">Private Equity</a><a href="#">Wealth Management</a><a href="#">M&A Advisory</a></div>
-  <a class="mlink" href="#cases">Case Studies</a>
-  <a class="mlink" href="#services">Services</a>
-  <a class="mlink" href="#pricing">Pricing</a>
-  <a class="mlink" href="#contact">Contact</a>
+  <a class="mlink" href="platform.html">Platform</a>
+  <div class="msub"><a href="platform.html">Platform Overview</a><a href="pricing.html">Pricing</a><a href="cases.html">Case Studies</a><a href="resources.html">Resources</a><a href="blog.html">Blog</a></div>
+  <a class="mlink" href="solutions.html">Solutions</a>
+  <div class="msub"><a href="solutions.html">Solutions Overview</a><a href="cases.html">Client Outcomes</a><a href="resources.html">Resources Hub</a><a href="contact.html">Contact</a></div>
+  <a class="mlink" href="cases.html">Case Studies</a>
+  <a class="mlink" href="pricing.html">Pricing</a>
+  <a class="mlink" href="resources.html">Resources</a>
+  <a class="mlink" href="contact.html">Contact</a>
   <div class="mob-btns">
-    <a href="#" style="font-size:.88rem;color:var(--t2)">Sign In</a>
-    <a href="#contact" class="btn-gi">Get in touch</a>
+    <a href="login.html" style="font-size:.88rem;color:var(--t2)">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
   </div>
 </div>
 
@@ -884,15 +888,15 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
     </div>
     <div>
       <div class="fct">Platform</div>
-      <ul class="flinks"><li><a href="#">Portfolio Analytics</a></li><li><a href="#">Risk Intelligence</a></li><li><a href="#">Client Reporting</a></li><li><a href="#">Deal Flow CRM</a></li><li><a href="#">API Docs</a></li></ul>
+      <ul class="flinks"><li><a href="platform.html">Platform Overview</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="cases.html">Case Studies</a></li><li><a href="resources.html">Resources</a></li><li><a href="contact.html">Book a Demo</a></li></ul>
     </div>
     <div>
       <div class="fct">Company</div>
-      <ul class="flinks"><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Blog</a></li><li><a href="#">Press</a></li><li><a href="#">Contact</a></li></ul>
+      <ul class="flinks"><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="resources.html">Resources</a></li><li><a href="contact.html">Contact</a></li></ul>
     </div>
     <div>
       <div class="fct">Resources</div>
-      <ul class="flinks"><li><a href="#">Help Center</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Security</a></li><li><a href="#">Status</a></li><li><a href="#">Changelog</a></li></ul>
+      <ul class="flinks"><li><a href="resources.html">Resources Hub</a></li><li><a href="cases.html">Case Studies</a></li><li><a href="platform.html">Platform</a></li><li><a href="blog.html">Blog</a></li><li><a href="pricing.html">Pricing</a></li></ul>
     </div>
   </div>
   <div class="fbot">

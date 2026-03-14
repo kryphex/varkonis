@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>M&amp;A Advisory &#8212; VARKONIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.26);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.13);--g:#1fcfa0;--r:#f75a5a;--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--a)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.03;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:800;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);border-bottom:1px solid var(--bdr);background:rgba(9,9,15,.88);backdrop-filter:blur(20px);transition:background .3s}
+nav.up{background:rgba(9,9,15,.98)}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
+.logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:spin 10s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)} to{transform:rotate(360deg)}}
+.nav-ul{display:flex;height:100%;align-items:center}
+.nav-ul>li{position:relative;height:100%;display:flex;align-items:center}
+.nav-ul>li>a,.nav-ul>li>span{display:flex;align-items:center;gap:.28rem;padding:.15rem .9rem;font-size:.81rem;color:var(--t2);cursor:pointer;transition:color .2s;white-space:nowrap;height:100%}
+.nav-ul>li>a:hover,.nav-ul>li>span:hover,.nav-ul>li.op>span{color:var(--t)}
+.chv{font-size:.5rem;transition:transform .25s}
+.nav-ul>li.op .chv{transform:rotate(180deg)}
+.mega{display:none;position:absolute;top:100%;left:0;background:var(--s2);border:1px solid var(--bdr2);border-top:none;padding:1.6rem 1.4rem;min-width:700px;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+@keyframes megaIn{from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)}}
+.mega.sm{min-width:200px}
+.nav-ul>li.op .mega{display:flex;gap:2.5rem;animation:megaIn .22s var(--ease)}
+.mega.sm{display:none;flex-direction:column;gap:0}
+.nav-ul>li.op .mega.sm{display:flex}
+.mega-col{min-width:130px}
+.mega-ttl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);padding:.3rem .6rem .15rem;margin-bottom:.2rem;font-weight:600}
+.mega a{display:flex;align-items:center;gap:.5rem;padding:.48rem .6rem;font-size:.8rem;color:var(--t2);border-radius:4px;transition:background .15s,color .15s;white-space:nowrap}
+.mega a:hover{background:var(--ag);color:var(--a2)}
+.mega-img{width:200px;flex-shrink:0;align-self:flex-start}
+.mega-img-inner{background:linear-gradient(135deg,var(--s3) 0%,#0d1535 100%);padding:1.4rem;border-radius:6px;border:1px solid var(--bdr)}
+.mega-img-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.4rem}
+.mega-img-sub{font-size:.72rem;color:var(--t3);line-height:1.5}
+.mega-cta{display:inline-flex;align-items:center;gap:.35rem;margin-top:.8rem;font-size:.72rem;color:var(--a2);font-weight:600;transition:gap .2s}
+.mega-cta:hover{gap:.55rem}
+.nav-r{display:flex;align-items:center;gap:.7rem}
+.btn-si{font-size:.79rem;color:var(--t2);padding:.3rem .6rem;transition:color .2s}
+.btn-si:hover{color:var(--t)}
+.btn-gi{font-family:'Syne',sans-serif;font-size:.77rem;font-weight:700;letter-spacing:.05em;padding:.52rem 1.25rem;background:var(--a);color:#fff;border-radius:4px;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-gi:hover{background:var(--a2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,110,247,.4)}
+.hbg{display:none;flex-direction:column;gap:5px;width:22px;cursor:pointer}
+.hbg span{display:block;height:1.5px;background:var(--t);border-radius:2px;transition:transform .3s,opacity .3s}
+.hbg.op span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.op span:nth-child(2){opacity:0}
+.hbg.op span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mmenu{display:none;position:fixed;top:var(--nh);inset:var(--nh) 0 0;background:var(--bg);z-index:700;overflow-y:auto;padding:1.8rem clamp(1rem,5vw,2.5rem)}
+.mmenu.op{display:block}
+.mlink{display:block;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;padding:.75rem 0;border-bottom:1px solid var(--bdr);color:var(--t2);transition:color .2s}
+.mlink:hover{color:var(--t)}
+.mob-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.sec{padding:6rem clamp(1rem,6vw,4rem)}
+.wrap{max-width:1100px;margin:0 auto}
+.page{padding:calc(var(--nh) + 5rem) clamp(1rem,6vw,4rem) 5rem;max-width:1100px;margin:0 auto}
+.ey{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.ey::before{content:'';width:15px;height:1px;background:var(--a)}
+.sh2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3.5vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem;max-width:22ch}
+.sp2{font-size:.9rem;line-height:1.8;color:var(--t2);max-width:56ch;margin-bottom:2.5rem}
+.ph-h{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4.5vw,4rem);font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1rem}
+.ph-h em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ph-p{font-size:.93rem;line-height:1.8;color:var(--t2);max-width:52ch;margin-bottom:2.5rem}
+.bp{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700;letter-spacing:.04em;padding:.78rem 1.75rem;background:var(--a);color:#fff;border-radius:4px;display:inline-flex;align-items:center;gap:.45rem;transition:background .2s,transform .2s,box-shadow .2s}
+.bp:hover{background:var(--a2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(79,110,247,.4)}
+.bg2{font-size:.83rem;color:var(--t2);display:inline-flex;align-items:center;gap:.5rem;transition:color .2s}
+.bg2:hover{color:var(--t)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.8rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--bdr2);transform:translateY(-3px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),transparent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.card:hover::before{transform:scaleX(1)}
+.card-ico{width:36px;height:36px;border-radius:4px;background:var(--ag);border:1px solid var(--bdr2);display:grid;place-items:center;margin-bottom:1rem}
+.card-ico svg{width:16px;height:16px;stroke:var(--a2);fill:none;stroke-width:1.5}
+.card-ttl{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:.4rem}
+.card-dsc{font-size:.78rem;line-height:1.7;color:var(--t2)}
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+[data-r].in{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}
+[data-r][data-d="2"]{transition-delay:.2s}
+[data-r][data-d="3"]{transition-delay:.3s}
+[data-r][data-d="4"]{transition-delay:.4s}
+footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1rem,6vw,4rem) 2rem}
+.fg4{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.8rem;border-bottom:1px solid var(--bdr);margin-bottom:1.8rem}
+.flogo{display:flex;align-items:center;gap:.52rem;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.85rem}
+.flico{width:24px;height:24px;background:var(--a);display:grid;place-items:center;font-size:.6rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+.fdesc{font-size:.78rem;line-height:1.7;color:var(--t3);max-width:26ch}
+.fct{font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem;font-weight:600}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.62rem}
+.flinks a{font-size:.78rem;color:var(--t2);transition:color .2s}
+.flinks a:hover{color:var(--a2)}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.fcopy{font-size:.68rem;color:var(--t3)}
+.fleg{display:flex;gap:1.5rem}
+.fleg a{font-size:.68rem;color:var(--t3);transition:color .2s}
+.fleg a:hover{color:var(--t2)}
+@media(max-width:768px){.nav-ul,.btn-si{display:none}.hbg{display:flex}.fg4{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+<style>
+.sol-ph{padding:calc(var(--nh) + 5.5rem) clamp(1rem,6vw,4rem) 5rem;position:relative;overflow:hidden}
+.sol-ph::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(79,110,247,.11),transparent 65%);top:-200px;right:-200px;pointer-events:none}
+.sol-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.sol-h{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,5vw,4.8rem);font-weight:800;line-height:.96;letter-spacing:-.025em;margin-bottom:1.3rem}
+.sol-h em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--a2) 45%,var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sol-p{font-size:.95rem;line-height:1.8;color:var(--t2);margin-bottom:2rem;max-width:46ch}
+.sol-btns{display:flex;gap:.85rem;align-items:center;flex-wrap:wrap}
+.lcard{background:var(--s2);border:1px solid var(--bdr2);border-radius:8px;overflow:hidden}
+.lcard-h{background:var(--s3);border-bottom:1px solid var(--bdr);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700}
+.live-dot{display:flex;align-items:center;gap:.36rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g)}
+.live-dot::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--g);animation:lpulse 2s infinite}
+@keyframes lpulse{0%,100%{opacity:1} 50%{opacity:.25}}
+.lcard-b{padding:1.2rem}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--bdr);font-size:.8rem}
+.srow:last-child{border-bottom:none}
+.srow-l{color:var(--t2)}
+.srow-v{font-family:'Syne',sans-serif;font-weight:700}
+.gu{color:var(--g)}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;margin-top:3rem}
+.fcard{background:var(--s1);padding:2rem;transition:background .3s;position:relative;overflow:hidden}
+.fcard:hover{background:var(--s2)}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),transparent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.fcard:hover::before{transform:scaleX(1)}
+.fcard-ico{width:38px;height:38px;border:1px solid var(--bdr2);border-radius:4px;display:grid;place-items:center;background:var(--ag);margin-bottom:1.2rem}
+.fcard-ico svg{width:17px;height:17px;stroke:var(--a2);fill:none;stroke-width:1.5}
+.fcard-t{font-family:'Syne',sans-serif;font-size:.97rem;font-weight:700;margin-bottom:.5rem}
+.fcard-d{font-size:.8rem;line-height:1.7;color:var(--t2)}
+.resgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.rescard{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:2rem;text-align:center;transition:border-color .3s,transform .3s}
+.rescard:hover{border-color:var(--bdr2);transform:translateY(-4px)}
+.resv{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--a),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
+.resl{font-size:.8rem;color:var(--t2);line-height:1.5}
+.ctaband{background:var(--s1);border-top:1px solid var(--bdr);padding:6rem clamp(1rem,6vw,4rem);text-align:center;position:relative;overflow:hidden}
+.ctaband::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(79,110,247,.1),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.ctaband h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.8rem;position:relative}
+.ctaband h2 em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ctaband p{font-size:.88rem;color:var(--t2);max-width:44ch;margin:0 auto 2rem;line-height:1.75;position:relative}
+.ctabtns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;position:relative}
+.bcp{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.05em;padding:.9rem 2.1rem;background:var(--a);color:#fff;border-radius:4px;transition:background .2s,transform .2s,box-shadow .2s}
+.bcp:hover{background:var(--a2);transform:translateY(-2px);box-shadow:0 8px 25px rgba(79,110,247,.4)}
+.bcg{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:600;padding:.9rem 2.1rem;border:1px solid var(--bdr2);border-radius:4px;color:var(--t2);transition:border-color .2s,color .2s}
+.bcg:hover{border-color:var(--t2);color:var(--t)}
+@media(max-width:900px){.sol-grid{grid-template-columns:1fr}.lcard{display:none}.fgrid{grid-template-columns:1fr 1fr}.resgrid{grid-template-columns:1fr}}
+@media(max-width:600px){.fgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <ul class="nav-ul">
+    <li id="d-plat"><span>Platform <span class="chv">&#9662;</span></span>
+      <div class="mega">
+        <div class="mega-col">
+          <div class="mega-ttl">Analytics</div>
+          <a href="platform-portfolio-analytics.html">Portfolio Analytics</a>
+          <a href="platform-risk-intelligence.html">Risk Intelligence</a>
+          <a href="platform-ai-insights.html">AI Insights</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-ttl">Operations</div>
+          <a href="platform-client-reporting.html">Client Reporting</a>
+          <a href="platform-deal-flow-crm.html">Deal Flow CRM</a>
+          <a href="platform-api-integrations.html">API &amp; Integrations</a>
+        </div>
+        <div class="mega-img">
+          <div class="mega-img-inner">
+            <div class="mega-img-ttl">VARKONIS Platform</div>
+            <div class="mega-img-sub">Institutional-grade financial intelligence.</div>
+            <a href="platform.html" class="mega-cta">Explore platform &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li id="d-sol"><span>Solutions <span class="chv">&#9662;</span></span>
+      <div class="mega sm">
+        <a href="solutions-hedge-funds.html">Hedge Funds</a>
+        <a href="solutions-private-equity.html">Private Equity</a>
+        <a href="solutions-wealth-management.html">Wealth Management</a>
+        <a href="solutions-ma-advisory.html">M&amp;A Advisory</a>
+        <a href="solutions-family-offices.html">Family Offices</a>
+      </div>
+    </li>
+    <li><a href="cases.html">Case Studies</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="login.html" class="btn-si">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
+    <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mmenu" id="mmenu">
+  <a class="mlink" href="index.html">Home</a>
+  <a class="mlink" href="platform.html">Platform</a>
+  <a class="mlink" href="solutions.html">Solutions</a>
+  <a class="mlink" href="pricing.html">Pricing</a>
+  <a class="mlink" href="about.html">About</a>
+  <a class="mlink" href="contact.html">Contact</a>
+  <div class="mob-btns">
+    <a href="login.html" style="font-size:.88rem;color:var(--t2)">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
+  </div>
+</div>
+<div class="sol-ph">
+  <div class="sol-grid">
+    <div data-r>
+      <div class="ey">Solutions &#183; M&amp;A Advisory</div>
+      <h1 class="sol-h">Close more deals,<br><em>faster.</em></h1>
+      <p class="sol-p">VARKONIS gives M&amp;A advisory firms a centralized deal management platform &#8212; from mandate origination to close &#8212; with the compliance tools, data rooms, and analytics that serious transactions demand.</p>
+      <div class="sol-btns"><a href="contact.html" class="bp">Get started &#8594;</a><a href="pricing.html" class="bg2">View pricing</a></div>
+    </div>
+    <div data-r data-d="2">
+      <div class="lcard">
+        <div class="lcard-h"><span>Deal Pipeline</span><span class="live-dot">Live</span></div>
+        <div class="lcard-b"><div class="srow"><span class="srow-l">Active Mandates</span><span class="srow-v ">9</span></div><div class="srow"><span class="srow-l">Pipeline Value</span><span class="srow-v gu">$2.1B</span></div><div class="srow"><span class="srow-l">Avg Deal Time</span><span class="srow-v ">4.2 mo</span></div><div class="srow"><span class="srow-l">Close Rate</span><span class="srow-v gu">71%</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="sec" style="background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)">
+  <div class="wrap">
+    <div class="ey" data-r>Key Features</div>
+    <h2 class="sh2" data-r>Everything your firm needs in one platform</h2>
+    <div class="fgrid" data-r><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="fcard-t">Mandate Pipeline CRM</div><p class="fcard-d">Track every mandate from origination to close &#8212; NDA status, valuation milestones, buyer/seller contacts, and next actions &#8212; in a shared team workspace.</p></div><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="fcard-t">Virtual Data Room</div><p class="fcard-d">Spin up secure, permission-controlled data rooms for each transaction in minutes. Manage document versions, track investor activity, and set expiry dates.</p></div><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="fcard-t">Valuation Modelling</div><p class="fcard-d">Run DCF, comparable company, and precedent transaction analyses directly within VARKONIS. Link live market data to your models automatically.</p></div><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><div class="fcard-t">Buyer/Seller Matching</div><p class="fcard-d">AI-powered counterparty matching surfaces relevant buyers or targets based on sector, size, geography, and strategic fit.</p></div><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="fcard-t">Compliance &amp; Audit Trail</div><p class="fcard-d">Every action on every transaction is logged, timestamped, and exportable &#8212; meeting the documentation requirements of regulated advisory firms.</p></div><div class="fcard"><div class="fcard-ico"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="fcard-t">Multi-Office Collaboration</div><p class="fcard-d">Share pipeline, documents, and deal status across multiple offices with role-based access &#8212; no more deal updates over email.</p></div></div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <div class="ey" data-r>Results</div>
+    <h2 class="sh2" data-r>What our clients achieve</h2>
+    <div class="resgrid"><div class="rescard" data-r data-d="1"><div class="resv">22%</div><div class="resl">improvement in deal close rate within 12 months</div></div><div class="rescard" data-r data-d="2"><div class="resv">$2.1B</div><div class="resl">in active deal pipeline tracked across client firms</div></div><div class="rescard" data-r data-d="3"><div class="resv">0</div><div class="resl">compliance violations for firms using VARKONIS audit tools</div></div></div>
+  </div>
+</section>
+<div class="ctaband">
+  <h2>Ready to run a tighter deal process?<br><em>Let&#8217;s talk.</em></h2>
+  <p>See how VARKONIS helps advisory firms win more mandates, close faster, and stay compliant.</p>
+  <div class="ctabtns"><a href="contact.html" class="bcp">Book a demo</a><a href="cases.html" class="bcg">View case studies</a></div>
+</div>
+<footer>
+  <div class="fg4">
+    <div>
+      <div class="flogo"><div class="flico">V</div>VARKONIS</div>
+      <p class="fdesc">Institutional-grade financial intelligence for firms of great significance.</p>
+    </div>
+    <div>
+      <div class="fct">Platform</div>
+      <ul class="flinks">
+        <li><a href="platform-portfolio-analytics.html">Portfolio Analytics</a></li>
+        <li><a href="platform-risk-intelligence.html">Risk Intelligence</a></li>
+        <li><a href="platform-client-reporting.html">Client Reporting</a></li>
+        <li><a href="platform-deal-flow-crm.html">Deal Flow CRM</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">Company</div>
+      <ul class="flinks">
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">Legal</div>
+      <ul class="flinks">
+        <li><a href="legal-privacy.html">Privacy</a></li>
+        <li><a href="legal-terms.html">Terms</a></li>
+        <li><a href="legal-security.html">Security</a></li>
+        <li><a href="status.html">Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">&#169; 2026 VARKONIS Technologies, Inc.</div>
+    <div class="fleg">
+      <a href="legal-privacy.html">Privacy</a>
+      <a href="legal-terms.html">Terms</a>
+      <a href="legal-cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
+document.querySelectorAll('.nav-ul>li').forEach(li=>{
+  const d=li.querySelector('.mega');
+  if(!d)return;
+  li.addEventListener('mouseenter',()=>li.classList.add('op'));
+  li.addEventListener('mouseleave',()=>li.classList.remove('op'));
+});
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{
+  hbg.classList.toggle('op');
+  mm.classList.toggle('op');
+  document.body.style.overflow=mm.classList.contains('op')?'hidden':'';
+});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hbg.classList.remove('op');mm.classList.remove('op');document.body.style.overflow='';
+}));
+const io=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
+},{threshold:.07});
+document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

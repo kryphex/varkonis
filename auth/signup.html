@@ -9,31 +9,27 @@
 :root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.26);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.13);--g:#1fcfa0;--r:#f75a5a;--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:1fr 1fr}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow:hidden;-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:1fr 1fr}
 a{text-decoration:none;color:inherit}button{font-family:inherit;cursor:pointer;border:none;background:none}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--a)}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.03;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
-
-/* LEFT */
 .left{background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;overflow:hidden;position:relative}
-.left::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(31,207,160,.09),transparent 65%);top:-150px;left:-150px;pointer-events:none}
+.left::before{content:'';position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(31,207,160,.12),transparent 65%);top:-180px;left:-160px;pointer-events:none}
 .llogo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
 .logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:spin 10s linear infinite}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .lmid{position:relative;z-index:2}
 .trial-badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(31,207,160,.12);border:1px solid rgba(31,207,160,.25);border-radius:100px;padding:.35rem .9rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:1.4rem}
-.lh{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1.2rem}
+.lh{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,3.4vw,3rem);font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1.2rem}
 .lh em{font-style:normal;background:linear-gradient(110deg,var(--g),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.lp{font-size:.86rem;line-height:1.8;color:var(--t2);max-width:38ch;margin-bottom:2rem}
+.lp{font-size:.86rem;line-height:1.8;color:var(--t2);max-width:40ch;margin-bottom:2rem}
 .inclists{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem}
 .incl{display:flex;align-items:center;gap:.65rem;font-size:.8rem;color:var(--t2)}
 .incl::before{content:'✓';color:var(--g);font-size:.72rem;flex-shrink:0;font-weight:700}
-.lcards{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.lcards{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem}
 .lcard{background:var(--s2);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem}
 .lcv{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--a)}
 .lcl{font-size:.67rem;color:var(--t3);margin-top:.15rem}
-
-/* RIGHT */
 .right{display:flex;align-items:center;justify-content:center;padding:2.5rem;overflow-y:auto}
 .rbox{width:100%;max-width:440px}
 .steps{display:flex;align-items:center;gap:.5rem;margin-bottom:2.2rem}
@@ -44,7 +40,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 .rh{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.3rem}
 .rp{font-size:.84rem;color:var(--t2);margin-bottom:2rem}
 .rp a{color:var(--a2);transition:color .2s}.rp a:hover{color:var(--a)}
-
 .fg{display:flex;flex-direction:column;gap:.42rem;margin-bottom:.9rem}
 .fl{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
 .fi,.fsel{background:var(--s1);border:1px solid var(--bdr);border-radius:4px;padding:.78rem .9rem;font-family:'Manrope',sans-serif;font-size:.88rem;color:var(--t);transition:border-color .2s,background .2s;outline:none;width:100%}
@@ -66,13 +61,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 .sso svg{width:16px;height:16px;flex-shrink:0}
 .signin{text-align:center;font-size:.8rem;color:var(--t2);margin-top:1.5rem}
 .signin a{color:var(--a2);font-weight:600;transition:color .2s}.signin a:hover{color:var(--a)}
-
+.msg{display:none;margin-top:1rem;font-size:.84rem;padding:.8rem .95rem;border-radius:5px}
+.msg.ok{background:rgba(31,207,160,.12);border:1px solid rgba(31,207,160,.35);color:var(--g)}
+.msg.err{background:rgba(247,90,90,.12);border:1px solid rgba(247,90,90,.35);color:var(--r)}
 @media(max-width:768px){body{grid-template-columns:1fr;overflow:auto}.left{display:none}.right{padding:3rem 1.5rem;padding-top:5rem;align-items:flex-start}}
 </style>
 </head>
 <body>
-
-<!-- LEFT -->
 <div class="left">
   <a href="index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
   <div class="lmid">
@@ -82,9 +77,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
     <div class="inclists">
       <div class="incl">Full platform access from day one</div>
       <div class="incl">Onboarding call with your account manager</div>
-      <div class="incl">Connect all your custodians in minutes</div>
+      <div class="incl">Connect custodians in minutes</div>
       <div class="incl">No credit card required to start</div>
-      <div class="incl">Cancel anytime, no questions asked</div>
+      <div class="incl">Cancel anytime</div>
     </div>
     <div class="lcards">
       <div class="lcard"><div class="lcv">840+</div><div class="lcl">Active firms</div></div>
@@ -95,119 +90,128 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
   </div>
   <div style="font-size:.7rem;color:var(--t3)">© 2026 VARKONIS Technologies, Inc.</div>
 </div>
-
-<!-- RIGHT -->
 <div class="right">
   <div class="rbox">
     <div class="steps">
-      <div class="step on" id="s1">1</div>
-      <div class="sline"></div>
-      <div class="step" id="s2">2</div>
-      <div class="sline"></div>
-      <div class="step" id="s3">3</div>
+      <div class="step on" id="s1">1</div><div class="sline"></div><div class="step" id="s2">2</div><div class="sline"></div><div class="step" id="s3">3</div>
     </div>
     <h1 class="rh" id="rtitle">Create your account</h1>
     <p class="rp" id="rsub">Already have an account? <a href="login.html">Sign in →</a></p>
-
-    <!-- STEP 1 -->
     <div id="step1">
       <div class="frow2">
-        <div class="fg"><label class="fl">First Name *</label><input class="fi" type="text" placeholder="James"/></div>
-        <div class="fg"><label class="fl">Last Name *</label><input class="fi" type="text" placeholder="Harlow"/></div>
+        <div class="fg"><label class="fl">First Name *</label><input class="fi" type="text" id="first" placeholder="James"/></div>
+        <div class="fg"><label class="fl">Last Name *</label><input class="fi" type="text" id="last" placeholder="Harlow"/></div>
       </div>
-      <div class="fg"><label class="fl">Work Email *</label><input class="fi" type="email" id="email1" placeholder="james@yourfirm.com"/></div>
+      <div class="fg"><label class="fl">Email *</label><input class="fi" type="email" id="email1" placeholder="you@email.com"/></div>
       <div class="fg">
         <label class="fl">Password *</label>
-        <input class="fi" type="password" id="pw1" placeholder="Create a strong password" oninput="updatePw(this.value)"/>
+        <input class="fi" type="password" id="pw1" placeholder="Min 8 characters"/>
         <div class="pwstr"><div class="pwfill" id="pwf"></div></div>
-        <div class="pwlbl" id="pwlbl">Enter a password</div>
+        <div class="pwlbl" id="pwlbl">Too weak</div>
       </div>
-      <label class="terms"><input type="checkbox" id="terms1"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-      <button class="sbtn" onclick="goStep(2)">Continue →</button>
-      <div class="or"><div class="orline"></div><div class="ortxt">or sign up with</div><div class="orline"></div></div>
-      <button class="sso"><svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Continue with Google</button>
-      <p class="signin">Already have an account? <a href="login.html">Sign in</a></p>
+      <label class="terms"><input type="checkbox" id="terms" checked/>I agree to the <a href="legal-terms.html">Terms</a> and <a href="legal-privacy.html">Privacy Policy</a>.</label>
+      <button class="sbtn" id="next1">Continue</button>
     </div>
-
-    <!-- STEP 2 -->
     <div id="step2" style="display:none">
-      <div class="fg"><label class="fl">Firm Name *</label><input class="fi" type="text" placeholder="Aldgate Capital Partners"/></div>
-      <div class="fg">
-        <label class="fl">Firm Type *</label>
-        <select class="fsel">
-          <option value="">Select…</option>
-          <option>Hedge Fund</option>
-          <option>Private Equity</option>
-          <option>Wealth Management / RIA</option>
-          <option>M&A Advisory</option>
-          <option>Family Office</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label class="fl">Approximate AUM</label>
-        <select class="fsel">
-          <option value="">Select…</option>
-          <option>Under $10M</option>
-          <option>$10M – $50M</option>
-          <option>$50M – $250M</option>
-          <option>$250M – $1B</option>
-          <option>Over $1B</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label class="fl">Country</label>
-        <select class="fsel">
-          <option>United Kingdom</option>
-          <option>United States</option>
-          <option>Switzerland</option>
-          <option>Singapore</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <button class="sbtn" onclick="goStep(3)" style="margin-top:.8rem">Continue →</button>
-      <button onclick="goStep(1)" style="width:100%;padding:.6rem;font-size:.78rem;color:var(--t3);margin-top:.6rem;transition:color .2s" onmouseover="this.style.color='var(--t2)'" onmouseout="this.style.color='var(--t3)'">← Back</button>
+      <div class="fg"><label class="fl">Firm Name *</label><input class="fi" type="text" id="firm" placeholder="Varkonis Capital"/></div>
+      <div class="fg"><label class="fl">Team Size</label><select class="fsel" id="size"><option value="">Select</option><option>1-10</option><option>11-50</option><option>51-200</option><option>201-500</option><option>500+</option></select></div>
+      <div class="fg"><label class="fl">Primary role</label><select class="fsel" id="role"><option value="">Select</option><option>Founder / Partner</option><option>PM / Analyst</option><option>Risk / Ops</option><option>Client / Investor Relations</option><option>Technology</option></select></div>
+      <button class="sbtn" id="next2">Continue</button>
     </div>
-
-    <!-- STEP 3 — success -->
-    <div id="step3" style="display:none;text-align:center;padding:2rem 0">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(31,207,160,.12);border:1px solid rgba(31,207,160,.3);display:grid;place-items:center;margin:0 auto 1.5rem;font-size:1.5rem">✓</div>
-      <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.6rem">You're all set!</h2>
-      <p style="font-size:.84rem;line-height:1.75;color:var(--t2);max-width:34ch;margin:0 auto 2rem">Check your email for a verification link. Once confirmed, you'll have full 14-day access.</p>
-      <a href="index.html" style="font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;padding:.85rem 2rem;background:var(--a);color:#fff;border-radius:4px;display:inline-block;transition:background .2s" onmouseover="this.style.background='var(--a2)'" onmouseout="this.style.background='var(--a)'">Go to homepage</a>
+    <div id="step3" style="display:none">
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:.5rem">Check your email</h2>
+      <p class="rp" style="margin-bottom:1.2rem" id="confirm-copy">We sent a verification link to your inbox. Confirm to start your trial.</p>
+    <a href="login.html" class="sbtn" style="display:inline-flex;justify-content:center">Return to sign in</a>
+      <div class="msg ok" id="msg-ok">Sign-up created. Verify your email to finish.</div>
+      <div class="msg err" id="msg-err">Something went wrong. Try again.</div>
     </div>
   </div>
 </div>
-
 <script>
-function goStep(n){
-  document.getElementById('step1').style.display=n===1?'block':'none';
-  document.getElementById('step2').style.display=n===2?'block':'none';
-  document.getElementById('step3').style.display=n===3?'block':'none';
-  [1,2,3].forEach(i=>{
-    const s=document.getElementById('s'+i);
-    s.classList.remove('on','done');
-    if(i<n)s.classList.add('done'),s.textContent='✓';
-    else if(i===n)s.classList.add('on'),s.textContent=i;
-    else s.textContent=i;
+  window.SUPABASE_URL="https://xvtnnszvfbirixppbdtl.supabase.co";
+  window.SUPABASE_ANON_KEY="sb_publishable_pQJ3E0t7j34sImItSqxn6Q_jLBGuasq";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=> {
+  const supa=supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);
+  const first=document.getElementById('first');
+  const last=document.getElementById('last');
+  const email=document.getElementById('email1');
+  const pw=document.getElementById('pw1');
+  const firm=document.getElementById('firm');
+  const size=document.getElementById('size');
+  const role=document.getElementById('role');
+  const terms=document.getElementById('terms');
+  const next1=document.getElementById('next1');
+  const next2=document.getElementById('next2');
+  const pwFill=document.getElementById('pwf');
+  const pwLbl=document.getElementById('pwlbl');
+  const msgOk=document.getElementById('msg-ok');
+  const msgErr=document.getElementById('msg-err');
+  const USERS_KEY='varkonis_local_users';
+  const loadUsers=()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}');}catch{return{}}};
+  const saveUser=(em,pw)=>{const u=loadUsers();u[em.toLowerCase()]={password:pw};localStorage.setItem(USERS_KEY,JSON.stringify(u));};
+
+  function goStep(n){
+    ['step1','step2','step3'].forEach((id,idx)=>document.getElementById(id).style.display=idx+1===n?'block':'none');
+    [1,2,3].forEach(i=>{
+      const s=document.getElementById('s'+i);
+      s.classList.remove('on','done');
+      if(i<n){s.classList.add('done');s.textContent='✓';}
+      else if(i===n){s.classList.add('on');s.textContent=i;}
+      else{s.textContent=i;}
+    });
+    const titles={1:'Create your account',2:'About your firm',3:'Check your email'};
+    const subs={1:'Already have an account? <a href="login.html">Sign in →</a>',2:'Step 2 of 3 — tell us about your firm',3:''};
+    document.getElementById('rtitle').textContent=titles[n];
+    document.getElementById('rsub').innerHTML=subs[n];
+  }
+
+  function updatePw(v){
+    let s=0,lbl='Too weak',clr='var(--r)';
+    if(v.length>=8)s=25;if(v.length>=10)s=50;
+    if(/[A-Z]/.test(v)&&/[0-9]/.test(v))s+=25;
+    if(/[^A-Za-z0-9]/.test(v))s+=25;
+    if(s<=25){lbl='Too weak';clr='var(--r)'}
+    else if(s<=50){lbl='Fair';clr='#f7a75a'}
+    else if(s<=75){lbl='Good';clr='var(--a)'}
+    else{lbl='Strong';clr='var(--g)'}
+    pwFill.style.width=s+'%';pwFill.style.background=clr;pwLbl.textContent=lbl;pwLbl.style.color=clr;
+  }
+  pw.addEventListener('input',e=>updatePw(e.target.value));
+
+  next1.addEventListener('click',()=>{
+    if(!first.value||!last.value||!email.value||!pw.value){alert('Fill name, email, and password.');return;}
+    if(!terms.checked){alert('Please accept terms.');return;}
+    goStep(2);
   });
-  const titles={1:'Create your account',2:'About your firm',3:'Check your email'};
-  const subs={1:'Already have an account? <a href="login.html">Sign in →</a>',2:'Step 2 of 3 — tell us about your firm',3:''};
-  document.getElementById('rtitle').textContent=titles[n];
-  document.getElementById('rsub').innerHTML=subs[n];
-}
-function updatePw(v){
-  const f=document.getElementById('pwf'),l=document.getElementById('pwlbl');
-  let s=0,lbl='Too weak',clr='var(--r)';
-  if(v.length>=8)s=25;if(v.length>=10)s=50;
-  if(/[A-Z]/.test(v)&&/[0-9]/.test(v))s+=25;
-  if(/[^A-Za-z0-9]/.test(v))s+=25;
-  if(s<=25){lbl='Too weak';clr='var(--r)'}
-  else if(s<=50){lbl='Fair';clr='#f7a75a'}
-  else if(s<=75){lbl='Good';clr='var(--a)'}
-  else{lbl='Strong';clr='var(--g)'}
-  f.style.width=s+'%';f.style.background=clr;l.textContent=lbl;l.style.color=clr;
-}
+
+  next2.addEventListener('click',async()=>{
+    if(!firm.value){alert('Add your firm name.');return;}
+    next2.disabled=true;next2.textContent='Creating...';
+    msgOk.style.display='none';msgErr.style.display='none';
+    try{
+      const {error}=await supa.auth.signUp({
+        email:email.value.trim(),
+        password:pw.value,
+        options:{data:{first_name:first.value,last_name:last.value,firm:firm.value,team_size:size.value,role:role.value}}
+      });
+      if(error) throw error;
+      saveUser(email.value.trim(),pw.value);
+      msgOk.style.display='block';
+      goStep(3);
+    }catch(ex){
+      // fallback local demo signup
+      saveUser(email.value.trim(),pw.value);
+      msgErr.textContent=ex.message||'Supabase sign up failed; saved locally for demo login.';msgErr.style.display='block';
+      msgOk.style.display='block';
+      goStep(3);
+    }finally{
+      next2.disabled=false;next2.textContent='Continue';
+    }
+  });
+})();
 </script>
 </body>
 </html>

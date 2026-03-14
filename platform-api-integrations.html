@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>API & Integrations - VARKONIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.6);--t3:rgba(255,255,255,.32);--a:#4f6ef7;--a2:#7b94ff;--g:#1fcfa0;--ag:rgba(79,110,247,.13);--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);border-bottom:1px solid var(--bdr);background:rgba(9,9,15,.88);backdrop-filter:blur(20px)}nav.up{background:rgba(9,9,15,.98)}
+.logo,.flogo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}.logo-ico,.flico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0 50%)}
+.nav-ul{display:flex;height:100%;align-items:center}.nav-ul>li{height:100%;display:flex;align-items:center;position:relative}.nav-ul>li>a,.nav-ul>li>span{display:flex;align-items:center;height:100%;padding:.15rem .9rem;font-size:.81rem;color:var(--t2)}.nav-ul>li>a:hover,.nav-ul>li>span:hover,.nav-ul>li.op>span{color:var(--t)}
+.chv{font-size:.55rem;margin-left:.28rem;transition:transform .25s}.nav-ul>li.op .chv{transform:rotate(180deg)}
+.mega{display:none;position:absolute;top:100%;left:0;background:var(--s2);border:1px solid var(--bdr2);border-top:none;padding:1.5rem;min-width:640px;box-shadow:0 30px 70px rgba(0,0,0,.5)}.mega.sm{min-width:220px}.nav-ul>li.op .mega{display:flex;gap:1.8rem}.nav-ul>li.op .mega.sm{display:flex;flex-direction:column;gap:0}
+.mega-ttl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);padding:.3rem .55rem}
+.mega a{display:block;padding:.5rem .55rem;border-radius:4px;font-size:.8rem;color:var(--t2)}.mega a:hover{background:var(--ag);color:var(--a2)}
+.mega-img{width:220px}.mega-img-inner{padding:1.2rem;border:1px solid var(--bdr);border-radius:6px;background:linear-gradient(135deg,var(--s3),#0d1535)}
+.mega-img-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.35rem}.mega-img-sub{font-size:.72rem;line-height:1.6;color:var(--t3)}
+.nav-r{display:flex;align-items:center;gap:.7rem}.btn-si{font-size:.79rem;color:var(--t2)}.btn-gi{font-family:'Syne',sans-serif;font-size:.77rem;font-weight:700;letter-spacing:.05em;padding:.55rem 1.2rem;border-radius:4px;background:var(--a);color:#fff}
+.hbg{display:none;flex-direction:column;gap:5px;width:22px;cursor:pointer}.hbg span{display:block;height:1.5px;background:var(--t)}
+.mmenu{display:none;position:fixed;top:var(--nh);inset:var(--nh) 0 0;background:var(--bg);z-index:700;padding:1.8rem clamp(1rem,5vw,2.5rem)}.mmenu.op{display:block}
+.mlink{display:block;padding:.8rem 0;border-bottom:1px solid var(--bdr);font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--t2)}
+.mob-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.hero{padding:calc(var(--nh)+5.5rem) clamp(1rem,6vw,4rem) 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-160px;right:-140px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(79,110,247,.14),transparent 65%)}
+.wrap{max-width:1280px;margin:0 auto}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:end}
+.ey{display:flex;align-items:center;gap:.6rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);margin-bottom:1rem}.ey::before{content:'';width:16px;height:1px;background:var(--a)}
+h1,.section-title{font-family:'Syne',sans-serif;letter-spacing:-.03em}
+.hero h1{font-size:clamp(2.8rem,5vw,5.5rem);line-height:.94;margin-bottom:1.2rem}
+h1 em,.section-title em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--a2) 45%,var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p,.section-copy{color:var(--t2);font-size:.95rem;line-height:1.85}.hero p{max-width:52ch;margin-bottom:2rem}
+.primary,.ghost{display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.5rem;border-radius:4px;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em}
+.primary{background:var(--a);color:#fff}.ghost{border:1px solid var(--bdr2);color:var(--t2)}
+.section{padding:0 clamp(1rem,6vw,4rem) 5rem}
+.section-title{font-size:clamp(1.75rem,3.2vw,2.8rem);line-height:1.08;margin-bottom:1rem}
+.section-copy{max-width:56ch;margin-bottom:2.2rem;color:var(--t2);line-height:1.8}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:1.2rem}
+.card h3{font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:.4rem}
+.card p{font-size:.82rem;line-height:1.7;color:var(--t2)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.metric{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:1.1rem}
+.metric strong{font-family:'Syne',sans-serif;font-size:1.4rem;color:var(--a)}
+.metric span{font-size:.76rem;color:var(--t3)}
+.cta{padding:5rem clamp(1rem,6vw,4rem);background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);text-align:center}
+footer{background:var(--s1);padding:4rem clamp(1rem,6vw,4rem) 2rem}
+.fg4{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2.4rem;border-bottom:1px solid var(--bdr);margin-bottom:1.6rem}
+.fct{font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem;font-weight:600}
+.flogo{display:flex;align-items:center;gap:.52rem;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.85rem}
+.fdesc{font-size:.78rem;line-height:1.7;color:var(--t3);max-width:26ch}
+.flinks{display:flex;flex-direction:column;gap:.62rem}.flinks a{font-size:.78rem;color:var(--t2)}
+.fbot{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.fcopy,.fleg a{font-size:.68rem;color:var(--t3)}.fleg{display:flex;gap:1.5rem}
+[data-r]{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+[data-r].in{opacity:1;transform:translateY(0)}
+@media(max-width:960px){.hero-grid,.grid3,.metrics,.fg4{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-ul,.btn-si{display:none}.hbg{display:flex}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <ul class="nav-ul">
+    <li id="d-plat"><span>Platform <span class="chv">&#9662;</span></span><div class="mega"><div><div class="mega-ttl">Overview</div><a href="platform.html">Platform Overview</a><a href="pricing.html">Pricing</a><a href="resources.html">Resources</a></div><div><div class="mega-ttl">Proof</div><a href="cases.html">Case Studies</a><a href="solutions.html">Solutions</a><a href="contact.html">Book a Demo</a></div><div class="mega-img"><div class="mega-img-inner"><div class="mega-img-ttl">API & Integrations</div><div class="mega-img-sub">Connect data sources, export, and embed VARKONIS into your stack.</div></div></div></div></li>
+    <li id="d-sol"><span>Solutions <span class="chv">&#9662;</span></span><div class="mega sm"><a href="solutions.html">Solutions Overview</a><a href="cases.html">Case Studies</a><a href="resources.html">Resources Hub</a></div></li>
+    <li><a href="cases.html">Case Studies</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r"><a href="login.html" class="btn-si">Sign In</a><a href="contact.html" class="btn-gi">Get in touch</a><div class="hbg" id="hbg"><span></span><span></span><span></span></div></div>
+</nav>
+<div class="mmenu" id="mmenu"><a class="mlink" href="platform.html">Platform</a><a class="mlink" href="solutions.html">Solutions</a><a class="mlink" href="cases.html">Case Studies</a><a class="mlink" href="pricing.html">Pricing</a><a class="mlink" href="resources.html">Resources</a><a class="mlink" href="blog.html">Blog</a><a class="mlink" href="contact.html">Contact</a><div class="mob-btns"><a href="login.html" style="font-size:.88rem;color:var(--t2)">Sign In</a><a href="contact.html" class="btn-gi">Get in touch</a></div></div>
+<section class="hero">
+  <div class="hero-grid">
+    <div data-r>
+      <div class="ey">Platform / Integrations</div>
+      <h1>APIs and integrations that keep <em>data moving with integrity.</em></h1>
+      <p>Inbound connections to custodians and data partners, outbound exports to your downstream tools, and an API that doesn’t require babysitting.</p>
+      <div style="display:flex;gap:.85rem;flex-wrap:wrap"><a href="contact.html" class="primary">Talk integrations</a><a href="resources.html" class="ghost">View resources</a></div>
+    </div>
+    <div class="metrics" data-r>
+      <div class="metric"><strong>200+</strong><span>Supported feeds</span></div>
+      <div class="metric"><strong>38ms</strong><span>Avg API latency</span></div>
+      <div class="metric"><strong>99.9%</strong><span>Uptime SLA</span></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="ey" data-r">What it does</div>
+    <h2 class="section-title" data-r>Built for operators and engineers who hate brittle pipes</h2>
+    <p class="section-copy" data-r>This is the integration anchor page; it can later link to docs, status, and changelog.</p>
+    <div class="grid3">
+      <div class="card" data-r><h3>Ingestion</h3><p>Secure connectors to custodians, brokers, CRMs, and data vendors with reconciliation baked in.</p></div>
+      <div class="card" data-r><h3>API</h3><p>REST endpoints for positions, performance, risk, and reporting assets with clear rate limits and monitoring.</p></div>
+      <div class="card" data-r><h3>Exports</h3><p>Schedule data pushes into your warehouse, BI, or downstream systems without manual CSV wrangling.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="ey" data-r">Why it matters</div>
+    <h2 class="section-title" data-r>Good data plumbing keeps everything else honest</h2>
+    <div class="grid3">
+      <div class="card" data-r><h3>Reliability</h3><p>Alerts and monitoring on ingestion and API usage so ops and engineering know when to act.</p></div>
+      <div class="card" data-r><h3>Governance</h3><p>Access controls, keys, and audit trails to satisfy security and compliance reviews.</p></div>
+      <div class="card" data-r><h3>Speed to value</h3><p>Faster onboarding because connections, mapping, and reconciliation are handled in one place.</p></div>
+    </div>
+  </div>
+</section>
+<section class="cta">
+  <div class="wrap" data-r>
+    <div class="ey" style="justify-content:center">Next</div>
+    <h2 class="section-title">Pair integrations with security and data controls.</h2>
+    <div style="display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap"><a href="platform-security.html" class="primary">Security</a><a href="platform-risk-intelligence.html" class="ghost">Risk Intelligence</a><a href="platform-client-reporting.html" class="ghost">Client Reporting</a></div>
+  </div>
+</section>
+<footer>
+  <div class="fg4">
+    <div><div class="flogo"><div class="flico">V</div>VARKONIS</div><p class="fdesc">Institutional-grade financial intelligence for firms of great significance.</p></div>
+    <div><div class="fct">Platform</div><ul class="flinks"><li><a href="platform.html">Overview</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="cases.html">Case Studies</a></li><li><a href="resources.html">Resources</a></li></ul></div>
+    <div><div class="fct">Company</div><ul class="flinks"><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="fct">Explore</div><ul class="flinks"><li><a href="solutions.html">Solutions</a></li><li><a href="login.html">Sign In</a></li><li><a href="contact.html">Book a Demo</a></li><li><a href="resources.html">Docs and Help</a></li></ul></div>
+  </div>
+  <div class="fbot"><div class="fcopy">Copyright 2026 VARKONIS Technologies, Inc.</div><div class="fleg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
+document.querySelectorAll('.nav-ul>li').forEach(li=>{const d=li.querySelector('.mega');if(!d)return;li.addEventListener('mouseenter',()=>li.classList.add('op'));li.addEventListener('mouseleave',()=>li.classList.remove('op'));});
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{hbg.classList.toggle('op');mm.classList.toggle('op');document.body.style.overflow=mm.classList.contains('op')?'hidden':'';});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hbg.classList.remove('op');mm.classList.remove('op');document.body.style.overflow='';}));
+const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target);}})},{threshold:.08});
+document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Solutions Overview - VARKONIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.6);--t3:rgba(255,255,255,.3);--a:#4f6ef7;--a2:#7b94ff;--g:#1fcfa0;--ag:rgba(79,110,247,.13);--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+a{text-decoration:none;color:inherit}ul{list-style:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.03;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);border-bottom:1px solid var(--bdr);background:rgba(9,9,15,.88);backdrop-filter:blur(20px)}nav.up{background:rgba(9,9,15,.98)}
+.logo,.flogo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}.logo-ico,.flico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0 50%)}
+.nav-ul{display:flex;height:100%;align-items:center}.nav-ul>li{height:100%;display:flex;align-items:center;position:relative}.nav-ul>li>a,.nav-ul>li>span{display:flex;align-items:center;height:100%;padding:.15rem .9rem;font-size:.81rem;color:var(--t2)}.nav-ul>li>a:hover,.nav-ul>li>span:hover,.nav-ul>li.op>span{color:var(--t)}
+.chv{font-size:.55rem;margin-left:.28rem;transition:transform .25s}.nav-ul>li.op .chv{transform:rotate(180deg)}.mega{display:none;position:absolute;top:100%;left:0;background:var(--s2);border:1px solid var(--bdr2);border-top:none;padding:1.5rem;min-width:650px;box-shadow:0 30px 70px rgba(0,0,0,.5)}.mega.sm{min-width:220px}.nav-ul>li.op .mega{display:flex;gap:1.8rem}.nav-ul>li.op .mega.sm{display:flex;flex-direction:column;gap:0}.mega-ttl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);padding:.3rem .55rem}.mega a{display:block;padding:.5rem .55rem;border-radius:4px;font-size:.8rem;color:var(--t2)}.mega a:hover{background:var(--ag);color:var(--a2)}
+.mega-img{width:220px}.mega-img-inner{padding:1.2rem;border:1px solid var(--bdr);border-radius:6px;background:linear-gradient(135deg,var(--s3),#0d1535)}.mega-img-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.35rem}.mega-img-sub{font-size:.72rem;line-height:1.6;color:var(--t3)}
+.nav-r{display:flex;align-items:center;gap:.7rem}.btn-si{font-size:.79rem;color:var(--t2)}.btn-si:hover{color:var(--t)}.btn-gi,.primary,.ghost{display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.05em}.btn-gi,.primary{padding:.55rem 1.2rem;background:var(--a);color:#fff}.btn-gi:hover,.primary:hover{background:var(--a2)}.ghost{padding:.88rem 1.4rem;border:1px solid var(--bdr2);color:var(--t2);font-size:.8rem}.ghost:hover{border-color:var(--t2);color:var(--t)}
+.hbg{display:none;flex-direction:column;gap:5px;width:22px;cursor:pointer}.hbg span{display:block;height:1.5px;background:var(--t)}.mmenu{display:none;position:fixed;top:var(--nh);inset:var(--nh) 0 0;background:var(--bg);z-index:700;padding:1.8rem clamp(1rem,5vw,2.5rem)}.mmenu.op{display:block}.mlink{display:block;padding:.8rem 0;border-bottom:1px solid var(--bdr);font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--t2)}.mob-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.hero{padding:calc(var(--nh) + 5.5rem) clamp(1rem,6vw,4rem) 4.5rem;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;top:-160px;left:-120px;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(31,207,160,.08),transparent 65%)}.hero-grid,.wrap{max-width:1280px;margin:0 auto}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+.ey{display:flex;align-items:center;gap:.6rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);margin-bottom:1rem}.ey::before{content:'';width:16px;height:1px;background:var(--a)}
+h1,.section-title{font-family:'Syne',sans-serif;letter-spacing:-.03em}.hero h1{font-size:clamp(2.8rem,5vw,5.5rem);line-height:.94;margin-bottom:1.2rem}.hero h1 em,.section-title em{font-style:normal;background:linear-gradient(110deg,var(--g),var(--a2) 50%,var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p,.section-copy{color:var(--t2);font-size:.95rem;line-height:1.85}.hero p{max-width:50ch;margin-bottom:2rem}
+.summary{background:var(--s1);border:1px solid var(--bdr2);border-radius:10px;padding:1.4rem}.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}.sum{background:var(--s2);border:1px solid var(--bdr);border-radius:6px;padding:.95rem}.sum strong{display:block;font-family:'Syne',sans-serif;font-size:1.2rem;margin-bottom:.25rem}.sum span{font-size:.75rem;color:var(--t3)}
+.section{padding:0 clamp(1rem,6vw,4rem) 5rem}.section-title{font-size:clamp(1.75rem,3.2vw,2.8rem);line-height:1.08;margin-bottom:1rem}.section-copy{max-width:57ch;margin-bottom:2.4rem}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}.card,.compare,.proof{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:1.3rem}.card{display:block}.card h3,.compare h3,.proof h3{font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:.45rem}.card p,.compare p,.proof p{font-size:.82rem;line-height:1.7;color:var(--t2)}
+.compare-grid,.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.badge{display:inline-flex;padding:.28rem .7rem;border-radius:999px;background:var(--ag);color:var(--a2);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.85rem}
+.cta{padding:5rem clamp(1rem,6vw,4rem);background:var(--s1);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);text-align:center}
+footer{background:var(--s1);padding:4rem clamp(1rem,6vw,4rem) 2rem}.fg4{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2.4rem;border-bottom:1px solid var(--bdr);margin-bottom:1.6rem}.flico{width:24px;height:24px;font-size:.6rem}.fdesc{font-size:.78rem;line-height:1.7;color:var(--t3);max-width:26ch}.fct{font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem;font-weight:600}.flinks{display:flex;flex-direction:column;gap:.62rem}.flinks a{font-size:.78rem;color:var(--t2)}.fbot{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem}.fcopy,.fleg a{font-size:.68rem;color:var(--t3)}.fleg{display:flex;gap:1.5rem}
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}[data-r].in{opacity:1;transform:translateY(0)}
+@media(max-width:1000px){.hero-grid,.grid5,.compare-grid,.proof-grid,.fg4{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-ul,.btn-si{display:none}.hbg{display:flex}.summary-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <ul class="nav-ul">
+    <li id="d-plat"><span>Platform <span class="chv">&#9662;</span></span><div class="mega"><div><div class="mega-ttl">Overview</div><a href="platform.html">Platform Overview</a><a href="resources.html">Resources</a><a href="pricing.html">Pricing</a></div><div><div class="mega-ttl">Proof</div><a href="cases.html">Case Studies</a><a href="about.html">About</a><a href="contact.html">Book a Demo</a></div><div class="mega-img"><div class="mega-img-inner"><div class="mega-img-ttl">Designed by use case</div><div class="mega-img-sub">Each firm type needs a slightly different balance of analytics, workflows, reporting, and governance.</div></div></div></div></li>
+    <li id="d-sol"><span>Solutions <span class="chv">&#9662;</span></span><div class="mega sm"><a href="solutions.html">Solutions Overview</a><a href="cases.html">Client Outcomes</a><a href="resources.html">Resources Hub</a></div></li>
+    <li><a href="cases.html">Case Studies</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="solutions.html" style="color:var(--t)">Solutions</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r"><a href="login.html" class="btn-si">Sign In</a><a href="contact.html" class="btn-gi">Get in touch</a><div class="hbg" id="hbg"><span></span><span></span><span></span></div></div>
+</nav>
+<div class="mmenu" id="mmenu"><a class="mlink" href="platform.html">Platform</a><a class="mlink" href="solutions.html">Solutions</a><a class="mlink" href="cases.html">Case Studies</a><a class="mlink" href="pricing.html">Pricing</a><a class="mlink" href="resources.html">Resources</a><a class="mlink" href="contact.html">Contact</a><div class="mob-btns"><a href="login.html" style="font-size:.88rem;color:var(--t2)">Sign In</a><a href="contact.html" class="btn-gi">Get in touch</a></div></div>
+<section class="hero">
+  <div class="hero-grid">
+    <div data-r>
+      <div class="ey">Solutions Overview</div>
+      <h1>Different firms. Same standard of <em>clarity and control.</em></h1>
+      <p>VARKONIS adapts the same product foundation to hedge funds, private equity teams, wealth platforms, M&amp;A advisory firms, and family offices without fragmenting the experience.</p>
+      <div style="display:flex;gap:.85rem;flex-wrap:wrap"><a href="contact.html" class="primary">Find your fit</a><a href="cases.html" class="ghost">See who uses it</a></div>
+    </div>
+    <div class="summary" data-r><div class="summary-grid"><div class="sum"><strong>Hedge Funds</strong><span>Fast risk and portfolio context</span></div><div class="sum"><strong>Private Equity</strong><span>Pipeline, diligence, and reporting</span></div><div class="sum"><strong>Wealth</strong><span>Retention and white-label delivery</span></div><div class="sum"><strong>Family Office</strong><span>Consolidation and governance</span></div></div></div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="ey" data-r">Firm Types</div>
+    <h2 class="section-title" data-r>Fast paths into each vertical experience</h2>
+    <p class="section-copy" data-r>Choose a tailored path for hedge funds, private equity, wealth, M&amp;A advisory, or family offices without leaving the VARKONIS visual system.</p>
+    <div class="grid5">
+      <a class="card" data-r href="solutions-hedge-funds.html"><div class="badge">01</div><h3>Hedge Funds</h3><p>Risk visibility, portfolio intelligence, scenario awareness, and operating speed under volatile conditions.</p></a>
+      <a class="card" data-r href="solutions-private-equity.html"><div class="badge">02</div><h3>Private Equity</h3><p>Deal flow structure, investment committee context, portfolio monitoring, and executive reporting.</p></a>
+      <a class="card" data-r href="solutions-wealth-management.html"><div class="badge">03</div><h3>Wealth Management</h3><p>Client-grade reporting, advisor leverage, segmentation, and differentiated service delivery.</p></a>
+      <a class="card" data-r href="solutions-ma-advisory.html"><div class="badge">04</div><h3>M&amp;A Advisory</h3><p>Pipeline coordination, mandate tracking, workflow visibility, and stakeholder-ready outputs.</p></a>
+      <a class="card" data-r href="solutions-family-offices.html"><div class="badge">05</div><h3>Family Offices</h3><p>Cross-manager visibility, entity-level reporting, governance controls, and multi-generational access.</p></a>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="ey" data-r">Comparison</div>
+    <h2 class="section-title" data-r>Shared product core, different emphasis by workflow</h2>
+    <div class="compare-grid">
+      <div class="compare" data-r><h3>Decision-centric buyers</h3><p>Hedge funds and wealth teams lean hardest on analytics, risk, reporting cadence, and signal clarity.</p></div>
+      <div class="compare" data-r><h3>Workflow-centric buyers</h3><p>Private equity and M&amp;A teams care deeply about pipeline structure, review states, and shared operating context.</p></div>
+      <div class="compare" data-r><h3>Governance-centric buyers</h3><p>Family offices often prioritize consolidation, permissions, entity reporting, and principal/trustee visibility.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="ey" data-r">Proof Layer</div>
+    <h2 class="section-title" data-r>What this route should support next</h2>
+    <div class="proof-grid">
+      <div class="proof" data-r><h3>Vertical-specific copy</h3><p>Each detail page can reuse this frame while tuning the language, benefits, and proof to the target buyer.</p></div>
+      <div class="proof" data-r><h3>Case-study mapping</h3><p>Direct links from each vertical to the most relevant outcome stories keep the site commercially coherent.</p></div>
+      <div class="proof" data-r><h3>Qualified CTAs</h3><p>Demo, contact, and resource CTAs can shift by segment once the detail pages are added.</p></div>
+    </div>
+  </div>
+</section>
+<section class="cta">
+  <div class="wrap" data-r>
+    <div class="ey" style="justify-content:center">Now Live</div>
+    <h2 class="section-title">All five vertical detail pages are linked from here.</h2>
+    <p class="section-copy" style="margin:0 auto 1.8rem">Explore each solution page for segment-specific proof and calls to action, all within the same UI system.</p>
+    <a href="contact.html" class="primary">Book a segment-focused demo</a>
+  </div>
+</section>
+<footer>
+  <div class="fg4">
+    <div><div class="flogo"><div class="flico">V</div>VARKONIS</div><p class="fdesc">Institutional-grade financial intelligence for firms of great significance.</p></div>
+    <div><div class="fct">Platform</div><ul class="flinks"><li><a href="platform.html">Overview</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="cases.html">Case Studies</a></li><li><a href="resources.html">Resources</a></li></ul></div>
+    <div><div class="fct">Company</div><ul class="flinks"><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="fct">Explore</div><ul class="flinks"><li><a href="solutions.html">Solutions</a></li><li><a href="login.html">Sign In</a></li><li><a href="contact.html">Book a Demo</a></li><li><a href="resources.html">ROI Tools</a></li></ul></div>
+  </div>
+  <div class="fbot"><div class="fcopy">Copyright 2026 VARKONIS Technologies, Inc.</div><div class="fleg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
+document.querySelectorAll('.nav-ul>li').forEach(li=>{const d=li.querySelector('.mega');if(!d)return;li.addEventListener('mouseenter',()=>li.classList.add('op'));li.addEventListener('mouseleave',()=>li.classList.remove('op'));});
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{hbg.classList.toggle('op');mm.classList.toggle('op');document.body.style.overflow=mm.classList.contains('op')?'hidden':'';});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hbg.classList.remove('op');mm.classList.remove('op');document.body.style.overflow='';}));
+const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target);}})},{threshold:.08});
+document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
