@@ -96,7 +96,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
       <div class="step on" id="s1">1</div><div class="sline"></div><div class="step" id="s2">2</div><div class="sline"></div><div class="step" id="s3">3</div>
     </div>
     <h1 class="rh" id="rtitle">Create your account</h1>
-    <p class="rp" id="rsub">Already have an account? <a href="login.html">Sign in →</a></p>
+    <p class="rp" id="rsub">Already have an account? <a href="https://varkonis-auth.vercel.app/login">Sign in →</a></p>
     <div id="step1">
       <div class="frow2">
         <div class="fg"><label class="fl">First Name *</label><input class="fi" type="text" id="first" placeholder="James"/></div>
@@ -121,7 +121,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
     <div id="step3" style="display:none">
       <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:.5rem">Check your email</h2>
       <p class="rp" style="margin-bottom:1.2rem" id="confirm-copy">We sent a verification link to your inbox. Confirm to start your trial.</p>
-    <a href="login.html" class="sbtn" style="display:inline-flex;justify-content:center">Return to sign in</a>
+    <a href="https://varkonis-auth.vercel.app/login" class="sbtn" style="display:inline-flex;justify-content:center">Return to sign in</a>
       <div class="msg ok" id="msg-ok">Sign-up created. Verify your email to finish.</div>
       <div class="msg err" id="msg-err">Something went wrong. Try again.</div>
     </div>
@@ -163,7 +163,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
       else{s.textContent=i;}
     });
     const titles={1:'Create your account',2:'About your firm',3:'Check your email'};
-    const subs={1:'Already have an account? <a href="login.html">Sign in →</a>',2:'Step 2 of 3 — tell us about your firm',3:''};
+    const subs={1:'Already have an account? <a href="https://varkonis-auth.vercel.app/login">Sign in →</a>',2:'Step 2 of 3 — tell us about your firm',3:''};
     document.getElementById('rtitle').textContent=titles[n];
     document.getElementById('rsub').innerHTML=subs[n];
   }
