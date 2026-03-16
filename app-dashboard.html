@@ -306,10 +306,20 @@ const sb = createClient(
 )
 
 async function init() {
-  // Check auth
+  // Check auth - wait a moment for session to load from storage
+  await new Promise(r => setTimeout(r, 300))
   const { data: { session } } = await sb.auth.getSession()
   if (!session) {
-    window.location.href = 'https://varkonis-auth.vercel.app/login'
+    // Show not logged in state instead of redirecting
+    document.getElementById('main-content').innerHTML = `
+      <div style="display:grid;place-items:center;height:60vh;text-align:center">
+        <div>
+          <div style="font-size:2.5rem;margin-bottom:1rem">🔒</div>
+          <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.75rem">Sign in to access your dashboard</h2>
+          <p style="font-size:.87rem;color:rgba(255,255,255,.52);margin-bottom:2rem">You need to be signed in to view this page.</p>
+          <a href="https://varkonis-auth.vercel.app/login" style="font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;padding:.85rem 2rem;background:#4f6ef7;color:#fff;border-radius:5px;text-decoration:none">Sign In →</a>
+        </div>
+      </div>`
     return
   }
 
