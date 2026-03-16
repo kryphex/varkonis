@@ -148,7 +148,7 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-r">
-    <a href="https://varkonis-auth.vercel.app/login" class="btn-si">Sign In</a>
+    <a href="https://varkonis-auth.vercel.app/login" class="btn-si" id="nav-signin">Sign In</a><a href="app-dashboard.html" class="btn-si" id="nav-dashboard" style="display:none">Dashboard</a>
     <a href="contact.html" class="btn-gi">Get in touch</a>
     <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
   </div>
@@ -161,7 +161,7 @@ footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1
   <a class="mlink" href="about.html">About</a>
   <a class="mlink" href="contact.html">Contact</a>
   <div class="mob-btns">
-    <a href="https://varkonis-auth.vercel.app/login" style="font-size:.88rem;color:var(--t2)">Sign In</a>
+    <a href="https://varkonis-auth.vercel.app/login" id="mob-signin" style="font-size:.88rem;color:var(--t2)">Sign In</a><a href="app-dashboard.html" id="mob-dashboard" style="font-size:.88rem;color:var(--t2);display:none">Dashboard</a>
     <a href="contact.html" class="btn-gi">Get in touch</a>
   </div>
 </div>
@@ -236,6 +236,9 @@ const io=new IntersectionObserver(e=>{
   e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
 },{threshold:.07});
 document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+
+// Auth state check
+(async()=>{try{const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');const sb=createClient('https://neaqsrrgqjdwjdpocuul.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lYXFzcnJncWpkd2pkcG9jdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODE1MDIsImV4cCI6MjA4OTE1NzUwMn0.1YcWGKvhC-ywfBTemPN6i8jUMWCVS9zKAOmoJZhLnFc');const {data:{session}}=await sb.auth.getSession();if(session){const si=document.getElementById('nav-signin');const db=document.getElementById('nav-dashboard');const ms=document.getElementById('mob-signin');const md=document.getElementById('mob-dashboard');if(si)si.style.display='none';if(db)db.style.display='';if(ms)ms.style.display='none';if(md)md.style.display='';}}catch(e){}})();
 </script>
 </body>
 </html>

@@ -287,6 +287,9 @@ window.priceOption=function(){
   document.getElementById('delta').textContent=(normCdf(d1)).toFixed(2);
 };
 priceOption();
+
+// Auth state check
+(async()=>{try{const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');const sb=createClient('https://neaqsrrgqjdwjdpocuul.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lYXFzcnJncWpkd2pkcG9jdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODE1MDIsImV4cCI6MjA4OTE1NzUwMn0.1YcWGKvhC-ywfBTemPN6i8jUMWCVS9zKAOmoJZhLnFc');const {data:{session}}=await sb.auth.getSession();if(session){const si=document.getElementById('nav-signin');const db=document.getElementById('nav-dashboard');const ms=document.getElementById('mob-signin');const md=document.getElementById('mob-dashboard');if(si)si.style.display='none';if(db)db.style.display='';if(ms)ms.style.display='none';if(md)md.style.display='';}}catch(e){}})();
 </script>
 </body>
 </html>

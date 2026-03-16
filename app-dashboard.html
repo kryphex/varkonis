@@ -3,789 +3,319 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Dashboard — VARKONIS</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<title>Dashboard &#8212; VARKONIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#07070e;--s1:#0c0c16;--s2:#11111e;--s3:#171728;--s4:#1d1d30;
-  --bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.11);--bdr3:rgba(255,255,255,.18);
-  --t:#fff;--t2:rgba(255,255,255,.55);--t3:rgba(255,255,255,.28);--t4:rgba(255,255,255,.12);
-  --a:#4f6ef7;--a2:#7b94ff;--a3:#3d5ae0;--ag:rgba(79,110,247,.1);--ag2:rgba(79,110,247,.18);
-  --g:#1fcfa0;--g2:#17a882;--gag:rgba(31,207,160,.1);
-  --r:#f75a5a;--rag:rgba(247,90,90,.1);
-  --amber:#f59e0b;
-  --sw:240px;
-  --ease:cubic-bezier(.16,1,.3,1);
-  --ease2:cubic-bezier(.4,0,.2,1);
-}
+:root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.26);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.13);--g:#1fcfa0;--r:#f75a5a;--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
-input{font-family:inherit}
 ::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-thumb{background:rgba(79,110,247,.4);border-radius:2px}
- 
-/* noise overlay */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.025;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
- 
-/* ── SIDEBAR ── */
-.sidebar{
-  width:var(--sw);flex-shrink:0;
-  background:var(--s1);
-  border-right:1px solid var(--bdr);
-  display:flex;flex-direction:column;
-  position:fixed;height:100vh;left:0;top:0;
-  z-index:100;
-  transition:transform .3s var(--ease);
-}
- 
-.sb-logo{
-  display:flex;align-items:center;gap:.6rem;
-  padding:1.5rem 1.4rem;
-  border-bottom:1px solid var(--bdr);
-  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.06em;
-}
-.sb-logo-ico{
-  width:30px;height:30px;background:var(--a);
-  display:grid;place-items:center;
-  font-size:.72rem;font-weight:900;
-  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
-  animation:spin 12s linear infinite;
-  flex-shrink:0;
-}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
- 
-.sb-section{padding:.5rem .75rem;margin-top:.5rem}
-.sb-label{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);padding:.3rem .65rem;margin-bottom:.2rem;font-weight:600}
- 
-.sb-link{
-  display:flex;align-items:center;gap:.65rem;
-  padding:.6rem .65rem;border-radius:6px;
-  font-size:.8rem;color:var(--t2);
-  transition:all .18s;cursor:pointer;
-  position:relative;
-}
-.sb-link:hover{background:var(--s3);color:var(--t)}
-.sb-link.active{background:var(--ag2);color:var(--a2)}
-.sb-link.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:2px;background:var(--a);border-radius:2px}
-.sb-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
-.sb-link .badge{margin-left:auto;font-size:.58rem;background:var(--a);color:#fff;padding:.12rem .4rem;border-radius:100px;font-weight:700}
-.sb-link .badge.green{background:var(--g)}
-.sb-link .badge.amber{background:var(--amber)}
- 
-.sb-bottom{margin-top:auto;border-top:1px solid var(--bdr);padding:.75rem}
-.sb-user{display:flex;align-items:center;gap:.65rem;padding:.65rem;border-radius:6px;transition:background .18s;cursor:pointer}
-.sb-user:hover{background:var(--s3)}
-.sb-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--a),#1e2f8a);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:800;flex-shrink:0}
-.sb-uname{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700}
-.sb-uemail{font-size:.62rem;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
-.sb-logout{display:flex;align-items:center;gap:.65rem;padding:.6rem .65rem;border-radius:6px;font-size:.78rem;color:var(--t3);transition:all .18s;cursor:pointer;margin-top:.25rem}
-.sb-logout:hover{background:var(--rag);color:var(--r)}
-.sb-logout svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
- 
-/* ── MAIN ── */
-.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
- 
-/* topbar */
-.topbar{
-  height:60px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;
-  border-bottom:1px solid var(--bdr);
-  background:rgba(7,7,14,.85);
-  backdrop-filter:blur(20px);
-  position:sticky;top:0;z-index:50;
-}
-.topbar-left{display:flex;align-items:center;gap:.75rem}
-.topbar-breadcrumb{font-size:.78rem;color:var(--t3)}
-.topbar-breadcrumb span{color:var(--t2)}
-.topbar-right{display:flex;align-items:center;gap:.75rem}
-.tb-btn{display:flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:5px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .18s;border:1px solid var(--bdr2);color:var(--t2);background:transparent}
-.tb-btn:hover{border-color:var(--bdr3);color:var(--t);background:var(--s2)}
-.tb-btn-p{background:var(--a);border-color:var(--a);color:#fff}
-.tb-btn-p:hover{background:var(--a2);border-color:var(--a2)}
-.tb-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
-.live-dot{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--g);font-weight:600}
-.live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g);animation:pulse 2s infinite;display:inline-block}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
- 
-/* ── CONTENT ── */
-.content{padding:2rem;flex:1}
-.page-header{margin-bottom:2rem}
-.greeting{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:.3rem}
-.page-title{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:-.025em}
-.page-title em{font-style:normal;background:linear-gradient(110deg,var(--a2),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
- 
-/* ── KPI GRID ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-.kpi{
-  background:var(--s1);border:1px solid var(--bdr);border-radius:8px;
-  padding:1.4rem;position:relative;overflow:hidden;
-  transition:border-color .2s,transform .2s;
-}
-.kpi:hover{border-color:var(--bdr2);transform:translateY(-2px)}
-.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
-.kpi:hover::after{opacity:1}
-.kpi.blue::after{background:linear-gradient(90deg,var(--a),transparent)}
-.kpi.green::after{background:linear-gradient(90deg,var(--g),transparent)}
-.kpi.amber::after{background:linear-gradient(90deg,var(--amber),transparent)}
-.kpi.red::after{background:linear-gradient(90deg,var(--r),transparent)}
-.kpi-icon{width:34px;height:34px;border-radius:6px;display:grid;place-items:center;margin-bottom:1rem}
-.kpi-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
-.kpi-icon.blue{background:var(--ag);color:var(--a2)}
-.kpi-icon.green{background:var(--gag);color:var(--g)}
-.kpi-icon.amber{background:rgba(245,158,11,.1);color:var(--amber)}
-.kpi-icon.red{background:var(--rag);color:var(--r)}
-.kpi-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:.35rem}
-.kpi-value{font-family:'Syne',sans-serif;font-size:1.65rem;font-weight:800;line-height:1;margin-bottom:.35rem}
-.kpi-change{font-size:.68rem;display:flex;align-items:center;gap:.25rem}
-.kpi-change.up{color:var(--g)}
-.kpi-change.down{color:var(--r)}
-.kpi-change.neutral{color:var(--t3)}
- 
-/* ── GRID LAYOUT ── */
-.dash-grid{display:grid;grid-template-columns:1fr 380px;gap:1.2rem;margin-bottom:1.2rem}
-.dash-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
- 
-/* ── CARDS ── */
-.card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;overflow:hidden}
-.card-header{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 1.4rem;border-bottom:1px solid var(--bdr)}
-.card-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700}
-.card-subtitle{font-size:.65rem;color:var(--t3);margin-top:.1rem}
-.card-body{padding:1.4rem}
-.card-tabs{display:flex;gap:.25rem}
-.ctab{font-size:.65rem;padding:.28rem .65rem;border-radius:4px;cursor:pointer;transition:all .18s;color:var(--t3);border:1px solid transparent}
-.ctab:hover{color:var(--t2)}
-.ctab.on{background:var(--ag);border-color:rgba(79,110,247,.25);color:var(--a2)}
- 
-/* ── CHART ── */
-.chart-wrap{padding:1.2rem 1.4rem 1rem}
-.chart-months{display:flex;justify-content:space-between;padding:0 .2rem;margin-top:.5rem}
-.chart-months span{font-size:.55rem;color:var(--t3)}
- 
-/* ── ALLOCATION ── */
-.alloc-row{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--bdr)}
-.alloc-row:last-child{border-bottom:none}
-.alloc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.alloc-name{font-size:.78rem;color:var(--t2);flex:1}
-.alloc-bar-wrap{width:80px;height:3px;background:var(--bdr2);border-radius:2px;overflow:hidden}
-.alloc-bar{height:100%;border-radius:2px;transition:width .6s var(--ease)}
-.alloc-pct{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--t);width:30px;text-align:right}
-.alloc-ret{font-family:'JetBrains Mono',monospace;font-size:.7rem;width:45px;text-align:right}
- 
-/* ── HOLDINGS TABLE ── */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-thead tr{border-bottom:1px solid var(--bdr)}
-thead th{padding:.6rem 1.2rem;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-align:left;font-weight:600;white-space:nowrap}
-tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:background .15s;cursor:default}
-tbody tr:hover{background:var(--s2)}
-tbody tr:last-child{border-bottom:none}
-td{padding:.75rem 1.2rem;font-size:.78rem;white-space:nowrap}
-.td-name{font-weight:600;color:var(--t)}
-.td-ticker{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--t3);margin-top:.1rem}
-.td-mono{font-family:'JetBrains Mono',monospace;font-size:.75rem}
-.chip{display:inline-flex;align-items:center;padding:.18rem .55rem;border-radius:100px;font-size:.62rem;font-weight:600}
-.chip.up{background:var(--gag);color:var(--g)}
-.chip.down{background:var(--rag);color:var(--r)}
-.chip.neutral{background:var(--t4);color:var(--t2)}
- 
-/* ── RISK PANEL ── */
-.risk-metric{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--bdr)}
-.risk-metric:last-child{border-bottom:none}
-.risk-name{font-size:.78rem;color:var(--t2)}
-.risk-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
-.risk-bar-wrap{width:60px;height:3px;background:var(--bdr2);border-radius:2px;overflow:hidden;margin-top:.3rem}
-.risk-bar{height:100%;border-radius:2px}
- 
-/* ── ALERTS ── */
-.alert-item{display:flex;align-items:flex-start;gap:.75rem;padding:.8rem 0;border-bottom:1px solid var(--bdr)}
-.alert-item:last-child{border-bottom:none}
-.alert-ico{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;flex-shrink:0}
-.alert-ico svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
-.alert-ico.green{background:var(--gag);color:var(--g)}
-.alert-ico.amber{background:rgba(245,158,11,.1);color:var(--amber)}
-.alert-ico.blue{background:var(--ag);color:var(--a2)}
-.alert-msg{font-size:.76rem;color:var(--t2);line-height:1.5}
-.alert-time{font-size:.62rem;color:var(--t3);margin-top:.2rem}
- 
-/* ── ACTIVITY ── */
-.activity-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid var(--bdr)}
-.activity-item:last-child{border-bottom:none}
-.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.act-text{font-size:.76rem;color:var(--t2);flex:1;line-height:1.4}
-.act-time{font-size:.62rem;color:var(--t3);white-space:nowrap}
- 
-/* ── SPARKLINES ── */
-.sparkline{display:inline-block;vertical-align:middle}
- 
-/* ── SECTION LABEL ── */
-.section-label{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
-.section-label::before{content:'';width:12px;height:1px;background:var(--a)}
- 
-/* ── STATUS BAR ── */
-.status-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:var(--gag);border:1px solid rgba(31,207,160,.15);border-radius:6px;font-size:.72rem;color:var(--g);margin-bottom:1.5rem}
-.status-bar svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
- 
-/* ── RESPONSIVE ── */
-@media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}.dash-grid-3{grid-template-columns:1fr 1fr}}
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .dash-grid-3{grid-template-columns:1fr}
-  .topbar{padding:0 1rem}
-  .content{padding:1.2rem}
-}
- 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.kpi{animation:fadeUp .5s var(--ease) both}
-.kpi:nth-child(1){animation-delay:.05s}
-.kpi:nth-child(2){animation-delay:.1s}
-.kpi:nth-child(3){animation-delay:.15s}
-.kpi:nth-child(4){animation-delay:.2s}
-.card{animation:fadeUp .5s var(--ease) both;animation-delay:.25s}
+::-webkit-scrollbar-thumb{background:var(--a)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.03;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:800;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);border-bottom:1px solid var(--bdr);background:rgba(9,9,15,.88);backdrop-filter:blur(20px);transition:background .3s}
+nav.up{background:rgba(9,9,15,.98)}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
+.logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:spin 10s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)} to{transform:rotate(360deg)}}
+.nav-ul{display:flex;height:100%;align-items:center}
+.nav-ul>li{position:relative;height:100%;display:flex;align-items:center}
+.nav-ul>li>a,.nav-ul>li>span{display:flex;align-items:center;gap:.28rem;padding:.15rem .9rem;font-size:.81rem;color:var(--t2);cursor:pointer;transition:color .2s;white-space:nowrap;height:100%}
+.nav-ul>li>a:hover,.nav-ul>li>span:hover,.nav-ul>li.op>span{color:var(--t)}
+.chv{font-size:.5rem;transition:transform .25s}
+.nav-ul>li.op .chv{transform:rotate(180deg)}
+.mega{display:none;position:absolute;top:100%;left:0;background:var(--s2);border:1px solid var(--bdr2);border-top:none;padding:1.6rem 1.4rem;min-width:700px;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+@keyframes megaIn{from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)}}
+.mega.sm{min-width:200px}
+.nav-ul>li.op .mega{display:flex;gap:2.5rem;animation:megaIn .22s var(--ease)}
+.mega.sm{display:none;flex-direction:column;gap:0}
+.nav-ul>li.op .mega.sm{display:flex}
+.mega-col{min-width:130px}
+.mega-ttl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);padding:.3rem .6rem .15rem;margin-bottom:.2rem;font-weight:600}
+.mega a{display:flex;align-items:center;gap:.5rem;padding:.48rem .6rem;font-size:.8rem;color:var(--t2);border-radius:4px;transition:background .15s,color .15s;white-space:nowrap}
+.mega a:hover{background:var(--ag);color:var(--a2)}
+.mega-img{width:200px;flex-shrink:0;align-self:flex-start}
+.mega-img-inner{background:linear-gradient(135deg,var(--s3) 0%,#0d1535 100%);padding:1.4rem;border-radius:6px;border:1px solid var(--bdr)}
+.mega-img-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.4rem}
+.mega-img-sub{font-size:.72rem;color:var(--t3);line-height:1.5}
+.mega-cta{display:inline-flex;align-items:center;gap:.35rem;margin-top:.8rem;font-size:.72rem;color:var(--a2);font-weight:600;transition:gap .2s}
+.mega-cta:hover{gap:.55rem}
+.nav-r{display:flex;align-items:center;gap:.7rem}
+.btn-si{font-size:.79rem;color:var(--t2);padding:.3rem .6rem;transition:color .2s}
+.btn-si:hover{color:var(--t)}
+.btn-gi{font-family:'Syne',sans-serif;font-size:.77rem;font-weight:700;letter-spacing:.05em;padding:.52rem 1.25rem;background:var(--a);color:#fff;border-radius:4px;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-gi:hover{background:var(--a2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,110,247,.4)}
+.hbg{display:none;flex-direction:column;gap:5px;width:22px;cursor:pointer}
+.hbg span{display:block;height:1.5px;background:var(--t);border-radius:2px;transition:transform .3s,opacity .3s}
+.hbg.op span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.op span:nth-child(2){opacity:0}
+.hbg.op span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mmenu{display:none;position:fixed;top:var(--nh);inset:var(--nh) 0 0;background:var(--bg);z-index:700;overflow-y:auto;padding:1.8rem clamp(1rem,5vw,2.5rem)}
+.mmenu.op{display:block}
+.mlink{display:block;font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;padding:.75rem 0;border-bottom:1px solid var(--bdr);color:var(--t2);transition:color .2s}
+.mlink:hover{color:var(--t)}
+.mob-btns{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.sec{padding:6rem clamp(1rem,6vw,4rem)}
+.wrap{max-width:1100px;margin:0 auto}
+.page{padding:calc(var(--nh) + 5rem) clamp(1rem,6vw,4rem) 5rem;max-width:1100px;margin:0 auto}
+.ey{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.ey::before{content:'';width:15px;height:1px;background:var(--a)}
+.sh2{font-family:'Syne',sans-serif;font-size:clamp(1.75rem,3.5vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem;max-width:22ch}
+.sp2{font-size:.9rem;line-height:1.8;color:var(--t2);max-width:56ch;margin-bottom:2.5rem}
+.ph-h{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4.5vw,4rem);font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1rem}
+.ph-h em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ph-p{font-size:.93rem;line-height:1.8;color:var(--t2);max-width:52ch;margin-bottom:2.5rem}
+.bp{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700;letter-spacing:.04em;padding:.78rem 1.75rem;background:var(--a);color:#fff;border-radius:4px;display:inline-flex;align-items:center;gap:.45rem;transition:background .2s,transform .2s,box-shadow .2s}
+.bp:hover{background:var(--a2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(79,110,247,.4)}
+.bg2{font-size:.83rem;color:var(--t2);display:inline-flex;align-items:center;gap:.5rem;transition:color .2s}
+.bg2:hover{color:var(--t)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.8rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--bdr2);transform:translateY(-3px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),transparent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.card:hover::before{transform:scaleX(1)}
+.card-ico{width:36px;height:36px;border-radius:4px;background:var(--ag);border:1px solid var(--bdr2);display:grid;place-items:center;margin-bottom:1rem}
+.card-ico svg{width:16px;height:16px;stroke:var(--a2);fill:none;stroke-width:1.5}
+.card-ttl{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:.4rem}
+.card-dsc{font-size:.78rem;line-height:1.7;color:var(--t2)}
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+[data-r].in{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:.1s}
+[data-r][data-d="2"]{transition-delay:.2s}
+[data-r][data-d="3"]{transition-delay:.3s}
+[data-r][data-d="4"]{transition-delay:.4s}
+footer{background:var(--s1);border-top:1px solid var(--bdr);padding:4rem clamp(1rem,6vw,4rem) 2rem}
+.fg4{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.8rem;border-bottom:1px solid var(--bdr);margin-bottom:1.8rem}
+.flogo{display:flex;align-items:center;gap:.52rem;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.85rem}
+.flico{width:24px;height:24px;background:var(--a);display:grid;place-items:center;font-size:.6rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+.fdesc{font-size:.78rem;line-height:1.7;color:var(--t3);max-width:26ch}
+.fct{font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1rem;font-weight:600}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.62rem}
+.flinks a{font-size:.78rem;color:var(--t2);transition:color .2s}
+.flinks a:hover{color:var(--a2)}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.fcopy{font-size:.68rem;color:var(--t3)}
+.fleg{display:flex;gap:1.5rem}
+.fleg a{font-size:.68rem;color:var(--t3);transition:color .2s}
+.fleg a:hover{color:var(--t2)}
+@media(max-width:768px){.nav-ul,.btn-si{display:none}.hbg{display:flex}.fg4{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+<style>
+.dash{padding:calc(var(--nh) + 2rem) clamp(1rem,3vw,2.5rem) 3rem;max-width:1300px;margin:0 auto}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.dash-greet{font-size:.72rem;color:var(--t3);margin-bottom:.2rem}
+.dash-name{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800}
+.dash-acts{display:flex;gap:.8rem}
+.dash-btn-o{padding:.6rem 1.2rem;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;border:1px solid var(--bdr2);border-radius:4px;color:var(--t2);background:transparent;transition:all .2s;cursor:pointer}
+.dash-btn-o:hover{border-color:var(--a);color:var(--a)}
+.dash-btn-p{padding:.6rem 1.2rem;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;background:var(--a);color:#fff;border-radius:4px;border:none;cursor:pointer;transition:background .2s}
+.dash-btn-p:hover{background:var(--a2)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.4rem;transition:border-color .2s}
+.kpi:hover{border-color:var(--bdr2)}
+.kpi-lbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:.4rem}
+.kpi-val{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.2rem}
+.kpi-sub{font-size:.7rem;color:var(--g)}
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem}
+.chart-card{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.4rem}
+.chart-ttl{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.chart-ttl span{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700}
+.chart-ttl small{font-size:.68rem;color:var(--t3)}
+.risk-card{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.4rem}
+.risk-ttl{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:1rem}
+.risk-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--bdr);font-size:.78rem}
+.risk-row:last-child{border-bottom:none}
+.risk-l{color:var(--t2)}
+.risk-v{font-family:'Syne',sans-serif;font-weight:700}
+.alert-card{background:var(--s1);border:1px solid var(--bdr);border-radius:6px;padding:1.4rem;margin-top:1rem}
+.alert-live{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--g);margin-bottom:.6rem;font-weight:600}
+@keyframes adot{0%,100%{opacity:1}50%{opacity:.3}}
+.alert-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g);animation:adot 2s infinite;display:inline-block}
+.dash-demo{text-align:center;margin-top:2rem;padding:2rem;background:var(--s1);border:1px solid var(--bdr);border-radius:6px}
+.dash-demo p{font-size:.8rem;color:var(--t3);margin-bottom:.8rem}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.dash-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
- 
-<!-- ══ SIDEBAR ══ -->
-<aside class="sidebar" id="sidebar">
-  <div class="sb-logo">
-    <div class="sb-logo-ico">V</div>
-    VARKONIS
+<nav id="nav">
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <ul class="nav-ul">
+    <li id="d-plat"><span>Platform <span class="chv">&#9662;</span></span>
+      <div class="mega">
+        <div class="mega-col">
+          <div class="mega-ttl">Analytics</div>
+          <a href="platform-portfolio-analytics.html">Portfolio Analytics</a>
+          <a href="platform-risk-intelligence.html">Risk Intelligence</a>
+          <a href="platform-ai-insights.html">AI Insights</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-ttl">Operations</div>
+          <a href="platform-client-reporting.html">Client Reporting</a>
+          <a href="platform-deal-flow-crm.html">Deal Flow CRM</a>
+          <a href="platform-api-integrations.html">API &amp; Integrations</a>
+        </div>
+        <div class="mega-img">
+          <div class="mega-img-inner">
+            <div class="mega-img-ttl">VARKONIS Platform</div>
+            <div class="mega-img-sub">Institutional-grade financial intelligence.</div>
+            <a href="platform.html" class="mega-cta">Explore platform &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li id="d-sol"><span>Solutions <span class="chv">&#9662;</span></span>
+      <div class="mega sm">
+        <a href="solutions-hedge-funds.html">Hedge Funds</a>
+        <a href="solutions-private-equity.html">Private Equity</a>
+        <a href="solutions-wealth-management.html">Wealth Management</a>
+        <a href="solutions-ma-advisory.html">M&amp;A Advisory</a>
+        <a href="solutions-family-offices.html">Family Offices</a>
+      </div>
+    </li>
+    <li><a href="cases.html">Case Studies</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="https://varkonis-auth.vercel.app/login" class="btn-si">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
+    <div class="hbg" id="hbg"><span></span><span></span><span></span></div>
   </div>
- 
-  <div class="sb-section">
-    <div class="sb-label">Overview</div>
-    <a href="app-dashboard.html" class="sb-link active">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </a>
-    <a href="market-terminal.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Market Terminal
-      <span class="badge green">Live</span>
-    </a>
-  </div>
- 
-  <div class="sb-section">
-    <div class="sb-label">Portfolio</div>
-    <a href="platform-portfolio-analytics.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
-      Analytics
-    </a>
-    <a href="platform-risk-intelligence.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Risk Intelligence
-    </a>
-    <a href="platform-ai-insights.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      AI Insights
-      <span class="badge amber">3</span>
-    </a>
-  </div>
- 
-  <div class="sb-section">
-    <div class="sb-label">Operations</div>
-    <a href="platform-client-reporting.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      Client Reporting
-    </a>
-    <a href="platform-deal-flow-crm.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      Deal Flow CRM
-    </a>
-    <a href="platform-api-integrations.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      API & Integrations
-    </a>
-  </div>
- 
-  <div class="sb-section">
-    <div class="sb-label">Company</div>
-    <a href="docs.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Documentation
-    </a>
-    <a href="help.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Help & Support
-    </a>
-  </div>
- 
-  <div class="sb-bottom">
-    <div class="sb-user">
-      <div class="sb-avatar" id="sb-avatar">V</div>
-      <div style="overflow:hidden;flex:1">
-        <div class="sb-uname" id="sb-name">Varun</div>
-        <div class="sb-uemail" id="sb-email">user@varkonis.io</div>
-      </div>
-    </div>
-    <a href="https://varkonis-auth.vercel.app/logout" class="sb-logout">
-      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign Out
-    </a>
-  </div>
-</aside>
- 
-<!-- ══ MAIN ══ -->
-<div class="main">
- 
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <button class="tb-btn" id="mob-toggle" style="display:none">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <div class="topbar-breadcrumb">VARKONIS / <span>Dashboard</span></div>
-    </div>
-    <div class="topbar-right">
-      <div class="live-dot">Live data</div>
-      <button class="tb-btn">
-        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        Alerts <span style="background:var(--r);color:#fff;font-size:.58rem;padding:.1rem .35rem;border-radius:100px;margin-left:.2rem">3</span>
-      </button>
-      <button class="tb-btn tb-btn-p">
-        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        New Report
-      </button>
-    </div>
-  </header>
- 
-  <!-- Content -->
-  <div class="content">
- 
-    <!-- Status bar -->
-    <div class="status-bar">
-      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-      All systems operational · Data feeds active · Last sync 12 seconds ago
-    </div>
- 
-    <!-- Page header -->
-    <div class="page-header">
-      <div class="greeting" id="greeting">Good morning,</div>
-      <h1 class="page-title">Welcome back, <em id="display-name">Varun</em></h1>
-    </div>
- 
-    <!-- KPI Grid -->
-    <div class="kpi-grid">
-      <div class="kpi blue">
-        <div class="kpi-icon blue">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <div class="kpi-label">Total AUM</div>
-        <div class="kpi-value">$24.6M</div>
-        <div class="kpi-change up">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          +4.8% this month
-        </div>
-      </div>
-      <div class="kpi green">
-        <div class="kpi-icon green">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="kpi-label">YTD Return</div>
-        <div class="kpi-value">+18.3%</div>
-        <div class="kpi-change up">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          vs 11.2% benchmark
-        </div>
-      </div>
-      <div class="kpi amber">
-        <div class="kpi-icon amber">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="kpi-label">Sharpe Ratio</div>
-        <div class="kpi-value">0.94</div>
-        <div class="kpi-change up">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          from 0.81 last quarter
-        </div>
-      </div>
-      <div class="kpi blue">
-        <div class="kpi-icon blue">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="kpi-label">Active Clients</div>
-        <div class="kpi-value">47</div>
-        <div class="kpi-change up">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          3 added this month
-        </div>
-      </div>
-    </div>
- 
-    <!-- Main grid: Chart + Allocation -->
-    <div class="dash-grid">
-      <!-- Portfolio Chart -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Portfolio Performance</div>
-            <div class="card-subtitle">vs benchmark · last 12 months</div>
-          </div>
-          <div class="card-tabs">
-            <div class="ctab on">1Y</div>
-            <div class="ctab">6M</div>
-            <div class="ctab">3M</div>
-            <div class="ctab">1M</div>
-          </div>
-        </div>
-        <div class="chart-wrap">
-          <svg viewBox="0 0 680 130" style="width:100%;height:130px;display:block;overflow:visible">
-            <defs>
-              <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#4f6ef7" stop-opacity=".22"/>
-                <stop offset="100%" stop-color="#4f6ef7" stop-opacity="0"/>
-              </linearGradient>
-              <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#1fcfa0" stop-opacity=".1"/>
-                <stop offset="100%" stop-color="#1fcfa0" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <!-- Grid lines -->
-            <line x1="0" y1="32" x2="680" y2="32" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <line x1="0" y1="64" x2="680" y2="64" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <line x1="0" y1="96" x2="680" y2="96" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <!-- Benchmark -->
-            <path d="M0,115 C80,112 160,108 240,104 S400,98 480,94 S580,90 680,86" stroke="rgba(255,255,255,.18)" stroke-width="1.5" fill="none" stroke-dasharray="5,4"/>
-            <!-- Portfolio fill -->
-            <path d="M0,115 C80,106 160,96 240,82 S380,58 460,44 S580,28 680,14 L680,130 L0,130Z" fill="url(#pg)"/>
-            <!-- Portfolio line -->
-            <path d="M0,115 C80,106 160,96 240,82 S380,58 460,44 S580,28 680,14" stroke="#4f6ef7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <!-- Data points -->
-            <circle cx="240" cy="82" r="3.5" fill="#4f6ef7" stroke="var(--bg)" stroke-width="2"/>
-            <circle cx="460" cy="44" r="3.5" fill="#4f6ef7" stroke="var(--bg)" stroke-width="2"/>
-            <circle cx="680" cy="14" r="4" fill="#4f6ef7" stroke="var(--bg)" stroke-width="2"/>
-          </svg>
-          <div class="chart-months">
-            <span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span>
-          </div>
-          <div style="display:flex;gap:1.5rem;margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--bdr)">
-            <div style="display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--t2)"><div style="width:14px;height:2px;background:var(--a);border-radius:2px"></div>Portfolio +18.3%</div>
-            <div style="display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--t3)"><div style="width:14px;height:2px;background:rgba(255,255,255,.2);border-radius:2px"></div>Benchmark +11.2%</div>
-          </div>
-        </div>
-      </div>
- 
-      <!-- Right panel -->
-      <div style="display:flex;flex-direction:column;gap:1.2rem">
-        <!-- Asset Allocation -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Asset Allocation</div>
-            <div style="font-size:.65rem;color:var(--t3)">$24.6M total</div>
-          </div>
-          <div class="card-body" style="padding:1rem 1.4rem">
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#4f6ef7"></div>
-              <div class="alloc-name">US Equity</div>
-              <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:34%;background:#4f6ef7"></div></div>
-              <div class="alloc-pct">34%</div>
-              <div class="alloc-ret" style="color:var(--g)">+22.1%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#1fcfa0"></div>
-              <div class="alloc-name">Fixed Income</div>
-              <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:21%;background:#1fcfa0"></div></div>
-              <div class="alloc-pct">21%</div>
-              <div class="alloc-ret" style="color:var(--g)">+4.2%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#7b94ff"></div>
-              <div class="alloc-name">Alternatives</div>
-              <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:17%;background:#7b94ff"></div></div>
-              <div class="alloc-pct">17%</div>
-              <div class="alloc-ret" style="color:var(--g)">+31.4%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:#f59e0b"></div>
-              <div class="alloc-name">International</div>
-              <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:15%;background:#f59e0b"></div></div>
-              <div class="alloc-pct">15%</div>
-              <div class="alloc-ret" style="color:var(--r)">−1.8%</div>
-            </div>
-            <div class="alloc-row">
-              <div class="alloc-dot" style="background:rgba(255,255,255,.25)"></div>
-              <div class="alloc-name">Cash</div>
-              <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:13%;background:rgba(255,255,255,.2)"></div></div>
-              <div class="alloc-pct">13%</div>
-              <div class="alloc-ret" style="color:var(--t3)">+0.1%</div>
-            </div>
-          </div>
-        </div>
- 
-        <!-- Risk Dashboard -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Risk Dashboard</div>
-            <div class="live-dot" style="font-size:.65rem">Live</div>
-          </div>
-          <div class="card-body" style="padding:.8rem 1.4rem">
-            <div class="risk-metric">
-              <div>
-                <div class="risk-name">VaR (95%, 1-day)</div>
-                <div class="risk-bar-wrap"><div class="risk-bar" style="width:45%;background:var(--amber)"></div></div>
-              </div>
-              <div class="risk-val">$184K</div>
-            </div>
-            <div class="risk-metric">
-              <div>
-                <div class="risk-name">Max Drawdown</div>
-                <div class="risk-bar-wrap"><div class="risk-bar" style="width:25%;background:var(--g)"></div></div>
-              </div>
-              <div class="risk-val" style="color:var(--g)">−4.2%</div>
-            </div>
-            <div class="risk-metric">
-              <div>
-                <div class="risk-name">Portfolio Beta</div>
-                <div class="risk-bar-wrap"><div class="risk-bar" style="width:60%;background:var(--a)"></div></div>
-              </div>
-              <div class="risk-val">0.72</div>
-            </div>
-            <div class="risk-metric">
-              <div>
-                <div class="risk-name">Volatility (ann.)</div>
-                <div class="risk-bar-wrap"><div class="risk-bar" style="width:35%;background:var(--g)"></div></div>
-              </div>
-              <div class="risk-val" style="color:var(--g)">8.4%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
- 
-    <!-- Holdings Table -->
-    <div class="card" style="margin-bottom:1.2rem">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Top Holdings</div>
-          <div class="card-subtitle">Live positions · updated 12s ago</div>
-        </div>
-        <button class="tb-btn">View all holdings →</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Market Value</th>
-              <th>Allocation</th>
-              <th>Day P&L</th>
-              <th>YTD Return</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div class="td-name">US Large Cap Equity</div><div class="td-ticker">INDEX · DOMESTIC</div></td>
-              <td class="td-mono">$8.4M</td>
-              <td class="td-mono">34%</td>
-              <td class="td-mono" style="color:var(--g)">+$18,240</td>
-              <td><span class="chip up">+22.1%</span></td>
-              <td><span class="chip neutral">Active</span></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">Fixed Income Core</div><div class="td-ticker">BONDS · INVESTMENT GRADE</div></td>
-              <td class="td-mono">$5.1M</td>
-              <td class="td-mono">21%</td>
-              <td class="td-mono" style="color:var(--g)">+$2,100</td>
-              <td><span class="chip up">+4.2%</span></td>
-              <td><span class="chip neutral">Active</span></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">Alternatives</div><div class="td-ticker">PRIVATE · MULTI-STRAT</div></td>
-              <td class="td-mono">$4.2M</td>
-              <td class="td-mono">17%</td>
-              <td class="td-mono" style="color:var(--g)">+$42,000</td>
-              <td><span class="chip up">+31.4%</span></td>
-              <td><span class="chip neutral">Active</span></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">International Dev.</div><div class="td-ticker">INTL · DEVELOPED MKTS</div></td>
-              <td class="td-mono">$3.8M</td>
-              <td class="td-mono">15%</td>
-              <td class="td-mono" style="color:var(--r)">−$9,500</td>
-              <td><span class="chip down">−1.8%</span></td>
-              <td><span class="chip amber" style="background:rgba(245,158,11,.1);color:var(--amber)">Review</span></td>
-            </tr>
-            <tr>
-              <td><div class="td-name">Cash & Equivalents</div><div class="td-ticker">CASH · MMF</div></td>
-              <td class="td-mono">$3.1M</td>
-              <td class="td-mono">13%</td>
-              <td class="td-mono" style="color:var(--t3)">+$850</td>
-              <td><span class="chip up">+0.1%</span></td>
-              <td><span class="chip neutral">Active</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
- 
-    <!-- Bottom grid: Alerts + Activity -->
-    <div class="dash-grid-3">
-      <!-- Alerts -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Live Alerts</div>
-          <div class="live-dot" style="font-size:.65rem">3 active</div>
-        </div>
-        <div class="card-body" style="padding:.8rem 1.4rem">
-          <div class="alert-item">
-            <div class="alert-ico amber">
-              <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            </div>
-            <div>
-              <div class="alert-msg">International Dev. approaching drawdown threshold of −5%</div>
-              <div class="alert-time">2 minutes ago</div>
-            </div>
-          </div>
-          <div class="alert-item">
-            <div class="alert-ico blue">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            </div>
-            <div>
-              <div class="alert-msg">Q1 rebalancing window opens in 3 days</div>
-              <div class="alert-time">1 hour ago</div>
-            </div>
-          </div>
-          <div class="alert-item">
-            <div class="alert-ico green">
-              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div>
-              <div class="alert-msg">LP risk audit passed — zero findings this quarter</div>
-              <div class="alert-time">Yesterday</div>
-            </div>
-          </div>
-        </div>
-      </div>
- 
-      <!-- Recent Activity -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Recent Activity</div>
-          <a href="#" style="font-size:.68rem;color:var(--a2)">View all →</a>
-        </div>
-        <div class="card-body" style="padding:.8rem 1.4rem">
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--g)"></div>
-            <div class="act-text">Report generated for <strong>Aldgate Capital</strong></div>
-            <div class="act-time">10m ago</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--a)"></div>
-            <div class="act-text">Portfolio rebalanced — Alternatives +2%</div>
-            <div class="act-time">2h ago</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--amber)"></div>
-            <div class="act-text">New client onboarded — <strong>Meridian Wealth</strong></div>
-            <div class="act-time">Yesterday</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--g)"></div>
-            <div class="act-text">AI commentary published for Q4 review</div>
-            <div class="act-time">2 days ago</div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--a)"></div>
-            <div class="act-text">Risk model updated — VaR recalculated</div>
-            <div class="act-time">3 days ago</div>
-          </div>
-        </div>
-      </div>
- 
-      <!-- Quick Actions -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Quick Actions</div>
-        </div>
-        <div class="card-body" style="padding:1rem 1.4rem;display:flex;flex-direction:column;gap:.6rem">
-          <a href="platform-client-reporting.html" style="display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;background:var(--s2);border:1px solid var(--bdr);border-radius:6px;transition:all .18s;cursor:pointer" onmouseover="this.style.borderColor='rgba(79,110,247,.3)'" onmouseout="this.style.borderColor='var(--bdr)'">
-            <div style="width:30px;height:30px;border-radius:5px;background:var(--ag);display:grid;place-items:center;flex-shrink:0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <div>
-              <div style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700">Generate Report</div>
-              <div style="font-size:.65rem;color:var(--t3)">AI-written client reports</div>
-            </div>
-          </a>
-          <a href="platform-deal-flow-crm.html" style="display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;background:var(--s2);border:1px solid var(--bdr);border-radius:6px;transition:all .18s;cursor:pointer" onmouseover="this.style.borderColor='rgba(31,207,160,.3)'" onmouseout="this.style.borderColor='var(--bdr)'">
-            <div style="width:30px;height:30px;border-radius:5px;background:var(--gag);display:grid;place-items:center;flex-shrink:0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <div>
-              <div style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700">Add Deal</div>
-              <div style="font-size:.65rem;color:var(--t3)">Track new mandate</div>
-            </div>
-          </a>
-          <a href="platform-risk-intelligence.html" style="display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;background:var(--s2);border:1px solid var(--bdr);border-radius:6px;transition:all .18s;cursor:pointer" onmouseover="this.style.borderColor='rgba(245,158,11,.3)'" onmouseout="this.style.borderColor='var(--bdr)'">
-            <div style="width:30px;height:30px;border-radius:5px;background:rgba(245,158,11,.1);display:grid;place-items:center;flex-shrink:0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
-              <div style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700">Run Stress Test</div>
-              <div style="font-size:.65rem;color:var(--t3)">Scenario analysis</div>
-            </div>
-          </a>
-          <a href="market-terminal.html" style="display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;background:var(--s2);border:1px solid var(--bdr);border-radius:6px;transition:all .18s;cursor:pointer" onmouseover="this.style.borderColor='rgba(79,110,247,.3)'" onmouseout="this.style.borderColor='var(--bdr)'">
-            <div style="width:30px;height:30px;border-radius:5px;background:var(--ag);display:grid;place-items:center;flex-shrink:0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div>
-              <div style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700">Market Terminal</div>
-              <div style="font-size:.65rem;color:var(--t3)">Live market data</div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
- 
+</nav>
+<div class="mmenu" id="mmenu">
+  <a class="mlink" href="index.html">Home</a>
+  <a class="mlink" href="platform.html">Platform</a>
+  <a class="mlink" href="solutions.html">Solutions</a>
+  <a class="mlink" href="pricing.html">Pricing</a>
+  <a class="mlink" href="about.html">About</a>
+  <a class="mlink" href="contact.html">Contact</a>
+  <div class="mob-btns">
+    <a href="https://varkonis-auth.vercel.app/login" style="font-size:.88rem;color:var(--t2)">Sign In</a>
+    <a href="contact.html" class="btn-gi">Get in touch</a>
   </div>
 </div>
- 
+<div class="dash">
+  <div class="dash-top">
+    <div><div class="dash-greet">Good morning,</div><h1 class="dash-name">James Harlow</h1></div>
+    <div class="dash-acts">
+      <button class="dash-btn-o">Generate Report</button>
+      <button class="dash-btn-p">+ Add Portfolio</button>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-lbl">Total AUM</div><div class="kpi-val">$24.6M</div><div class="kpi-sub">&#9650; +4.8% this month</div></div>
+    <div class="kpi"><div class="kpi-lbl">YTD Return</div><div class="kpi-val">+18.3%</div><div class="kpi-sub">vs 11.2% benchmark</div></div>
+    <div class="kpi"><div class="kpi-lbl">Sharpe Ratio</div><div class="kpi-val">0.94</div><div class="kpi-sub">&#9650; from 0.81 last quarter</div></div>
+    <div class="kpi"><div class="kpi-lbl">Active Portfolios</div><div class="kpi-val">14</div><div class="kpi-sub">2 added this month</div></div>
+  </div>
+  <div class="dash-grid">
+    <div class="chart-card">
+      <div class="chart-ttl"><span>Portfolio Performance</span><small>Last 12 months</small></div>
+      <svg viewBox="0 0 700 120" style="width:100%;height:120px">
+        <defs>
+          <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4f6ef7" stop-opacity=".25"/>
+            <stop offset="100%" stop-color="#4f6ef7" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,110 C80,100 140,90 200,78 S320,55 400,42 S520,28 600,18 L700,8" stroke="#4f6ef7" stroke-width="2" fill="none"/>
+        <path d="M0,110 C80,100 140,90 200,78 S320,55 400,42 S520,28 600,18 L700,8 L700,120 L0,120Z" fill="url(#pg)"/>
+        <path d="M0,110 C80,105 140,102 200,98 S320,92 400,88 S520,84 600,80 L700,76" stroke="rgba(255,255,255,.15)" stroke-width="1.5" fill="none" stroke-dasharray="4,4"/>
+      </svg>
+      <div style="display:flex;gap:1.5rem;margin-top:.8rem">
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--t2)"><div style="width:10px;height:2px;background:var(--a)"></div>Portfolio</div>
+        <div style="display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--t3)"><div style="width:10px;height:2px;background:rgba(255,255,255,.2)"></div>Benchmark</div>
+      </div>
+    </div>
+    <div>
+      <div class="risk-card">
+        <div class="risk-ttl">Risk Dashboard</div>
+        <div class="risk-row"><span class="risk-l">VaR (95%)</span><span class="risk-v">$184K</span></div>
+        <div class="risk-row"><span class="risk-l">Max Drawdown</span><span class="risk-v" style="color:var(--g)">-4.2%</span></div>
+        <div class="risk-row"><span class="risk-l">Beta</span><span class="risk-v">0.72</span></div>
+        <div class="risk-row"><span class="risk-l">Volatility</span><span class="risk-v" style="color:var(--g)">8.4%</span></div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-live">Live Alerts</div>
+        <div style="font-size:.8rem;color:var(--t2)">No active alerts. All thresholds within limits.</div>
+      </div>
+    </div>
+  </div>
+  <div class="dash-demo">
+    <p>This is a demo dashboard preview</p>
+    <a href="https://varkonis-auth.vercel.app/signup" class="bp">Start your free trial &#8594;</a>
+  </div>
+</div>
+<footer>
+  <div class="fg4">
+    <div>
+      <div class="flogo"><div class="flico">V</div>VARKONIS</div>
+      <p class="fdesc">Institutional-grade financial intelligence for firms of great significance.</p>
+    </div>
+    <div>
+      <div class="fct">Platform</div>
+      <ul class="flinks">
+        <li><a href="platform-portfolio-analytics.html">Portfolio Analytics</a></li>
+        <li><a href="platform-risk-intelligence.html">Risk Intelligence</a></li>
+        <li><a href="platform-client-reporting.html">Client Reporting</a></li>
+        <li><a href="platform-deal-flow-crm.html">Deal Flow CRM</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">Company</div>
+      <ul class="flinks">
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">Legal</div>
+      <ul class="flinks">
+        <li><a href="legal-privacy.html">Privacy</a></li>
+        <li><a href="legal-terms.html">Terms</a></li>
+        <li><a href="legal-security.html">Security</a></li>
+        <li><a href="status.html">Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">&#169; 2026 VARKONIS Technologies, Inc.</div>
+    <div class="fleg">
+      <a href="legal-privacy.html">Privacy</a>
+      <a href="legal-terms.html">Terms</a>
+      <a href="legal-cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
 <script>
-// Greeting
-const h = new Date().getHours()
-const g = h < 12 ? 'Good morning,' : h < 17 ? 'Good afternoon,' : 'Good evening,'
-document.getElementById('greeting').textContent = g
- 
-// Nav dropdown
-document.querySelectorAll('.nav-ul > li').forEach(li => {
-  const d = li.querySelector('.mega')
-  if (!d) return
-  li.addEventListener('mouseenter', () => li.classList.add('op'))
-  li.addEventListener('mouseleave', () => li.classList.remove('op'))
-})
- 
-// Chart tabs
-document.querySelectorAll('.ctab').forEach(t => {
-  t.addEventListener('click', () => {
-    document.querySelectorAll('.ctab').forEach(x => x.classList.remove('on'))
-    t.classList.add('on')
-  })
-})
- 
-// Mobile sidebar toggle
-const mobToggle = document.getElementById('mob-toggle')
-const sidebar = document.getElementById('sidebar')
-if (window.innerWidth <= 768) {
-  mobToggle.style.display = 'flex'
-  mobToggle.addEventListener('click', () => sidebar.classList.toggle('open'))
-}
- 
-// Scroll reveal
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } })
-}, { threshold: .07 })
-document.querySelectorAll('[data-r]').forEach(el => io.observe(el))
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('up',scrollY>40),{passive:true});
+document.querySelectorAll('.nav-ul>li').forEach(li=>{
+  const d=li.querySelector('.mega');
+  if(!d)return;
+  li.addEventListener('mouseenter',()=>li.classList.add('op'));
+  li.addEventListener('mouseleave',()=>li.classList.remove('op'));
+});
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{
+  hbg.classList.toggle('op');
+  mm.classList.toggle('op');
+  document.body.style.overflow=mm.classList.contains('op')?'hidden':'';
+});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hbg.classList.remove('op');mm.classList.remove('op');document.body.style.overflow='';
+}));
+const io=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
+},{threshold:.07});
+document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
