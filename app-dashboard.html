@@ -300,32 +300,58 @@ td{padding:.75rem 1.2rem;font-size:.78rem;white-space:nowrap}
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
+// CROSS-DOMAIN SESSION FIX - run before anything
+;(()=>{
+  const h = window.location.hash
+  if (h && h.includes('access_token')) {
+    const p = new URLSearchParams(h.replace('#',''))
+    const at = p.get('access_token'), rt = p.get('refresh_token')
+    if (at) {
+      localStorage.setItem('sb-neaqsrrgqjdwjdpocuul-auth-token', JSON.stringify({
+        access_token: at, refresh_token: rt||at, token_type:'bearer',
+        expires_in: 3600, expires_at: Math.floor(Date.now()/1000)+3600
+      }))
+      window.history.replaceState({},'', window.location.pathname)
+    }
+  }
+})()
+
 const sb = createClient(
   'https://neaqsrrgqjdwjdpocuul.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lYXFzcnJncWpkd2pkcG9jdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODE1MDIsImV4cCI6MjA4OTE1NzUwMn0.1YcWGKvhC-ywfBTemPN6i8jUMWCVS9zKAOmoJZhLnFc'
 )
 
 async function init() {
-  // Process hash tokens FIRST before anything else
+  // Check if tokens are in URL hash (coming from Vercel login)
   const hash = window.location.hash
   if (hash && hash.includes('access_token')) {
     const params = new URLSearchParams(hash.replace('#', ''))
     const accessToken = params.get('access_token')
     const refreshToken = params.get('refresh_token')
-    if (accessToken) {
-      await sb.auth.setSession({ 
-        access_token: accessToken, 
-        refresh_token: refreshToken 
-      })
+    if (accessToken && refreshToken) {
+      await sb.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
+      // Clean URL
       window.history.replaceState({}, '', window.location.pathname)
     }
   }
-  
-  // Wait for session to be set
-  await new Promise(r => setTimeout(r, 500))
-  const { data: { session } } = await sb.auth.getSession()
 
-  
+  // Small delay to let session settle
+  await new Promise(r => setTimeout(r, 200))
+  const { data: { session } } = await sb.auth.getSession()
+  if (!session) {
+    // Show not logged in state instead of redirecting
+    document.getElementById('main-content').innerHTML = `
+      <div style="display:grid;place-items:center;height:60vh;text-align:center">
+        <div>
+          <div style="font-size:2.5rem;margin-bottom:1rem">🔒</div>
+          <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.75rem">Sign in to access your dashboard</h2>
+          <p style="font-size:.87rem;color:rgba(255,255,255,.52);margin-bottom:2rem">You need to be signed in to view this page.</p>
+          <a href="https://varkonis-auth.vercel.app/login" style="font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;padding:.85rem 2rem;background:#4f6ef7;color:#fff;border-radius:5px;text-decoration:none">Sign In →</a>
+        </div>
+      </div>`
+    return
+  }
+
   // Get profile
   const { data: profile } = await sb.from('profiles').select('*').eq('id', session.user.id).single()
   const role = profile?.role || 'free'
