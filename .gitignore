@@ -1,0 +1,5 @@
+varkonis-auth/
+node_modules/
+.env
+dist/
+.vscode/
