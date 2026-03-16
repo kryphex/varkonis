@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin Panel — VARKONIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#07070e;--s1:#0c0c16;--s2:#11111e;--s3:#171728;--bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.11);--bdr3:rgba(255,255,255,.18);--t:#fff;--t2:rgba(255,255,255,.55);--t3:rgba(255,255,255,.28);--t4:rgba(255,255,255,.1);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.1);--ag2:rgba(79,110,247,.18);--g:#1fcfa0;--gag:rgba(31,207,160,.1);--r:#f75a5a;--rag:rgba(247,90,90,.1);--amber:#f59e0b;--sw:240px;--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}ul{list-style:none}button{font-family:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:rgba(79,110,247,.4);border-radius:2px}
+.sidebar{width:var(--sw);flex-shrink:0;background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;position:fixed;height:100vh;left:0;top:0;z-index:100}
+.sb-logo{display:flex;align-items:center;gap:.6rem;padding:1.5rem 1.4rem;border-bottom:1px solid var(--bdr);font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.06em}
+.sb-logo-ico{width:30px;height:30px;background:var(--amber);display:grid;place-items:center;font-size:.72rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:spin 12s linear infinite;flex-shrink:0}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.sb-badge{font-size:.58rem;padding:.15rem .5rem;background:rgba(245,158,11,.15);color:var(--amber);border-radius:100px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-left:.3rem}
+.sb-section{padding:.5rem .75rem;margin-top:.5rem}
+.sb-label{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);padding:.3rem .65rem;margin-bottom:.2rem;font-weight:600}
+.sb-link{display:flex;align-items:center;gap:.65rem;padding:.6rem .65rem;border-radius:6px;font-size:.8rem;color:var(--t2);transition:all .18s;cursor:pointer;position:relative;text-decoration:none}
+.sb-link:hover{background:var(--s3);color:var(--t)}
+.sb-link.active{background:rgba(245,158,11,.12);color:var(--amber)}
+.sb-link.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:2px;background:var(--amber);border-radius:2px}
+.sb-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
+.sb-bottom{margin-top:auto;border-top:1px solid var(--bdr);padding:.75rem}
+.sb-logout{display:flex;align-items:center;gap:.65rem;padding:.6rem .65rem;border-radius:6px;font-size:.78rem;color:var(--t3);transition:all .18s;cursor:pointer;text-decoration:none}
+.sb-logout:hover{background:var(--rag);color:var(--r)}
+.sb-logout svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1px solid var(--bdr);background:rgba(7,7,14,.85);backdrop-filter:blur(20px);position:sticky;top:0;z-index:50}
+.breadcrumb{font-size:.78rem;color:var(--t3)}.breadcrumb span{color:var(--t2)}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.admin-badge{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--amber);font-weight:600;padding:.3rem .75rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:100px}
+.content{padding:2rem;flex:1}
+.page-header{margin-bottom:2rem}
+.page-title{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:-.025em}
+.page-sub{font-size:.88rem;color:var(--t2);margin-top:.4rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:1.4rem;transition:border-color .2s}
+.kpi:hover{border-color:var(--bdr2)}
+.kpi-icon{width:34px;height:34px;border-radius:6px;display:grid;place-items:center;margin-bottom:1rem}
+.kpi-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.kpi-icon.blue{background:var(--ag);color:var(--a2)}.kpi-icon.green{background:var(--gag);color:var(--g)}.kpi-icon.amber{background:rgba(245,158,11,.1);color:var(--amber)}.kpi-icon.red{background:var(--rag);color:var(--r)}
+.kpi-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:.35rem}
+.kpi-value{font-family:'Syne',sans-serif;font-size:1.65rem;font-weight:800;line-height:1;margin-bottom:.35rem}
+.kpi-change{font-size:.68rem}.up{color:var(--g)}.down{color:var(--r)}.neutral{color:var(--t3)}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;margin-bottom:1.2rem}
+.card-header{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 1.4rem;border-bottom:1px solid var(--bdr)}
+.card-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700}
+.tb-btn{display:flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:5px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .18s;border:1px solid var(--bdr2);color:var(--t2);background:transparent}
+.tb-btn:hover{border-color:var(--bdr3);color:var(--t);background:var(--s2)}
+.tb-btn.primary{background:var(--a);border-color:var(--a);color:#fff}.tb-btn.primary:hover{background:var(--a2)}
+.tb-btn.success{background:var(--g);border-color:var(--g);color:#000;font-weight:700}
+.tb-btn.danger{background:var(--r);border-color:var(--r);color:#fff}.tb-btn.danger:hover{opacity:.85}
+.tb-btn.amber-btn{background:var(--amber);border-color:var(--amber);color:#000;font-weight:700}
+.tb-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid var(--bdr)}
+thead th{padding:.6rem 1.2rem;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-align:left;font-weight:600}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:background .15s}
+tbody tr:hover{background:var(--s2)}
+tbody tr:last-child{border-bottom:none}
+td{padding:.75rem 1.2rem;font-size:.78rem}
+.role-chip{display:inline-flex;align-items:center;padding:.18rem .55rem;border-radius:100px;font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.role-chip.admin{background:rgba(245,158,11,.15);color:var(--amber)}
+.role-chip.paid{background:var(--ag2);color:var(--a2)}
+.role-chip.free{background:var(--t4);color:var(--t3)}
+.select-role{background:var(--s2);border:1px solid var(--bdr2);color:var(--t);padding:.3rem .6rem;border-radius:4px;font-size:.75rem;cursor:pointer;font-family:inherit}
+.select-role:focus{outline:none;border-color:var(--a)}
+.tab-row{display:flex;gap:.5rem;border-bottom:1px solid var(--bdr);padding:0 1.4rem}
+.tab{padding:.8rem 1rem;font-size:.78rem;color:var(--t3);cursor:pointer;transition:color .18s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--t2)}.tab.on{color:var(--a2);border-color:var(--a)}
+.tab-panel{display:none;padding:1.4rem}.tab-panel.on{display:block}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--bdr)}
+.stat-row:last-child{border-bottom:none}
+.stat-name{font-size:.8rem;color:var(--t2)}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:500}
+.dash-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--s2);border:1px solid var(--bdr2);border-radius:8px;padding:1rem 1.4rem;font-size:.82rem;z-index:9999;display:none;align-items:center;gap:.75rem;min-width:280px}
+.toast.show{display:flex}.toast.success{border-color:rgba(31,207,160,.3)}.toast svg{width:16px;height:16px;stroke:var(--g);fill:none;stroke-width:2}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.kpi-grid{grid-template-columns:1fr 1fr}.dash-grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-ico">V</div>
+    VARKONIS <span class="sb-badge">Admin</span>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Admin</div>
+    <a href="admin.html" class="sb-link active">
+      <svg viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      User Management
+    </a>
+    <a href="#" class="sb-link" onclick="switchTab('billing')">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Billing & Plans
+    </a>
+    <a href="#" class="sb-link" onclick="switchTab('analytics')">
+      <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+      Platform Analytics
+    </a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Platform</div>
+    <a href="app-dashboard.html" class="sb-link">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Back to Dashboard
+    </a>
+    <a href="index.html" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      Marketing Site
+    </a>
+  </div>
+  <div class="sb-bottom">
+    <a href="https://varkonis-auth.vercel.app/logout" class="sb-logout">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign Out
+    </a>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div class="breadcrumb">VARKONIS / <span>Admin Panel</span></div>
+    <div class="topbar-right">
+      <div class="admin-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        Admin Access
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-title">Admin Panel</h1>
+      <p class="page-sub">Manage users, roles, billing, and platform analytics</p>
+    </div>
+
+    <div class="kpi-grid" id="admin-kpis">
+      <div class="kpi"><div class="kpi-icon blue"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="kpi-label">Total Users</div><div class="kpi-value" id="stat-total">—</div><div class="kpi-change neutral">Loading...</div></div>
+      <div class="kpi"><div class="kpi-icon green"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="kpi-label">Paid Users</div><div class="kpi-value" id="stat-paid">—</div><div class="kpi-change up" id="stat-paid-pct">—</div></div>
+      <div class="kpi"><div class="kpi-icon amber"><svg viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg></div><div class="kpi-label">Free Users</div><div class="kpi-value" id="stat-free">—</div><div class="kpi-change neutral">Free tier</div></div>
+      <div class="kpi"><div class="kpi-icon blue"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div><div class="kpi-label">Admins</div><div class="kpi-value" id="stat-admin">—</div><div class="kpi-change neutral">Full access</div></div>
+    </div>
+
+    <div class="card">
+      <div class="tab-row">
+        <div class="tab on" onclick="switchTab('users')" id="tab-users">Users</div>
+        <div class="tab" onclick="switchTab('billing')" id="tab-billing">Billing</div>
+        <div class="tab" onclick="switchTab('analytics')" id="tab-analytics">Analytics</div>
+      </div>
+
+      <!-- USERS TAB -->
+      <div class="tab-panel on" id="panel-users">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
+          <div style="font-size:.82rem;color:var(--t2)" id="users-count">Loading users...</div>
+          <div style="display:flex;gap:.5rem">
+            <button class="tb-btn" onclick="loadUsers()">
+              <svg viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>User</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="users-table">
+              <tr><td colspan="5" style="text-align:center;color:var(--t3);padding:2rem">Loading users...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BILLING TAB -->
+      <div class="tab-panel" id="panel-billing">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+          <div>
+            <div style="font-size:.78rem;font-weight:600;color:var(--t2);margin-bottom:1rem">Plan Distribution</div>
+            <div class="stat-row"><span class="stat-name">Free tier</span><span class="stat-val" id="bill-free">—</span></div>
+            <div class="stat-row"><span class="stat-name">Growth plan</span><span class="stat-val" id="bill-paid">—</span></div>
+            <div class="stat-row"><span class="stat-name">Admin accounts</span><span class="stat-val" id="bill-admin">—</span></div>
+          </div>
+          <div>
+            <div style="font-size:.78rem;font-weight:600;color:var(--t2);margin-bottom:1rem">Revenue (Demo)</div>
+            <div class="stat-row"><span class="stat-name">MRR</span><span class="stat-val" style="color:var(--g)" id="bill-mrr">—</span></div>
+            <div class="stat-row"><span class="stat-name">ARR</span><span class="stat-val" style="color:var(--g)" id="bill-arr">—</span></div>
+            <div class="stat-row"><span class="stat-name">Conversion rate</span><span class="stat-val" id="bill-conv">—</span></div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:var(--ag);border:1px solid rgba(79,110,247,.2);border-radius:6px;font-size:.8rem;color:var(--t2)">
+          💡 Connect Stripe to see real billing data. Revenue figures above are calculated based on user roles × plan pricing.
+        </div>
+      </div>
+
+      <!-- ANALYTICS TAB -->
+      <div class="tab-panel" id="panel-analytics">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+          <div>
+            <div style="font-size:.78rem;font-weight:600;color:var(--t2);margin-bottom:1rem">Platform Stats</div>
+            <div class="stat-row"><span class="stat-name">Total signups</span><span class="stat-val" id="an-total">—</span></div>
+            <div class="stat-row"><span class="stat-name">Paid conversion</span><span class="stat-val" id="an-conv">—</span></div>
+            <div class="stat-row"><span class="stat-name">Admin users</span><span class="stat-val" id="an-admin">—</span></div>
+          </div>
+          <div>
+            <div style="font-size:.78rem;font-weight:600;color:var(--t2);margin-bottom:1rem">Growth</div>
+            <div class="stat-row"><span class="stat-name">Newest signup</span><span class="stat-val" id="an-newest" style="font-size:.7rem">—</span></div>
+            <div class="stat-row"><span class="stat-name">Platform status</span><span class="stat-val" style="color:var(--g)">✓ Live</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Done!</span>
+</div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const sb = createClient(
+  'https://neaqsrrgqjdwjdpocuul.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lYXFzcnJncWpkd2pkcG9jdXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODE1MDIsImV4cCI6MjA4OTE1NzUwMn0.1YcWGKvhC-ywfBTemPN6i8jUMWCVS9zKAOmoJZhLnFc'
+)
+
+// Auth guard - admin only
+async function init() {
+  const { data: { session } } = await sb.auth.getSession()
+  if (!session) { window.location.href = 'https://varkonis-auth.vercel.app/login'; return }
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', session.user.id).single()
+  if (!profile || profile.role !== 'admin') { window.location.href = 'app-dashboard.html'; return }
+  loadUsers()
+}
+
+window.loadUsers = async function() {
+  const { data: users, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false })
+  if (error) { console.error(error); return }
+
+  // Stats
+  const total = users.length
+  const paid = users.filter(u => u.role === 'paid').length
+  const free = users.filter(u => u.role === 'free').length
+  const admins = users.filter(u => u.role === 'admin').length
+  const pctPaid = total > 0 ? Math.round((paid/total)*100) : 0
+
+  document.getElementById('stat-total').textContent = total
+  document.getElementById('stat-paid').textContent = paid
+  document.getElementById('stat-free').textContent = free
+  document.getElementById('stat-admin').textContent = admins
+  document.getElementById('stat-paid-pct').textContent = `${pctPaid}% conversion`
+  document.getElementById('users-count').textContent = `${total} total users`
+
+  // Billing tab
+  document.getElementById('bill-free').textContent = free
+  document.getElementById('bill-paid').textContent = paid
+  document.getElementById('bill-admin').textContent = admins
+  const mrr = paid * 1290
+  document.getElementById('bill-mrr').textContent = `$${mrr.toLocaleString()}`
+  document.getElementById('bill-arr').textContent = `$${(mrr*12).toLocaleString()}`
+  document.getElementById('bill-conv').textContent = `${pctPaid}%`
+
+  // Analytics tab
+  document.getElementById('an-total').textContent = total
+  document.getElementById('an-conv').textContent = `${pctPaid}%`
+  document.getElementById('an-admin').textContent = admins
+  if (users.length > 0) {
+    const newest = users[0]
+    document.getElementById('an-newest').textContent = newest.email || 'Unknown'
+  }
+
+  // Users table
+  const tbody = document.getElementById('users-table')
+  if (users.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:2rem">No users found</td></tr>'
+    return
+  }
+
+  tbody.innerHTML = users.map(u => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:.65rem">
+          <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--a),#1e2f8a);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:800;flex-shrink:0;color:#fff">
+            ${(u.full_name || u.email || '?')[0].toUpperCase()}
+          </div>
+          <div style="font-weight:600;font-size:.8rem">${u.full_name || '—'}</div>
+        </div>
+      </td>
+      <td style="color:var(--t2);font-size:.75rem">${u.email || '—'}</td>
+      <td>
+        <select class="select-role" data-id="${u.id}" onchange="updateRole('${u.id}', this.value)">
+          <option value="free" ${u.role === 'free' ? 'selected' : ''}>Free</option>
+          <option value="paid" ${u.role === 'paid' ? 'selected' : ''}>Paid</option>
+          <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+        </select>
+      </td>
+      <td style="color:var(--t3);font-size:.72rem">${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
+      <td>
+        <div style="display:flex;gap:.4rem">
+          <button class="tb-btn success" style="font-size:.68rem;padding:.3rem .65rem" onclick="updateRole('${u.id}', 'paid')">→ Paid</button>
+          <button class="tb-btn" style="font-size:.68rem;padding:.3rem .65rem" onclick="updateRole('${u.id}', 'free')">→ Free</button>
+        </div>
+      </td>
+    </tr>
+  `).join('')
+}
+
+window.updateRole = async function(userId, newRole) {
+  const { error } = await sb.from('profiles').update({ role: newRole }).eq('id', userId)
+  if (error) { showToast('Error: ' + error.message, false); return }
+  showToast(`Role updated to ${newRole} ✓`)
+  loadUsers()
+}
+
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'))
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'))
+  document.getElementById('tab-' + tab).classList.add('on')
+  document.getElementById('panel-' + tab).classList.add('on')
+}
+
+window.showToast = function(msg, success = true) {
+  const toast = document.getElementById('toast')
+  document.getElementById('toast-msg').textContent = msg
+  toast.className = `toast show ${success ? 'success' : ''}`
+  setTimeout(() => toast.className = 'toast', 3000)
+}
+
+init()
+</script>
+</body>
+</html>
