@@ -142,7 +142,14 @@ function renderTicker(){
   tickerEl.innerHTML='';
   tickerData.forEach(t=>{
     const span=document.createElement('span');
-    span.innerHTML=`<strong>${t.s}</strong> ${t.p.toFixed( t.p>10 ? 2:4)} <span class="${t.c>=0?'up':'down'}">${t.c>0?'+':''}${t.c.toFixed(2)}%</span>`;
+    const strong=document.createElement('strong');
+    strong.textContent=t.s;
+    const move=document.createElement('span');
+    move.className=t.c>=0?'up':'down';
+    move.textContent=`${t.c>0?'+':''}${t.c.toFixed(2)}%`;
+    span.appendChild(strong);
+    span.append(` ${t.p.toFixed(t.p>10?2:4)} `);
+    span.appendChild(move);
     tickerEl.appendChild(span);
   });
 }
@@ -210,7 +217,21 @@ function renderTable(){
   tableBody.innerHTML='';
   books[active].forEach(r=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${r.s}</td><td>${r.p}</td><td class="${r.c>=0?'up':'down'}">${r.c>0?'+':''}${r.c}%</td><td><div class="bar"><div style="width:${r.v}%"></div></div></td>`;
+    const symbol=document.createElement('td');
+    symbol.textContent=r.s;
+    const price=document.createElement('td');
+    price.textContent=String(r.p);
+    const change=document.createElement('td');
+    change.className=r.c>=0?'up':'down';
+    change.textContent=`${r.c>0?'+':''}${r.c}%`;
+    const volume=document.createElement('td');
+    const bar=document.createElement('div');
+    bar.className='bar';
+    const fill=document.createElement('div');
+    fill.style.width=`${Math.max(0,Math.min(100,r.v))}%`;
+    bar.appendChild(fill);
+    volume.appendChild(bar);
+    tr.append(symbol,price,change,volume);
     tableBody.appendChild(tr);
   });
 }
@@ -245,7 +266,11 @@ function renderNews(){
   headlines.forEach((h,i)=>{
     if(i===hIdx%headlines.length)return;
     const div=document.createElement('div');div.className='news-item';
-    div.innerHTML=`<strong>${h.t}</strong><span>${h.b}</span>`;
+    const title=document.createElement('strong');
+    title.textContent=h.t;
+    const body=document.createElement('span');
+    body.textContent=h.b;
+    div.append(title,body);
     list.appendChild(div);
   });
 }
@@ -263,14 +288,27 @@ const earnings=[
 const earnBody=document.querySelector('#earnings tbody');
 earnings.forEach(e=>{
   const tr=document.createElement('tr');
-  tr.innerHTML=`<td>${e.d}</td><td>${e.c}</td><td>${e.e}</td>`;
+  const date=document.createElement('td');
+  date.textContent=e.d;
+  const company=document.createElement('td');
+  company.textContent=e.c;
+  const estimate=document.createElement('td');
+  estimate.textContent=e.e;
+  tr.append(date,company,estimate);
   earnBody.appendChild(tr);
 });
 
 // Option pricer (Black-Scholes)
 function phi(x){return (1/Math.sqrt(2*Math.PI))*Math.exp(-0.5*x*x);}
 function normCdf(x){return 0.5*(1+erf(x/Math.SQRT2));}
-function erf(x){const sign=x<0?-1:1;const a= Math.abs(x);const t=1/(1+0.3275911*a);const y=1-((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-a*a);return sign*y;}
+function erf(x){
+  const sign=x<0?-1:1;
+  const a=Math.abs(x);
+  const t=1/(1+0.3275911*a);
+  const poly=(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t;
+  const y=1-poly*Math.exp(-a*a);
+  return sign*y;
+}
 window.priceOption=function(){
   const S=+document.getElementById('spot').value;
   const K=+document.getElementById('strike').value;
@@ -278,6 +316,12 @@ window.priceOption=function(){
   const r=(+document.getElementById('rate').value)/100;
   const q=(+document.getElementById('div').value)/100;
   const T=+document.getElementById('tenor').value;
+  if(!(S>0&&K>0&&v>0&&T>0)){
+    document.getElementById('call').textContent='Invalid input';
+    document.getElementById('put').textContent='Invalid input';
+    document.getElementById('delta').textContent='Invalid input';
+    return;
+  }
   const d1=(Math.log(S/K)+(r-q+0.5*v*v)*T)/(v*Math.sqrt(T));
   const d2=d1-v*Math.sqrt(T);
   const call=S*Math.exp(-q*T)*normCdf(d1)-K*Math.exp(-r*T)*normCdf(d2);
