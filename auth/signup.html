@@ -69,7 +69,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 </head>
 <body>
 <div class="left">
-  <a href="index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
+  <a href="../index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
   <div class="lmid">
     <div class="trial-badge">✦ 14-day free trial</div>
     <h2 class="lh">Start with <em>full access.</em><br>No credit card.</h2>
@@ -99,17 +99,17 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
     <p class="rp" id="rsub">Already have an account? <a href="login.html">Sign in →</a></p>
     <div id="step1">
       <div class="frow2">
-        <div class="fg"><label class="fl">First Name *</label><input class="fi" type="text" id="first" placeholder="James"/></div>
-        <div class="fg"><label class="fl">Last Name *</label><input class="fi" type="text" id="last" placeholder="Harlow"/></div>
+        <div class="fg"><label class="fl">First Name *</label><input class="fi" type="text" id="first" placeholder="James" autocomplete="given-name" required/></div>
+        <div class="fg"><label class="fl">Last Name *</label><input class="fi" type="text" id="last" placeholder="Harlow" autocomplete="family-name" required/></div>
       </div>
-      <div class="fg"><label class="fl">Email *</label><input class="fi" type="email" id="email1" placeholder="you@email.com"/></div>
+      <div class="fg"><label class="fl">Email *</label><input class="fi" type="email" id="email1" placeholder="you@email.com" autocomplete="email" required/></div>
       <div class="fg">
         <label class="fl">Password *</label>
-        <input class="fi" type="password" id="pw1" placeholder="Min 8 characters"/>
+        <input class="fi" type="password" id="pw1" placeholder="Min 8 characters" autocomplete="new-password" minlength="12" required/>
         <div class="pwstr"><div class="pwfill" id="pwf"></div></div>
         <div class="pwlbl" id="pwlbl">Too weak</div>
       </div>
-      <label class="terms"><input type="checkbox" id="terms" checked/>I agree to the <a href="legal-terms.html">Terms</a> and <a href="legal-privacy.html">Privacy Policy</a>.</label>
+      <label class="terms"><input type="checkbox" id="terms" checked/>I agree to the <a href="../legal-terms.html">Terms</a> and <a href="../legal-privacy.html">Privacy Policy</a>.</label>
       <button class="sbtn" id="next1">Continue</button>
     </div>
     <div id="step2" style="display:none">
@@ -151,7 +151,34 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
   const msgErr=document.getElementById('msg-err');
   const USERS_KEY='varkonis_local_users';
   const loadUsers=()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}');}catch{return{}}};
-  const saveUser=(em,pw)=>{const u=loadUsers();u[em.toLowerCase()]={password:pw};localStorage.setItem(USERS_KEY,JSON.stringify(u));};
+
+  async function hashPassword(password,salt){
+    const data=new TextEncoder().encode(`${salt}:${password}`);
+    const digest=await crypto.subtle.digest('SHA-256',data);
+    return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  const generateSalt=()=>crypto.getRandomValues(new Uint8Array(16)).reduce((acc,n)=>acc+n.toString(16).padStart(2,'0'),'');
+  async function saveUser(em,pw){
+    const u=loadUsers();
+    const emailKey=em.toLowerCase();
+    const salt=generateSalt();
+    const passwordHash=await hashPassword(pw,salt);
+    u[emailKey]={passwordHash,salt};
+    localStorage.setItem(USERS_KEY,JSON.stringify(u));
+  }
+  const isStrongPassword=(value)=>value.length>=12 && /[A-Z]/.test(value) && /[a-z]/.test(value) && /[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value);
+  async function saveProfileToDatabase(){
+    const payload={
+      email:email.value.trim().toLowerCase(),
+      first_name:first.value.trim(),
+      last_name:last.value.trim(),
+      firm:firm.value.trim(),
+      team_size:size.value||null,
+      role:role.value||null
+    };
+    const {error}=await supa.from('profiles').upsert(payload,{onConflict:'email'});
+    if(error) throw error;
+  }
 
   function goStep(n){
     ['step1','step2','step3'].forEach((id,idx)=>document.getElementById(id).style.display=idx+1===n?'block':'none');
@@ -182,7 +209,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
   pw.addEventListener('input',e=>updatePw(e.target.value));
 
   next1.addEventListener('click',()=>{
-    if(!first.value||!last.value||!email.value||!pw.value){alert('Fill name, email, and password.');return;}
+    const emailValue=email.value.trim();
+    if(!first.value||!last.value||!emailValue||!pw.value){alert('Fill name, email, and password.');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)){alert('Enter a valid business email.');return;}
+    if(!isStrongPassword(pw.value)){alert('Use at least 12 chars with upper, lower, number, and symbol.');return;}
     if(!terms.checked){alert('Please accept terms.');return;}
     goStep(2);
   });
@@ -198,13 +228,18 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
         options:{data:{first_name:first.value,last_name:last.value,firm:firm.value,team_size:size.value,role:role.value}}
       });
       if(error) throw error;
-      saveUser(email.value.trim(),pw.value);
+      try{
+        await saveProfileToDatabase();
+      }catch(profileEx){
+        console.warn('Profile table write failed:',profileEx?.message||profileEx);
+      }
+      await saveUser(email.value.trim(),pw.value);
       msgOk.style.display='block';
       goStep(3);
     }catch(ex){
       // fallback local demo signup
-      saveUser(email.value.trim(),pw.value);
-      msgErr.textContent=ex.message||'Supabase sign up failed; saved locally for demo login.';msgErr.style.display='block';
+      await saveUser(email.value.trim(),pw.value);
+      msgErr.textContent='Sign up service is temporarily unavailable; demo account was saved locally for preview mode.';msgErr.style.display='block';
       msgOk.style.display='block';
       goStep(3);
     }finally{

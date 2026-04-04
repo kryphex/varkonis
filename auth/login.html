@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Sign In — VARKONIS</title>
+<title>Sign In â€” VARKONIS</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.26);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.13);--g:#1fcfa0;--r:#f75a5a;--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
@@ -64,7 +64,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
 </head>
 <body>
 <div class="left">
-  <a href="index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
+  <a href="../index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
   <div class="lmid">
     <h2 class="lh">Your capital.<br><em>Total clarity.</em></h2>
     <p class="lp">Join 840+ firms using VARKONIS to make faster, sharper decisions with institutional-grade financial intelligence.</p>
@@ -79,18 +79,66 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
     <p class="ltq">"VARKONIS is the first platform that actually understands how a fund operator thinks. The risk alerts alone have saved us from two very bad decisions."</p>
     <div class="ltu">
       <div class="ltav">MR</div>
-      <div><div class="ltnm">Marcus Reid</div><div class="ltrl">CIO · Aldgate Capital Partners</div></div>
-    </div>
-  </div>
-</div>
-<div class="right">
-  <div class="rbox">
-    <h1 class="rh">Welcome back</h1>
-    <p class="rp">Don't have an account? <a href="signup.html">Sign up free →</a></p>
-    <div class="err" id="err">Incorrect email or password. Please try again.</div>
-    <div class="ok" id="ok">Signed in successfully. Redirecting�</div>
-    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="email" placeholder="you@email.com"/></div>
-    <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="pw" placeholder="Enter your password"/></div>
+    <div class="ok" id="ok">Signed in successfully. Redirecting...</div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="email" placeholder="you@email.com" autocomplete="email" required/></div>
+    <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="pw" placeholder="Enter your password" autocomplete="current-password" required minlength="8"/></div>
+    <p class="signup">By signing in you agree to our <a href="../legal-terms.html">Terms</a> and <a href="../legal-privacy.html">Privacy Policy</a></p>
+  const ATTEMPTS_KEY='varkonis_login_attempts';
+  const MAX_ATTEMPTS=5;
+  const LOCKOUT_MS=5*60*1000;
+  async function loadProfileFromDatabase(emailValue){
+    const {data,error}=await supa
+      .from('profiles')
+      .select('email,first_name,last_name,firm,team_size,role')
+      .eq('email',emailValue.toLowerCase())
+      .maybeSingle();
+    if(error) throw error;
+    return data;
+  }
+  async function hashPassword(password,salt){
+    const data=new TextEncoder().encode(`${salt}:${password}`);
+    const digest=await crypto.subtle.digest('SHA-256',data);
+    return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  const getAttempts=(emailValue)=>{
+    try{
+      const all=JSON.parse(localStorage.getItem(ATTEMPTS_KEY)||'{}');
+      return all[emailValue.toLowerCase()]||{count:0,last:0,lockUntil:0};
+    }catch{return{count:0,last:0,lockUntil:0};}
+  };
+  const setAttempts=(emailValue,val)=>{
+    const key=emailValue.toLowerCase();
+    let all={};
+    try{all=JSON.parse(localStorage.getItem(ATTEMPTS_KEY)||'{}');}catch{}
+    all[key]=val;
+    localStorage.setItem(ATTEMPTS_KEY,JSON.stringify(all));
+  };
+
+  function setState(l){btn.disabled=l;btn.style.opacity=l?0.65:1;btn.textContent=l?'Signing in...':'Sign In';}
+    const attemptState=getAttempts(e);
+    if(Date.now()<attemptState.lockUntil){
+      showErr('Too many failed attempts. Please wait 5 minutes and try again.');
+      return;
+    }
+      if(u?.salt && u?.passwordHash){
+        const incomingHash=await hashPassword(p,u.salt);
+        if(incomingHash===u.passwordHash){signed=true;}
+      }
+    if(!signed && e.toLowerCase()===DEMO_USER.email && p===DEMO_USER.password){
+      setAttempts(e,{count:0,last:0,lockUntil:0});
+      try{
+        const profile=await loadProfileFromDatabase(e);
+        if(profile){localStorage.setItem('varkonis_profile',JSON.stringify(profile));}
+      }catch{}
+      showOk('Signed in. Redirecting to your dashboard...');
+      setTimeout(()=>location.href='../app-dashboard.html',600);
+      const failCount=(Date.now()-attemptState.last>LOCKOUT_MS)?1:attemptState.count+1;
+      setAttempts(e,{
+        count:failCount,
+        last:Date.now(),
+        lockUntil:failCount>=MAX_ATTEMPTS?Date.now()+LOCKOUT_MS:0
+      });
+      showErr(supaError?'Sign in failed. Please check your credentials and try again.':'Incorrect email or password. Use demo@varkonis.com / demo1234 to try it.');
     <div class="frow">
       <label class="remember"><input type="checkbox" checked/> Keep me signed in</label>
       <a href="forgot-password.html" class="forgot">Forgot password?</a>
@@ -128,7 +176,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
   const loadUsers=()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}');}catch{return{}}};
   const saveUser=(em,pw)=>{const u=loadUsers();u[em.toLowerCase()]={password:pw};localStorage.setItem(USERS_KEY,JSON.stringify(u));};
 
-  function setState(l){btn.disabled=l;btn.style.opacity=l?0.65:1;btn.textContent=l?'Signing in�':'Sign In';}
+  function setState(l){btn.disabled=l;btn.style.opacity=l?0.65:1;btn.textContent=l?'Signing in…':'Sign In';}
   function showErr(msg){err.textContent=msg;err.classList.add('show');ok.classList.remove('show');}
   function showOk(msg){ok.textContent=msg;ok.classList.add('show');err.classList.remove('show');}
 
@@ -156,7 +204,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;o
       if(remember.checked){localStorage.setItem('varkonis_remember_email',e);}else{localStorage.removeItem('varkonis_remember_email');}
       localStorage.setItem('varkonis_auth_token','demo-'+Date.now());
       localStorage.setItem('varkonis_auth_email',e);
-      showOk('Signed in. Redirecting to your dashboard…');
+      showOk('Signed in. Redirecting to your dashboardâ€¦');
       setTimeout(()=>location.href='app-dashboard.html',600);
     }else{
       showErr(supaError||'Incorrect email or password. Use demo@varkonis.com / demo1234 to try it.');
