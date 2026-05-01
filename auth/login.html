@@ -3,168 +3,98 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Sign In â VARKONIS</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<title>Sign In — VARKONIS</title>
+<!-- Centralized CSS -->
+<link rel="stylesheet" href="varkonis-core.css"/>
 <style>
-:root{--bg:#09090f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a2a;--bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);--t:#fff;--t2:rgba(255,255,255,.52);--t3:rgba(255,255,255,.26);--a:#4f6ef7;--a2:#7b94ff;--ag:rgba(79,110,247,.13);--g:#1fcfa0;--r:#f75a5a;--nh:70px;--ease:cubic-bezier(.16,1,.3,1)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* Page-Specific Layout CSS Only */
 html,body{height:100%}
-body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--t);overflow:hidden;-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:1fr 1fr}
-a{text-decoration:none;color:inherit}button{font-family:inherit;cursor:pointer;border:none;background:none}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--a)}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.03;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E")}
-.left{background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;overflow:hidden;position:relative}
-.left::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(79,110,247,.12),transparent 65%);bottom:-200px;right:-200px;pointer-events:none}
-.llogo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.06em}
-.logo-ico{width:28px;height:28px;background:var(--a);display:grid;place-items:center;font-size:.7rem;font-weight:900;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:spin 10s linear infinite}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.lmid{position:relative;z-index:2}
-.lh{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:800;line-height:1;letter-spacing:-.025em;margin-bottom:1.2rem}
-.lh em{font-style:normal;background:linear-gradient(110deg,var(--a),var(--a2) 45%,var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.lp{font-size:.87rem;line-height:1.8;color:var(--t2);max-width:38ch;margin-bottom:2.5rem}
-.lstats{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.lstat{background:var(--s2);border:1px solid var(--bdr);border-radius:6px;padding:1.1rem}
-.lsv{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--a)}
-.lsl{font-size:.68rem;color:var(--t3);margin-top:.15rem}
-.ltestimonial{background:var(--s2);border:1px solid var(--bdr2);border-radius:6px;padding:1.4rem;position:relative;z-index:2}
-.ltq{font-size:.82rem;line-height:1.7;color:var(--t2);font-style:italic;margin-bottom:1rem}
-.ltu{display:flex;align-items:center;gap:.7rem}
-.ltav{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--a),#1e2f8a);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:800;flex-shrink:0}
-.ltnm{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700}
-.ltrl{font-size:.62rem;color:var(--t3)}
-.right{display:flex;align-items:center;justify-content:center;padding:2.5rem;overflow-y:auto}
+body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.left{background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;position:relative}
+.lh{font-family:var(--font-head);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:800;line-height:1;margin-bottom:1.2rem;text-transform:uppercase;}
+.lh em{color:var(--a);font-style:normal;}
+.lstats{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2rem;}
+.lstat{background:var(--s2);border:1px solid var(--bdr);padding:1.1rem;border-radius:0;}
+.lsv{font-family:var(--font-mono);font-size:1.5rem;font-weight:800;color:var(--a)}
+.right{display:flex;align-items:center;justify-content:center;padding:2.5rem;overflow-y:auto;background:var(--bg);}
 .rbox{width:100%;max-width:420px}
-.rh{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:.35rem}
+.rh{font-family:var(--font-head);font-size:1.7rem;font-weight:800;text-transform:uppercase;margin-bottom:.35rem}
 .rp{font-size:.85rem;color:var(--t2);margin-bottom:2.4rem}
-.rp a{color:var(--a2);transition:color .2s}.rp a:hover{color:var(--a)}
-.fg{display:flex;flex-direction:column;gap:.42rem;margin-bottom:1rem}
-.fl{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
-.fi{background:var(--s1);border:1px solid var(--bdr);border-radius:4px;padding:.78rem .9rem;font-family:'Manrope',sans-serif;font-size:.88rem;color:var(--t);transition:border-color .2s,background .2s;outline:none;width:100%}
-.fi:focus{border-color:var(--a);background:var(--s2)}
-.fi::placeholder{color:var(--t3)}
-.frow{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
-.remember{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--t2);cursor:pointer}
-.remember input{width:14px;height:14px;accent-color:var(--a)}
-.forgot{font-size:.75rem;color:var(--a2);transition:color .2s}.forgot:hover{color:var(--a)}
-.sbtn{width:100%;padding:.88rem;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;background:var(--a);color:#fff;border-radius:4px;transition:background .2s,transform .2s,box-shadow .2s;margin-bottom:1.5rem}
-.sbtn:hover{background:var(--a2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(79,110,247,.4)}
-.or{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem}
-.orline{flex:1;height:1px;background:var(--bdr)}
-.ortxt{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
-.sso{width:100%;padding:.78rem;border:1px solid var(--bdr2);border-radius:4px;color:var(--t2);font-size:.82rem;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:border-color .2s,color .2s,background .2s;margin-bottom:.7rem}
-.sso:hover{border-color:var(--bdr2);background:var(--s1);color:var(--t)}
-.sso svg{width:16px;height:16px;flex-shrink:0}
-.signup{text-align:center;font-size:.8rem;color:var(--t2);margin-top:1.5rem}
-.signup a{color:var(--a2);font-weight:600;transition:color .2s}.signup a:hover{color:var(--a)}
-.err{background:rgba(247,90,90,.1);border:1px solid rgba(247,90,90,.3);border-radius:4px;padding:.7rem .9rem;font-size:.78rem;color:var(--r);margin-bottom:1rem;display:none}
-.ok{background:rgba(31,207,160,.08);border:1px solid rgba(31,207,160,.25);border-radius:4px;padding:.7rem .9rem;font-size:.78rem;color:var(--g);margin-bottom:1rem;display:none}
-.err.show,.ok.show{display:block}
-@media(max-width:768px){body{grid-template-columns:1fr;overflow:auto}.left{display:none}.right{padding:3rem 1.5rem;align-items:flex-start;padding-top:5rem}}
+.rp a{color:var(--a);text-decoration:underline;}
+.fi{background:var(--s1);border:1px solid var(--bdr);padding:.78rem .9rem;font-family:var(--font-mono);font-size:.88rem;color:var(--t);outline:none;width:100%;border-radius:0;}
+.fi:focus{border-color:var(--a);}
+.err,.ok{display:none;padding:.7rem .9rem;font-family:var(--font-mono);font-size:.78rem;margin-bottom:1rem;border-radius:0;}
+.err.show{display:block;background:rgba(255,51,51,.1);border:1px solid var(--r);color:var(--r);}
+.ok.show{display:block;background:rgba(0,255,157,.1);border:1px solid var(--g);color:var(--g);}
+@media(max-width:768px){body{grid-template-columns:1fr;overflow:auto}.left{display:none}}
 </style>
 </head>
 <body>
 <div class="left">
-  <a href="../index.html" class="llogo"><div class="logo-ico">V</div>VARKONIS</a>
-  <div class="lmid">
+  <a href="index.html" class="logo"><div class="logo-ico">V</div>VARKONIS</a>
+  <div style="position:relative;z-index:2">
     <h2 class="lh">Your capital.<br><em>Total clarity.</em></h2>
-    <p class="lp">Join 840+ firms using VARKONIS to make faster, sharper decisions with institutional-grade financial intelligence.</p>
+    <p style="color:var(--t2);line-height:1.8;">Join 840+ firms using VARKONIS to make faster, sharper decisions with institutional-grade financial intelligence.</p>
     <div class="lstats">
-      <div class="lstat"><div class="lsv">$4.2B</div><div class="lsl">Assets analyzed</div></div>
-      <div class="lstat"><div class="lsv">840+</div><div class="lsl">Active firms</div></div>
-      <div class="lstat"><div class="lsv">99.9%</div><div class="lsl">Uptime SLA</div></div>
-      <div class="lstat"><div class="lsv">38ms</div><div class="lsl">Data latency</div></div>
+      <div class="lstat"><div class="lsv">$4.2B</div><div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;">Assets analyzed</div></div>
+      <div class="lstat"><div class="lsv">840+</div><div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;">Active firms</div></div>
     </div>
   </div>
-  <div class="ltestimonial">
-    <p class="ltq">"VARKONIS is the first platform that actually understands how a fund operator thinks. The risk alerts alone have saved us from two very bad decisions."</p>
-    <div class="ltu">
-      <div class="ltav">MR</div>
-      <div><div class="ltnm">Marcus Reid</div><div class="ltrl">CIO Â· Aldgate Capital Partners</div></div>
-    </div>
-  </div>
+  <div style="font-family:var(--font-mono);font-size:.7rem;color:var(--t3);">SYS_SECURE // V.26.4</div>
 </div>
+
 <div class="right">
   <div class="rbox">
-    <h1 class="rh">Welcome back</h1>
-    <p class="rp">Don't have an account? <a href="signup.html">Sign up free â</a></p>
-    <div class="err" id="err">Incorrect email or password. Please try again.</div>
-    <div class="ok" id="ok">Signed in successfully. Redirecting</div>
-    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="email" placeholder="you@email.com"/></div>
-    <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="pw" placeholder="Enter your password"/></div>
-    <div class="frow">
-      <label class="remember"><input type="checkbox" checked/> Keep me signed in</label>
-      <a href="forgot-password.html" class="forgot">Forgot password?</a>
-    </div>
-    <button class="sbtn" id="sbtn">Sign In</button>
-    <div class="or"><div class="orline"></div><div class="ortxt">or continue with</div><div class="orline"></div></div>
-    <button class="sso">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-      Continue with Google
-    </button>
-    <button class="sso" style="margin-top:.7rem">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      Continue with LinkedIn
-    </button>
-    <p class="signup">By signing in you agree to our <a href="legal-terms.html">Terms</a> and <a href="../legal-privacy.html">Privacy Policy</a></p>
+    <h1 class="rh">Authenticate</h1>
+    <p class="rp">Terminal access required. <a href="signup.html">Request Clearance</a></p>
+    
+    <div class="err" id="err"></div>
+    <div class="ok" id="ok"></div>
+    
+    <div style="margin-bottom:1rem;"><label style="font-family:var(--font-mono);font-size:.66rem;color:var(--t3);display:block;margin-bottom:.4rem;">Operator ID (Email)</label><input class="fi" type="email" id="email" placeholder="sys@varkonis.io"/></div>
+    <div style="margin-bottom:1.5rem;"><label style="font-family:var(--font-mono);font-size:.66rem;color:var(--t3);display:block;margin-bottom:.4rem;">Passcode</label><input class="fi" type="password" id="pw" placeholder="••••••••"/></div>
+    
+    <button class="btn-gi" id="sbtn" style="width:100%;">Initialize Session</button>
   </div>
 </div>
-<script>
-  window.SUPABASE_URL="https://xvtnnszvfbirixppbdtl.supabase.co";
-  window.SUPABASE_ANON_KEY="sb_publishable_pQJ3E0t7j34sImItSqxn6Q_jLBGuasq";
-</script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (()=> {
-  const btn=document.getElementById('sbtn');
-  const email=document.getElementById('email');
-  const pw=document.getElementById('pw');
-  const err=document.getElementById('err');
-  const ok=document.getElementById('ok');
-  const remember=document.querySelector('.remember input');
-  const DEMO_USER={email:'demo@varkonis.com',password:'demo1234'};
-  const saved=localStorage.getItem('varkonis_remember_email'); if(saved){email.value=saved;}
-  const supa=supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);
-  const USERS_KEY='varkonis_local_users';
-  const loadUsers=()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'{}');}catch{return{}}};
-  const saveUser=(em,pw)=>{const u=loadUsers();u[em.toLowerCase()]={password:pw};localStorage.setItem(USERS_KEY,JSON.stringify(u));};
+  const btn = document.getElementById('sbtn');
+  const email = document.getElementById('email');
+  const pw = document.getElementById('pw');
+  const err = document.getElementById('err');
+  const ok = document.getElementById('ok');
+  
+  // SECURE AUTH INSTANTIATION
+  const supa = supabase.createClient('https://neaqsrrgqjdwjdpocuul.supabase.co', 'YOUR_PUBLIC_ANON_KEY_HERE');
 
-  function setState(l){btn.disabled=l;btn.style.opacity=l?0.65:1;btn.textContent=l?'Signing in':'Sign In';}
+  function setState(l){btn.disabled=l;btn.textContent=l?'Processing...':'Initialize Session';}
   function showErr(msg){err.textContent=msg;err.classList.add('show');ok.classList.remove('show');}
   function showOk(msg){ok.textContent=msg;ok.classList.add('show');err.classList.remove('show');}
 
   async function handleLogin(){
-    const e=email.value.trim();
-    const p=pw.value;
-    if(!e||!p){showErr('Please enter your email and password.');return;}
-    if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e)){showErr('Enter a valid email.');return;}
+    const e = email.value.trim();
+    const p = pw.value;
+    
+    if(!e||!p){showErr('Credentials required.');return;}
     setState(true);
-    let signed=false;let supaError='';
-    try{
-      const {error}=await supa.auth.signInWithPassword({email:e,password:p});
+    
+    try {
+      const { error } = await supa.auth.signInWithPassword({email: e, password: p});
       if(error) throw error;
-      signed=true;
-    }catch(ex){supaError=ex.message||'Sign-in failed';}
-    if(!signed){
-      const u=loadUsers()[e.toLowerCase()];
-      if(u && u.password===p){signed=true;}
+      
+      showOk('Handshake accepted. Routing...');
+      setTimeout(()=>location.href='app-dashboard.html', 800);
+    } catch(ex) {
+      showErr(ex.message || 'Authentication rejected.');
+    } finally {
+      setState(false);
     }
-    if(!signed && ((e.toLowerCase()===DEMO_USER.email && p===DEMO_USER.password) || p.length>=8)){
-      saveUser(e,p);
-      signed=true;
-    }
-    if(signed){
-      if(remember.checked){localStorage.setItem('varkonis_remember_email',e);}else{localStorage.removeItem('varkonis_remember_email');}
-      localStorage.setItem('varkonis_auth_token','demo-'+Date.now());
-      localStorage.setItem('varkonis_auth_email',e);
-      showOk('Signed in. Redirecting to your dashboardâ¦');
-      setTimeout(()=>location.href='https://varkonis-auth.vercel.app/dashboard',600);
-    }else{
-      showErr(supaError||'Incorrect email or password. Use demo@varkonis.com / demo1234 to try it.');
-    }
-    setState(false);
   }
 
-  btn.addEventListener('click',handleLogin);
+  btn.addEventListener('click', handleLogin);
   document.querySelectorAll('.fi').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')handleLogin();}));
 })();
 </script>
