@@ -4,10 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Sign In — VARKONIS</title>
-<!-- Centralized CSS -->
 <link rel="stylesheet" href="varkonis-core.css"/>
 <style>
-/* Page-Specific Layout CSS Only */
+/* Page-Specific Layout */
 html,body{height:100%}
 body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
 .left{background:var(--s1);border-right:1px solid var(--bdr);display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;position:relative}
@@ -26,6 +25,8 @@ body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
 .err,.ok{display:none;padding:.7rem .9rem;font-family:var(--font-mono);font-size:.78rem;margin-bottom:1rem;border-radius:0;}
 .err.show{display:block;background:rgba(255,51,51,.1);border:1px solid var(--r);color:var(--r);}
 .ok.show{display:block;background:rgba(0,255,157,.1);border:1px solid var(--g);color:var(--g);}
+.forgot{font-family:var(--font-mono);font-size:.7rem;color:var(--t3);text-transform:uppercase;display:block;text-align:right;margin-bottom:1.5rem;}
+.forgot:hover{color:var(--a);}
 @media(max-width:768px){body{grid-template-columns:1fr;overflow:auto}.left{display:none}}
 </style>
 </head>
@@ -52,7 +53,9 @@ body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
     <div class="ok" id="ok"></div>
     
     <div style="margin-bottom:1rem;"><label style="font-family:var(--font-mono);font-size:.66rem;color:var(--t3);display:block;margin-bottom:.4rem;">Operator ID (Email)</label><input class="fi" type="email" id="email" placeholder="sys@varkonis.io"/></div>
-    <div style="margin-bottom:1.5rem;"><label style="font-family:var(--font-mono);font-size:.66rem;color:var(--t3);display:block;margin-bottom:.4rem;">Passcode</label><input class="fi" type="password" id="pw" placeholder="••••••••"/></div>
+    <div style="margin-bottom:.5rem;"><label style="font-family:var(--font-mono);font-size:.66rem;color:var(--t3);display:block;margin-bottom:.4rem;">Passcode</label><input class="fi" type="password" id="pw" placeholder="••••••••"/></div>
+    
+    <a href="forgot-password.html" class="forgot">Reset Passcode</a>
     
     <button class="btn-gi" id="sbtn" style="width:100%;">Initialize Session</button>
   </div>
@@ -67,7 +70,7 @@ body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
   const err = document.getElementById('err');
   const ok = document.getElementById('ok');
   
-  // SECURE AUTH INSTANTIATION
+  // REPLACE WITH YOUR PUBLIC SUPABASE ANON KEY
   const supa = supabase.createClient('https://neaqsrrgqjdwjdpocuul.supabase.co', 'YOUR_PUBLIC_ANON_KEY_HERE');
 
   function setState(l){btn.disabled=l;btn.textContent=l?'Processing...':'Initialize Session';}
@@ -86,6 +89,7 @@ body{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
       if(error) throw error;
       
       showOk('Handshake accepted. Routing...');
+      // Strictly local routing
       setTimeout(()=>location.href='app-dashboard.html', 800);
     } catch(ex) {
       showErr(ex.message || 'Authentication rejected.');
